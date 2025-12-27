@@ -32,7 +32,7 @@ const cols = [
 
 export default function FooterModern() {
   return (
-    <Box sx={{ position: "relative", mt: 10, overflow: "hidden" }}>
+    <Box sx={{ position: "relative", overflow: "hidden" }}>
       {/* Background Layer */}
       <Box
         sx={{
@@ -49,7 +49,7 @@ export default function FooterModern() {
         {/* CTA Section */}
         <Box
           sx={{
-            borderRadius: 4,
+            borderRadius: 2.5,
             p: { xs: 3, md: 5 },
             mb: 8,
             border: "1px solid rgba(255, 255, 255, 0.1)",

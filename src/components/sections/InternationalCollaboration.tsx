@@ -38,12 +38,12 @@ export default function InternationalCollaboration() {
           <Stack spacing={2} sx={{ height: "100%" }}>
             <Card
               sx={{
-                borderRadius: 4,
+                borderRadius: 2.5,
                 p: { xs: 3, md: 4 },
                 height: "100%",
-                background:
-                  "linear-gradient(135deg, rgba(44,197,185,0.12) 0%, rgba(11,111,115,0.06) 100%)",
-                border: "1px solid rgba(11,111,115,0.12)",
+                background: "rgba(255, 255, 255, 0.6)",
+                border: "4px solid #0B6F73",
+                color: "#1d1d1f",
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "center",
@@ -100,20 +100,21 @@ export default function InternationalCollaboration() {
         {/* Right Side  */}
         <Box sx={{ flex: { xs: 3, md: 7 } }}>
           <Stack spacing={2.5}>
-            {points.map((p) => (
+            {points.map((p, index) => (
               <Card
                 key={p.title}
                 sx={{
-                  borderRadius: 4,
+                  borderRadius: 2,
                   p: 2,
-                  background: "rgba(255,255,255,0.60)",
-                  backdropFilter: "blur(20px)",
-                  border: "1px solid rgba(0,0,0,0.05)",
-                  transition: "all .3s cubic-bezier(0.4, 0, 0.2, 1)",
+                  background: "rgba(255, 255, 255, 0.72)",
+                  border: "3px solid #0B6F73",
+                  transition:
+                    "transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease, background 220ms ease",
                   "&:hover": {
-                    transform: { md: "translateX(8px)", xs: "none" },
-                    boxShadow: "0 20px 40px rgba(0,0,0,0.08)",
-                    borderColor: "rgba(11,111,115,0.3)",
+                    borderColor: "rgba(11,111,115,0.18)",
+                    background: "rgba(255,255,255,0.82)",
+                    transform: "translateY(-2px)",
+                    boxShadow: "0 12px 28px rgba(0,0,0,0.08)",
                   },
                 }}
               >
@@ -127,6 +128,26 @@ export default function InternationalCollaboration() {
                     alignItems: { xs: "flex-start", sm: "center" },
                   }}
                 >
+                  {/* Number Badge */}
+                  <Box
+                    sx={{
+                      minWidth: 44,
+                      height: 44,
+                      borderRadius: "50%",
+                      bgcolor: "#0B6F73",
+                      color: "#fff",
+                      fontWeight: 900,
+                      fontSize: 18,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      flexShrink: 0,
+                      boxShadow: "0 8px 18px rgba(11,111,115,0.25)",
+                    }}
+                  >
+                    {index + 1}
+                  </Box>
+
                   {/* Gradient Bar */}
                   <Box
                     sx={{
@@ -136,6 +157,7 @@ export default function InternationalCollaboration() {
                       background:
                         "linear-gradient(180deg, #0b6f73 0%, #2cc5b9 100%)",
                       flexShrink: 0,
+                      alignSelf: { xs: "center", sm: "auto" },
                     }}
                   />
 
