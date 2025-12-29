@@ -75,10 +75,7 @@ const NAV: NavItem[] = [
     key: "consultancy",
     label: "Consultancy",
     href: "",
-    items: [
-      { label: "mu", href: "#consultancy-mu" },
-      { label: "mu 2", href: "#consultancy-mu2" },
-    ],
+    items: [],
   },
   {
     key: "about",
