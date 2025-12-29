@@ -14,19 +14,8 @@ export default function SectionShell({
   eyebrow,
   title,
   subtitle,
-  variant = "light",
   children,
 }: Props) {
-  const bg =
-    variant === "dark"
-      ? "linear-gradient(180deg, rgba(7,19,22,0.98) 0%, rgba(11,111,115,0.18) 100%)"
-      : variant === "tint"
-      ? "linear-gradient(180deg, rgba(44,197,185,0.12) 0%, rgba(11,111,115,0.06) 45%, rgba(255,255,255,0) 100%)"
-      : "transparent";
-
-  const divider =
-    "linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(11,111,115,0.22) 25%, rgba(44,197,185,0.30) 50%, rgba(11,111,115,0.22) 75%, rgba(0,0,0,0) 100%)";
-
   return (
     <Box
       id={id}
@@ -34,7 +23,7 @@ export default function SectionShell({
         position: "relative",
         py: { xs: 7, md: 11 },
         overflow: "hidden",
-        background: bg,
+        background: "white",
       }}
     >
       {/* Top divider */}
@@ -46,7 +35,7 @@ export default function SectionShell({
           transform: "translateX(-50%)",
           width: "min(1120px, 92vw)",
           height: 1,
-          background: divider,
+          background: "white",
         }}
       />
       {/* Glow */}
@@ -94,18 +83,6 @@ export default function SectionShell({
         </Box>
         {children}
       </Container>
-      {/* Bottom divider */}
-      <Box
-        sx={{
-          position: "absolute",
-          left: "50%",
-          bottom: 0,
-          transform: "translateX(-50%)",
-          width: "min(1120px, 92vw)",
-          height: 1,
-          background: divider,
-        }}
-      />
     </Box>
   );
 }

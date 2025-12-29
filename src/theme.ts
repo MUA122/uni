@@ -1,90 +1,98 @@
-import { createTheme, alpha } from "@mui/material/styles";
+import { createTheme, lighten, darken, alpha } from "@mui/material/styles";
 
-const C = {
-  teal: "#0B6F73",
-  mint: "#2CC5B9",
+export const COLORS = {
+  white: "#FFFFFF",
+  black: "#000000",
   ink: "#071316",
   off: "#F6FAFB",
+
+  primary: {
+    main: "#006E71",
+    light: lighten("#006E71", 0.18),
+    lighter: lighten("#006E71", 0.38),
+    dark: darken("#006E71", 0.12),
+    darker: darken("#006E71", 0.24),
+    contrastText: "#FFFFFF",
+  },
+
+  secondary: {
+    main: "#26B99B",
+    light: lighten("#26B99B", 0.18),
+    lighter: lighten("#26B99B", 0.38),
+    dark: darken("#26B99B", 0.12),
+    darker: darken("#26B99B", 0.24),
+    contrastText: "#071316",
+  },
+
+  info: {
+    main: "#00A2CE",
+    light: lighten("#00A2CE", 0.2),
+    lighter: lighten("#00A2CE", 0.4),
+    dark: darken("#00A2CE", 0.15),
+    darker: darken("#00A2CE", 0.3),
+    contrastText: "#FFFFFF",
+  },
+
+  success: {
+    main: "#B0FDEB",
+    light: lighten("#B0FDEB", 0.15),
+    lighter: lighten("#B0FDEB", 0.3),
+    dark: darken("#B0FDEB", 0.2),
+    darker: darken("#B0FDEB", 0.35),
+    contrastText: "#071316",
+  },
+
+  warning: {
+    main: "#FFB516",
+    light: lighten("#FFB516", 0.2),
+    lighter: lighten("#FFB516", 0.4),
+    dark: darken("#FFB516", 0.15),
+    darker: darken("#FFB516", 0.3),
+    contrastText: "#071316",
+  },
+
+  error: {
+    main: "#960012",
+    light: lighten("#960012", 0.2),
+    lighter: lighten("#960012", 0.4),
+    dark: darken("#960012", 0.15),
+    darker: darken("#960012", 0.3),
+    contrastText: "#FFFFFF",
+  },
+
+  accent: {
+    blue: "#30508C",
+    purple: "#7D62AA",
+    deepPurple: "#3B2A70",
+    lime: "#DCEE32",
+    softYellow: "#EFEC97",
+    mintSoft: "#DBF288",
+  },
 };
 
 export const theme = createTheme({
   palette: {
     mode: "light",
-    primary: { main: C.teal },
-    secondary: { main: C.mint },
-    background: { default: C.off, paper: "#fff" },
+
+    primary: COLORS.primary,
+    secondary: COLORS.secondary,
+    info: COLORS.info,
+    success: COLORS.success,
+    warning: COLORS.warning,
+    error: COLORS.error,
+
+    background: {
+      default: COLORS.off,
+      paper: COLORS.white,
+    },
+
     text: {
-      primary: C.ink,
-      secondary: alpha(C.ink, 0.72),
+      primary: COLORS.ink,
+      secondary: alpha(COLORS.ink, 0.72),
     },
-    divider: alpha(C.teal, 0.14),
+
+    divider: alpha(COLORS.primary.main, 0.14),
   },
+
   shape: { borderRadius: 18 },
-  typography: {
-    fontFamily: [
-      "Inter",
-      "system-ui",
-      "Segoe UI",
-      "Roboto",
-      "Arial",
-      "sans-serif",
-    ].join(","),
-    h1: { fontWeight: 950, letterSpacing: "-0.05em", lineHeight: 1.02 },
-    h2: { fontWeight: 950, letterSpacing: "-0.04em" },
-    h3: { fontWeight: 900, letterSpacing: "-0.03em" },
-    h4: { fontWeight: 900, letterSpacing: "-0.02em" },
-    button: { textTransform: "none", fontWeight: 900 },
-  },
-  components: {
-    MuiCssBaseline: {
-      styleOverrides: {
-        body: {
-          background:
-            `radial-gradient(1200px 700px at 10% 0%, ${alpha(
-              C.mint,
-              0.15
-            )} 0%, transparent 55%),` +
-            `radial-gradient(1100px 650px at 90% 10%, ${alpha(
-              C.teal,
-              0.12
-            )} 0%, transparent 52%),` +
-            `linear-gradient(180deg, ${C.off} 0%, #ffffff 45%, ${C.off} 100%)`,
-        },
-      },
-    },
-    MuiAppBar: {
-      styleOverrides: {
-        root: {
-          background: alpha("#fff", 0.72),
-          backdropFilter: "blur(14px)",
-          borderBottom: `1px solid ${alpha(C.teal, 0.1)}`,
-          color: C.ink,
-          boxShadow: "none",
-        },
-      },
-    },
-    MuiButton: {
-      styleOverrides: {
-        root: { borderRadius: 999, paddingInline: 18, paddingBlock: 10 },
-        containedPrimary: {
-          background: `linear-gradient(135deg, ${C.teal} 0%, ${C.mint} 120%)`,
-          boxShadow: "0 14px 40px rgba(11,111,115,0.18)",
-        },
-        outlinedPrimary: {
-          borderColor: alpha(C.teal, 0.25),
-          background: alpha("#fff", 0.55),
-        },
-      },
-    },
-    MuiCard: {
-      styleOverrides: {
-        root: {
-          border: `1px solid ${alpha(C.teal, 0.12)}`,
-          background: alpha("#fff", 0.72),
-          backdropFilter: "blur(14px)",
-          borderRadius: 24,
-        },
-      },
-    },
-  },
 });
