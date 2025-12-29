@@ -360,7 +360,7 @@ function MobileNavDrawer({
             sx={{
               background: "transparent",
               "&:before": { display: "none" },
-              borderRadius: 2,
+              borderRadius: 1,
               overflow: "hidden",
               mb: 1,
               border: "1px solid rgba(0,0,0,0.06)",
@@ -371,46 +371,72 @@ function MobileNavDrawer({
             </AccordionSummary>
             <AccordionDetails sx={{ pt: 0 }}>
               <List disablePadding>
-                {section.items.map((item) => (
-                  <ListItemButton
-                    key={item.label}
-                    component="a"
-                    href={item.href}
-                    onClick={onClose}
-                    sx={{
-                      borderRadius: 14,
-                      mb: 0.5,
-                      "&:hover .mobileText": {
-                        color: theme.palette.primary.main,
-                      },
-                    }}
-                  >
-                    <Box
+                {section.items.map((item, index) => (
+                  <Box key={item.label}>
+                    <ListItemButton
+                      component="a"
+                      href={item.href}
+                      onClick={onClose}
                       sx={{
-                        width: 8,
-                        height: 8,
-                        borderRadius: "999px",
-                        bgcolor: theme.palette.primary.main,
-                        mr: 1.2,
-                        flex: "0 0 auto",
+                        borderRadius: 14,
+                        py: 1.1,
+                        "&:hover .mobileText": {
+                          color: theme.palette.primary.main,
+                        },
                       }}
-                    />
-                    <ListItemText
-                      primary={
-                        <Typography
-                          className="mobileText"
-                          sx={{ fontWeight: 650 }}
-                        >
-                          {item.label}
-                        </Typography>
-                      }
-                    />
-                  </ListItemButton>
+                    >
+                      <Box
+                        sx={{
+                          width: 8,
+                          height: 8,
+                          borderRadius: "50%",
+                          bgcolor: theme.palette.primary.main,
+                          mr: 1.2,
+                          flexShrink: 0,
+                        }}
+                      />
+                      <ListItemText
+                        primary={
+                          <Typography
+                            className="mobileText"
+                            sx={{ fontWeight: 650 }}
+                          >
+                            {item.label}
+                          </Typography>
+                        }
+                      />
+                    </ListItemButton>
+
+                    {/* Separator line between items */}
+                    {index !== section.items.length - 1 && (
+                      <Box
+                        sx={{
+                          height: "2px",
+                          mx: 3.5,
+                          background:
+                            "linear-gradient(90deg, transparent, rgba(0,0,0,0.12), transparent)",
+                        }}
+                      />
+                    )}
+                  </Box>
                 ))}
               </List>
             </AccordionDetails>
           </Accordion>
         ))}
+        <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
+          <Box
+            component="img"
+            src={iusatLogo}
+            alt="IUSAT Logo"
+            sx={{
+              height: { xs: 180 },
+              width: "auto",
+              transition: "transform 0.3s ease",
+              "&:hover": { transform: "scale(1.05)" },
+            }}
+          />
+        </Box>
       </Box>
     </Drawer>
   );
