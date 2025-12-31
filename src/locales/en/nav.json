@@ -1,0 +1,35 @@
+{
+  "top": {
+    "learn": "Learn",
+    "research": "Research",
+    "innovate": "Innovate",
+    "consultancy": "Consultancy",
+    "about": "About"
+  },
+  "items": {
+    "micro_credentials": "Micro-credentials",
+    "short_courses": "Short courses",
+    "professional_certificates": "Professional certificates",
+    "cross_academy_learning": "Cross-academy learning",
+    "lifelong_learning": "Lifelong learning",
+
+    "unesco_chair": "UNESCO Chair",
+    "research_themes": "Research themes",
+    "think_tanks": "Think tanks",
+    "publications": "Publications",
+
+    "ihub_innovation": "iHub Innovation",
+    "industry_partnerships": "Industry partnerships",
+    "startups_incubation": "Startups & incubation",
+
+    "vision_mission": "Vision & mission",
+    "founding_story": "Founding story",
+    "leadership": "Leadership",
+    "campus": "Campus",
+    "student_life": "Student Life",
+    "contact": "Contact",
+    "news_announcements": "News & announcements"
+  },
+  "search": { "placeholder": "Explore..." },
+  "mobile": { "menu": "Menu" }
+}

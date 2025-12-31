@@ -1,0 +1,35 @@
+{
+  "top": {
+    "learn": "التعلّم",
+    "research": "البحث العلمي",
+    "innovate": "الابتكار",
+    "consultancy": "الاستشارات",
+    "about": "عن الجامعة"
+  },
+  "items": {
+    "micro_credentials": "الشهادات المصغّرة",
+    "short_courses": "الدورات القصيرة",
+    "professional_certificates": "الشهادات المهنية",
+    "cross_academy_learning": "التعلّم بين الكليات",
+    "lifelong_learning": "التعلّم مدى الحياة",
+
+    "unesco_chair": "كرسي اليونسكو",
+    "research_themes": "محاور البحث",
+    "think_tanks": "مراكز الفكر",
+    "publications": "المنشورات",
+
+    "ihub_innovation": "ابتكار iHub",
+    "industry_partnerships": "شراكات الصناعة",
+    "startups_incubation": "الشركات الناشئة والحاضنات",
+
+    "vision_mission": "الرؤية والرسالة",
+    "founding_story": "قصة التأسيس",
+    "leadership": "القيادة",
+    "campus": "الحرم الجامعي",
+    "student_life": "الحياة الطلابية",
+    "contact": "اتصل بنا",
+    "news_announcements": "الأخبار والإعلانات"
+  },
+  "search": { "placeholder": "ابحث..." },
+  "mobile": { "menu": "القائمة" }
+}

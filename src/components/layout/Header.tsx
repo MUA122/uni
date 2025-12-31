@@ -22,11 +22,15 @@ import {
   ListItemButton,
   ListItemText,
   useTheme,
+  Select,
+  MenuItem,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import MenuIcon from "@mui/icons-material/Menu";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import iusatLogo from "/imgs/iusat.png";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 type NavKey = "learn" | "research" | "innovate" | "consultancy" | "about";
 
@@ -34,7 +38,7 @@ type NavItem = {
   key: NavKey;
   label: string;
   href: string;
-  items: Array<{ label: string; href: string }>;
+  items: Array<{ id: string; label: string; href: string }>;
 };
 
 const NAV: NavItem[] = [
@@ -43,11 +47,27 @@ const NAV: NavItem[] = [
     label: "Learn",
     href: "",
     items: [
-      { label: "Micro-credentials", href: "#learn-micro" },
-      { label: "Short courses", href: "#learn-short" },
-      { label: "Professional certificates", href: "#learn-cert" },
-      { label: "Cross-academy learning", href: "#learn-cross" },
-      { label: "Lifelong learning", href: "#learn-life" },
+      {
+        id: "micro_credentials",
+        label: "Micro-credentials",
+        href: "#learn-micro",
+      },
+      { id: "short_courses", label: "Short courses", href: "#learn-short" },
+      {
+        id: "professional_certificates",
+        label: "Professional certificates",
+        href: "#learn-cert",
+      },
+      {
+        id: "cross_academy_learning",
+        label: "Cross-academy learning",
+        href: "#learn-cross",
+      },
+      {
+        id: "lifelong_learning",
+        label: "Lifelong learning",
+        href: "#learn-life",
+      },
     ],
   },
   {
@@ -55,10 +75,18 @@ const NAV: NavItem[] = [
     label: "Research",
     href: "",
     items: [
-      { label: "UNESCO Chair", href: "#research-unesco" },
-      { label: "Research themes", href: "#research-themes" },
-      { label: "Think tanks", href: "#research-thinktanks" },
-      { label: "Publications", href: "#research-publications" },
+      { id: "unesco_chair", label: "UNESCO Chair", href: "#research-unesco" },
+      {
+        id: "research_themes",
+        label: "Research themes",
+        href: "#research-themes",
+      },
+      { id: "think_tanks", label: "Think tanks", href: "#research-thinktanks" },
+      {
+        id: "publications",
+        label: "Publications",
+        href: "#research-publications",
+      },
     ],
   },
   {
@@ -66,39 +94,65 @@ const NAV: NavItem[] = [
     label: "Innovate",
     href: "",
     items: [
-      { label: "iHub Innovation", href: "#innovate-ihub" },
-      { label: "Industry partnerships", href: "#innovate-partnerships" },
-      { label: "Startups & incubation", href: "#innovate-startups" },
+      {
+        id: "ihub_innovation",
+        label: "iHub Innovation",
+        href: "#innovate-ihub",
+      },
+      {
+        id: "industry_partnerships",
+        label: "Industry partnerships",
+        href: "#innovate-partnerships",
+      },
+      {
+        id: "startups_incubation",
+        label: "Startups & incubation",
+        href: "#innovate-startups",
+      },
     ],
   },
-  {
-    key: "consultancy",
-    label: "Consultancy",
-    href: "",
-    items: [],
-  },
+  { key: "consultancy", label: "Consultancy", href: "", items: [] },
   {
     key: "about",
     label: "About",
     href: "",
     items: [
-      { label: "Vision & mission", href: "#about-vision" },
-      { label: "Founding story", href: "#about-story" },
-      { label: "Leadership", href: "#about-leadership" },
-      { label: "Campus", href: "#about-campus" },
-      { label: "Student Life", href: "#about-studentlife" },
-      { label: "Contact", href: "#about-contact" },
-      { label: "News & announcements", href: "#about-news" },
+      {
+        id: "vision_mission",
+        label: "Vision & mission",
+        href: "#about-vision",
+      },
+      { id: "founding_story", label: "Founding story", href: "#about-story" },
+      { id: "leadership", label: "Leadership", href: "#about-leadership" },
+      { id: "campus", label: "Campus", href: "#about-campus" },
+      { id: "student_life", label: "Student Life", href: "#about-studentlife" },
+      { id: "contact", label: "Contact", href: "#about-contact" },
+      {
+        id: "news_announcements",
+        label: "News & announcements",
+        href: "#about-news",
+      },
     ],
   },
 ];
 
-function DesktopNav() {
+function LangLabel({ code }: { code: string }) {
+  return (
+    <Box sx={{ display: "inline-flex", alignItems: "center", gap: 1 }}>
+      <Box component="span" sx={{ fontWeight: 800, letterSpacing: "0.02em" }}>
+        {code}
+      </Box>
+    </Box>
+  );
+}
+
+function DesktopNav({ isRTL }: { isRTL: boolean }) {
   const theme = useTheme();
+  const { t } = useTranslation("nav");
 
   const [openKey, setOpenKey] = React.useState<NavKey | null>(null);
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
-
+  const [arrowEl] = React.useState<HTMLDivElement | null>(null);
   const closeTimer = React.useRef<number | null>(null);
 
   const open = Boolean(openKey && anchorEl);
@@ -119,7 +173,7 @@ function DesktopNav() {
     closeTimer.current = window.setTimeout(() => {
       setOpenKey(null);
       setAnchorEl(null);
-    }, 175); // small delay to allow moving to dropdown
+    }, 175);
   };
 
   const openMenu = (key: NavKey, el: HTMLElement) => {
@@ -134,15 +188,24 @@ function DesktopNav() {
     setAnchorEl(null);
   };
 
+  const navLabel = (key: NavKey, fallback: string) =>
+    t(`top.${key}`, { defaultValue: fallback });
+  const itemLabel = (id: string, fallback: string) =>
+    t(`items.${id}`, { defaultValue: fallback });
+
+  const navList = isRTL ? [...NAV].reverse() : NAV;
+
   return (
     <Box
       sx={{
         display: { xs: "none", md: "flex" },
         gap: 0.5,
         alignItems: "center",
+        flexDirection: isRTL ? "row-reverse" : "row",
+        justifyContent: "center",
       }}
     >
-      {NAV.map((item) => (
+      {navList.map((item) => (
         <Button
           key={item.key}
           href={item.href}
@@ -165,27 +228,29 @@ function DesktopNav() {
             },
           }}
         >
-          {item.label}
+          {navLabel(item.key, item.label)}
         </Button>
       ))}
 
       <Popper
         open={open}
         anchorEl={anchorEl}
-        placement="bottom-start"
+        placement={isRTL ? "bottom-end" : "bottom-start"}
         transition
         modifiers={[
           { name: "offset", options: { offset: [0, 14] } },
           { name: "preventOverflow", options: { padding: 12 } },
+          { name: "flip", options: { padding: 12 } },
+          { name: "arrow", options: { element: arrowEl, padding: 14 } },
         ]}
-        sx={{ zIndex: (t) => t.zIndex.modal }}
+        sx={{ zIndex: (t) => t.zIndex.appBar + 5 }}
       >
         {({ TransitionProps }) => (
           <Grow {...TransitionProps} timeout={160}>
             <Box onMouseEnter={clearCloseTimer} onMouseLeave={scheduleClose}>
               <ClickAwayListener onClickAway={hardClose}>
-                <Box sx={{ position: "relative" }}>
-                  {/* Connector  */}
+                {/* Arrow */}
+                <Box sx={{ position: "relative", overflow: "visible" }}>
                   <Box
                     sx={{
                       position: "absolute",
@@ -209,12 +274,13 @@ function DesktopNav() {
                       minWidth: 320,
                       maxWidth: 380,
                       borderRadius: "18px",
-                      background: "rgba(255, 255, 255, 0.4)",
-                      backdropFilter: "blur(16px) saturate(180%)",
-                      border: "1px solid rgba(255, 255, 255, 0.42)",
-                      boxShadow: "0 22px 60px rgba(0,0,0,0.10)",
+                      background: "rgba(255, 255, 255, 0.40)",
+                      backdropFilter: "blur(18px) saturate(180%)",
+                      border: "1px solid rgba(255, 255, 255, 0.45)",
+                      boxShadow: "0 22px 70px rgba(0,0,0,0.12)",
                       overflow: "hidden",
                       position: "relative",
+                      zIndex: 1,
                     }}
                   >
                     <Box
@@ -229,17 +295,16 @@ function DesktopNav() {
 
                     <Box sx={{ position: "relative" }}>
                       <Divider sx={{ opacity: 0.45, mb: 1.2 }} />
-
-                      {/* column items */}
                       <Stack spacing={0.25}>
                         {(current?.items ?? []).map((link) => (
                           <Box
-                            key={link.label}
+                            key={link.id}
                             component="a"
                             href={link.href}
                             sx={{
                               display: "flex",
                               alignItems: "center",
+                              flexDirection: isRTL ? "row-reverse" : "row",
                               gap: 1,
                               textDecoration: "none",
                               borderRadius: "14px",
@@ -249,7 +314,6 @@ function DesktopNav() {
                               "&:hover": { transform: "translateY(-1px)" },
                             }}
                           >
-                            {/* DOT */}
                             <Box
                               sx={{
                                 width: 8,
@@ -259,7 +323,6 @@ function DesktopNav() {
                                 flex: "0 0 auto",
                               }}
                             />
-
                             <Typography
                               sx={{
                                 fontSize: "0.95rem",
@@ -269,9 +332,10 @@ function DesktopNav() {
                                 "&:hover": {
                                   color: theme.palette.primary.main,
                                 },
+                                textAlign: isRTL ? "right" : "left",
                               }}
                             >
-                              {link.label}
+                              {itemLabel(link.id, link.label)}
                             </Typography>
                           </Box>
                         ))}
@@ -291,26 +355,37 @@ function DesktopNav() {
 function MobileNavDrawer({
   open,
   onClose,
+  isRTL,
 }: {
   open: boolean;
   onClose: () => void;
+  isRTL: boolean;
 }) {
   const theme = useTheme();
+  const { t } = useTranslation("nav");
+
+  const navLabel = (key: NavKey, fallback: string) =>
+    t(`top.${key}`, { defaultValue: fallback });
+  const itemLabel = (id: string, fallback: string) =>
+    t(`items.${id}`, { defaultValue: fallback });
 
   return (
     <Drawer
-      anchor="right"
+      anchor={isRTL ? "left" : "right"}
       open={open}
       onClose={onClose}
       PaperProps={{
         sx: {
           width: "86vw",
           maxWidth: 380,
-          borderTopLeftRadius: 22,
-          borderBottomLeftRadius: 22,
+          borderTopLeftRadius: isRTL ? 0 : 22,
+          borderBottomLeftRadius: isRTL ? 0 : 22,
+          borderTopRightRadius: isRTL ? 22 : 0,
+          borderBottomRightRadius: isRTL ? 22 : 0,
           background: "rgba(255, 255, 255, 0.70)",
           backdropFilter: "blur(18px) saturate(180%)",
-          borderLeft: "1px solid rgba(255,255,255,0.55)",
+          borderLeft: isRTL ? "none" : "1px solid rgba(255,255,255,0.55)",
+          borderRight: isRTL ? "1px solid rgba(255,255,255,0.55)" : "none",
         },
       }}
     >
@@ -321,10 +396,11 @@ function MobileNavDrawer({
             alignItems: "center",
             justifyContent: "space-between",
             mb: 1,
+            flexDirection: isRTL ? "row-reverse" : "row",
           }}
         >
           <Typography sx={{ fontWeight: 900, letterSpacing: "-0.03em" }}>
-            Menu
+            {t("mobile.menu")}
           </Typography>
           <IconButton
             onClick={onClose}
@@ -338,6 +414,7 @@ function MobileNavDrawer({
           sx={{
             display: "flex",
             alignItems: "center",
+            flexDirection: isRTL ? "row-reverse" : "row",
             bgcolor: "rgba(0, 0, 0, 0.05)",
             borderRadius: "50px",
             px: 2,
@@ -347,8 +424,16 @@ function MobileNavDrawer({
         >
           <SearchIcon sx={{ fontSize: 18, color: "rgba(0,0,0,0.4)" }} />
           <InputBase
-            placeholder="Explore..."
-            sx={{ fontSize: "0.95rem", ml: 1, width: "100%" }}
+            placeholder={t("search.placeholder", {
+              defaultValue: "Explore...",
+            })}
+            sx={{
+              fontSize: "0.95rem",
+              ml: isRTL ? 0 : 1,
+              mr: isRTL ? 1 : 0,
+              width: "100%",
+              textAlign: isRTL ? "right" : "left",
+            }}
           />
         </Box>
 
@@ -367,12 +452,15 @@ function MobileNavDrawer({
             }}
           >
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-              <Typography sx={{ fontWeight: 800 }}>{section.label}</Typography>
+              <Typography sx={{ fontWeight: 800 }}>
+                {navLabel(section.key, section.label)}
+              </Typography>
             </AccordionSummary>
+
             <AccordionDetails sx={{ pt: 0 }}>
               <List disablePadding>
                 {section.items.map((item, index) => (
-                  <Box key={item.label}>
+                  <Box key={item.id}>
                     <ListItemButton
                       component="a"
                       href={item.href}
@@ -380,6 +468,8 @@ function MobileNavDrawer({
                       sx={{
                         borderRadius: 14,
                         py: 1.1,
+                        display: "flex",
+                        flexDirection: isRTL ? "row-reverse" : "row",
                         "&:hover .mobileText": {
                           color: theme.palette.primary.main,
                         },
@@ -391,7 +481,8 @@ function MobileNavDrawer({
                           height: 8,
                           borderRadius: "50%",
                           bgcolor: theme.palette.primary.main,
-                          mr: 1.2,
+                          ml: isRTL ? 1.2 : 0,
+                          mr: isRTL ? 0 : 1.2,
                           flexShrink: 0,
                         }}
                       />
@@ -399,15 +490,17 @@ function MobileNavDrawer({
                         primary={
                           <Typography
                             className="mobileText"
-                            sx={{ fontWeight: 650 }}
+                            sx={{
+                              fontWeight: 650,
+                              textAlign: isRTL ? "right" : "left",
+                            }}
                           >
-                            {item.label}
+                            {itemLabel(item.id, item.label)}
                           </Typography>
                         }
                       />
                     </ListItemButton>
 
-                    {/* Separator line between items */}
                     {index !== section.items.length - 1 && (
                       <Box
                         sx={{
@@ -424,13 +517,14 @@ function MobileNavDrawer({
             </AccordionDetails>
           </Accordion>
         ))}
+
         <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
           <Box
             component="img"
             src={iusatLogo}
             alt="IUSAT Logo"
             sx={{
-              height: { xs: 180 },
+              height: 180,
               width: "auto",
               transition: "transform 0.3s ease",
               "&:hover": { transform: "scale(1.05)" },
@@ -445,6 +539,110 @@ function MobileNavDrawer({
 export default function Header() {
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { i18n, t } = useTranslation("nav");
+
+  const currentLang = location.pathname.split("/")[1] || "en";
+  const isRTL = currentLang === "ar";
+
+  const changeLang = (lng: string) => {
+    const segments = location.pathname.split("/");
+    segments[1] = lng;
+    const newPath = segments.join("/") || `/${lng}`;
+    navigate(newPath);
+    i18n.changeLanguage(lng);
+    document.documentElement.lang = lng;
+    document.documentElement.dir = lng === "ar" ? "rtl" : "ltr";
+  };
+
+  const LANGS = [
+    { code: "ar", label: "العربية" },
+    { code: "en", label: "English" },
+    { code: "fr", label: "Français" },
+  ] as const;
+
+  const current = LANGS.find((x) => x.code === currentLang) ?? LANGS[1];
+
+  const selectMenuProps = {
+    disableScrollLock: true,
+    anchorOrigin: {
+      vertical: "bottom" as const,
+      horizontal: "center" as const,
+    },
+    transformOrigin: {
+      vertical: "top" as const,
+      horizontal: "center" as const,
+    },
+    // styling for the menu language select
+    PaperProps: {
+      elevation: 0,
+      sx: {
+        mt: 1,
+        width: "auto",
+        minWidth: 90,
+        maxWidth: 160,
+        borderRadius: 1,
+        overflow: "hidden",
+        background: "rgba(255, 255, 255, 0.5)",
+        backdropFilter: "blur(18px) saturate(180%)",
+        border: "1px solid rgba(255, 255, 255, 0.55)",
+        boxShadow: "0 18px 60px rgba(0,0,0,0.14)",
+        "& .MuiMenu-list": {
+          p: 0.75,
+          display: "flex",
+          flexDirection: "column",
+          gap: 0.5,
+        },
+        "& .MuiMenuItem-root": {
+          position: "relative",
+          borderRadius: 999,
+          px: 1.25,
+          py: 1.0,
+          fontWeight: 800,
+          color: "rgba(0,0,0,0.78)",
+
+          "&:not(:last-of-type)::after": {
+            content: '""',
+            position: "absolute",
+            left: "20%",
+            right: "20%",
+            bottom: -4,
+            height: "1px",
+            background:
+              "linear-gradient(90deg, transparent, rgba(0,0,0,0.18), transparent)",
+            opacity: 0.6,
+          },
+
+          "&.Mui-selected": {
+            backgroundColor: "transparent",
+            color: "#000",
+            fontWeight: 900,
+            position: "relative",
+            paddingInlineStart: "26px",
+            paddingInlineEnd: "18px",
+
+            "&::before": {
+              content: '""',
+              position: "absolute",
+              insetInlineStart: "12px",
+              top: "50%",
+              transform: "translateY(-50%)",
+              width: 6,
+              height: 6,
+              borderRadius: "50%",
+              background: "#006E71",
+            },
+          },
+
+          "&.Mui-selected:hover": {
+            backgroundColor: "transparent",
+          },
+        },
+      },
+    },
+  };
+
   return (
     <>
       <AppBar
@@ -452,8 +650,9 @@ export default function Header() {
         elevation={0}
         sx={{
           top: { xs: 10, md: 20 },
-          left: "50%",
-          transform: "translateX(-50%)",
+          left: 0,
+          right: 0,
+          mx: "auto",
           width: { xs: "95%", md: "90%" },
           maxWidth: "1400px",
           borderRadius: "20px",
@@ -464,75 +663,225 @@ export default function Header() {
           color: "#1d1d1f",
         }}
       >
-        <Container maxWidth="lg">
+        <Container
+          maxWidth={false}
+          disableGutters
+          sx={{ px: { xs: 1.5, md: 2 } }}
+        >
           <Toolbar
             disableGutters
             sx={{
               height: { xs: 60, md: 74 },
-              px: 2,
-              justifyContent: "space-between",
+              px: { xs: 1, md: 2 },
+              display: "grid",
+              alignItems: "center",
+              gridTemplateColumns: { xs: "1fr auto 1fr", md: "1fr auto 1fr" },
+              columnGap: 1,
             }}
           >
-            {/* Logo */}
             <Box
-              component="a"
-              href="/"
               sx={{
                 display: "flex",
                 alignItems: "center",
-                gap: 1.5,
-                textDecoration: "none",
+                justifyContent: isRTL ? "flex-end" : "flex-start",
+                flexDirection: isRTL ? "row-reverse" : "row",
+                gap: 1,
               }}
             >
               <Box
-                component="img"
-                src={iusatLogo}
-                alt="IUSAT Logo"
                 sx={{
-                  height: { xs: 50, md: 80 },
-                  width: "auto",
-                  transition: "transform 0.3s ease",
-                  "&:hover": { transform: "scale(1.05)" },
-                }}
-              />
-              <Typography
-                variant="h6"
-                sx={{
-                  fontWeight: 900,
-                  letterSpacing: "-0.05em",
-                  color: "#000",
-                  fontSize: { xs: "1.1rem", md: "2rem" },
+                  display: { xs: "none", md: "flex" },
+                  alignItems: "center",
                 }}
               >
-                IUSAT
-              </Typography>
+                <Box
+                  component={Link}
+                  to={`/${currentLang}`}
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 1.2,
+                    textDecoration: "none",
+                    color: "inherit",
+                    flexDirection: isRTL ? "row-reverse" : "row",
+                  }}
+                >
+                  <Box
+                    component="img"
+                    src={iusatLogo}
+                    alt="IUSAT Logo"
+                    sx={{
+                      height: { md: 58 },
+                      width: "auto",
+                      transition: "transform 0.3s ease",
+                      "&:hover": { transform: "scale(1.05)" },
+                    }}
+                  />
+                  <Typography
+                    variant="h6"
+                    sx={{
+                      fontWeight: 900,
+                      letterSpacing: "-0.05em",
+                      color: "#000",
+                      fontSize: { md: "1.6rem" },
+                      lineHeight: 1,
+                    }}
+                  >
+                    IUSAT
+                  </Typography>
+                </Box>
+              </Box>
+
+              <Box
+                sx={{
+                  display: { xs: "flex", md: "none" },
+                  alignItems: "center",
+                }}
+              >
+                <Select
+                  size="small"
+                  value={currentLang}
+                  onChange={(e) => changeLang(String(e.target.value))}
+                  renderValue={() => <LangLabel code={current.label} />}
+                  sx={{
+                    height: 36,
+                    borderRadius: "999px",
+                    bgcolor: "rgba(0,0,0,0.05)",
+                    "& .MuiOutlinedInput-notchedOutline": { border: "none" },
+                    "& .MuiSelect-select": {
+                      display: "flex",
+                      alignItems: "center",
+                    },
+                    minWidth: 110,
+                    px: 0.5,
+                  }}
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  MenuProps={selectMenuProps as any}
+                >
+                  {LANGS.map((l) => (
+                    <MenuItem key={l.code} value={l.code}>
+                      <LangLabel code={l.label} />
+                    </MenuItem>
+                  ))}
+                </Select>
+              </Box>
             </Box>
 
-            {/* Desktop Navigation */}
-            <DesktopNav />
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Box sx={{ display: { xs: "flex", md: "none" } }}>
+                <Box
+                  component={Link}
+                  to={`/${currentLang}`}
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 1.2,
+                    textDecoration: "none",
+                    color: "inherit",
+                    flexDirection: isRTL ? "row-reverse" : "row",
+                  }}
+                >
+                  <Box
+                    component="img"
+                    src={iusatLogo}
+                    alt="IUSAT Logo"
+                    sx={{
+                      height: 46,
+                      width: "auto",
+                      transition: "transform 0.3s ease",
+                      "&:hover": { transform: "scale(1.05)" },
+                    }}
+                  />
+                  <Typography
+                    variant="h6"
+                    sx={{
+                      fontWeight: 900,
+                      letterSpacing: "-0.05em",
+                      color: "#000",
+                      fontSize: "1.25rem",
+                      lineHeight: 1,
+                    }}
+                  >
+                    IUSAT
+                  </Typography>
+                </Box>
+              </Box>
 
-            {/* Right Side Tools */}
-            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-              {/* Search (desktop) */}
+              <Box sx={{ display: { xs: "none", md: "flex" } }}>
+                <DesktopNav isRTL={isRTL} />
+              </Box>
+            </Box>
+
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: isRTL ? "flex-start" : "flex-end",
+                alignItems: "center",
+                gap: 1,
+                flexDirection: isRTL ? "row-reverse" : "row",
+              }}
+            >
+              <Select
+                size="small"
+                value={currentLang}
+                onChange={(e) => changeLang(String(e.target.value))}
+                renderValue={() => <LangLabel code={current.label} />}
+                sx={{
+                  display: { xs: "none", md: "inline-flex" },
+                  height: 36,
+                  borderRadius: "999px",
+                  bgcolor: "rgba(0,0,0,0.05)",
+                  "& .MuiOutlinedInput-notchedOutline": { border: "none" },
+                  "& .MuiSelect-select": {
+                    display: "flex",
+                    alignItems: "center",
+                  },
+                  minWidth: 110,
+                  px: 0.5,
+                }}
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                MenuProps={selectMenuProps as any}
+              >
+                {LANGS.map((l) => (
+                  <MenuItem key={l.code} value={l.code}>
+                    <LangLabel code={l.label} />
+                  </MenuItem>
+                ))}
+              </Select>
+
               <Box
                 sx={{
                   display: { xs: "none", sm: "flex" },
                   alignItems: "center",
+                  flexDirection: isRTL ? "row-reverse" : "row",
                   bgcolor: "rgba(0, 0, 0, 0.05)",
                   borderRadius: "50px",
                   px: 2,
                   py: 0.6,
-                  width: { sm: 180, md: 220 },
+                  width: { sm: 180, md: "auto" },
                 }}
               >
                 <SearchIcon sx={{ fontSize: 18, color: "rgba(0,0,0,0.4)" }} />
                 <InputBase
-                  placeholder="Explore..."
-                  sx={{ fontSize: "0.9rem", ml: 1, width: "100%" }}
+                  placeholder={t("search.placeholder", {
+                    defaultValue: "Explore...",
+                  })}
+                  sx={{
+                    fontSize: "0.9rem",
+                    ml: isRTL ? 0 : 1,
+                    mr: isRTL ? 1 : 0,
+                    width: "100%",
+                    textAlign: isRTL ? "right" : "left",
+                  }}
                 />
               </Box>
 
-              {/* Mobile Menu */}
               <IconButton
                 onClick={() => setMobileOpen(true)}
                 sx={{ display: { xs: "flex", md: "none" }, color: "#000" }}
@@ -544,8 +893,11 @@ export default function Header() {
         </Container>
       </AppBar>
 
-      {/* Mobile Drawer */}
-      <MobileNavDrawer open={mobileOpen} onClose={() => setMobileOpen(false)} />
+      <MobileNavDrawer
+        open={mobileOpen}
+        onClose={() => setMobileOpen(false)}
+        isRTL={isRTL}
+      />
     </>
   );
 }

@@ -1,7 +1,15 @@
 import { Box, Container, Typography, Button, Stack } from "@mui/material";
 import heroVideoPath from "/vids/iusatvid.mp4";
+import { useTranslation } from "react-i18next";
+import { useLocation } from "react-router-dom";
 
 export default function HeroVideo() {
+  const { t } = useTranslation("hero");
+  const location = useLocation();
+
+  const currentLang = location.pathname.split("/")[1] || "en";
+  const isRTL = currentLang === "ar";
+
   return (
     <Box sx={{ position: "relative", overflow: "hidden", bgcolor: "#000" }}>
       <Box
@@ -33,8 +41,9 @@ export default function HeroVideo() {
           sx={{
             position: "absolute",
             inset: 0,
-            background:
-              "linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 60%, transparent 100%)",
+            background: isRTL
+              ? "linear-gradient(to left, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 60%, transparent 100%)"
+              : "linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 60%, transparent 100%)",
           }}
         />
 
@@ -47,7 +56,16 @@ export default function HeroVideo() {
             zIndex: 2,
           }}
         >
-          <Stack spacing={3} sx={{ maxWidth: 850 }}>
+          <Stack
+            spacing={3}
+            sx={{
+              maxWidth: 850,
+              textAlign: isRTL ? "right" : "left",
+              ml: isRTL ? "auto" : 0,
+              mr: isRTL ? 0 : "auto",
+              alignItems: isRTL ? "flex-end" : "flex-start",
+            }}
+          >
             {/* Tagline */}
             <Typography
               sx={{
@@ -58,7 +76,7 @@ export default function HeroVideo() {
                 fontSize: "0.85rem",
               }}
             >
-              Future Starts Here
+              {t("tagline")}
             </Typography>
 
             <Typography
@@ -71,9 +89,9 @@ export default function HeroVideo() {
                 letterSpacing: "-0.04em",
               }}
             >
-              Welcome to{" "}
+              {t("title.before")}{" "}
               <Box component="span" sx={{ color: "primary.main" }}>
-                IUSAT
+                {t("title.brand")}
               </Box>
             </Typography>
 
@@ -86,15 +104,19 @@ export default function HeroVideo() {
                 fontWeight: 400,
               }}
             >
-              A leading national institution in the New Administrative Capital,
-              dedicated to innovative education, applied research, and global
-              competitiveness.
+              {t("desc")}
             </Typography>
 
             <Stack
               direction={{ xs: "column", sm: "row" }}
               spacing={2}
-              sx={{ pt: 2 }}
+              sx={{
+                pt: 2,
+                width: { xs: "100%", sm: "auto" },
+                ...(isRTL
+                  ? { flexDirection: { xs: "column", sm: "row-reverse" } }
+                  : {}),
+              }}
             >
               <Button
                 variant="contained"
@@ -102,22 +124,23 @@ export default function HeroVideo() {
                 sx={{
                   px: 4,
                   py: 1.5,
-                  borderRadius: "25",
+                  borderRadius: "25px",
                   fontWeight: 700,
                   fontSize: "1rem",
                   textTransform: "none",
                   boxShadow: "0 10px 20px rgba(44,197,185,0.3)",
                 }}
               >
-                Explore Programs
+                {t("cta.primary")}
               </Button>
+
               <Button
                 variant="outlined"
                 size="large"
                 sx={{
                   px: 4,
                   py: 1.5,
-                  borderRadius: "25",
+                  borderRadius: "25px",
                   color: "white",
                   borderColor: "rgba(255,255,255,0.5)",
                   backdropFilter: "blur(4px)",
@@ -130,7 +153,7 @@ export default function HeroVideo() {
                   },
                 }}
               >
-                Find Out More
+                {t("cta.secondary")}
               </Button>
             </Stack>
           </Stack>

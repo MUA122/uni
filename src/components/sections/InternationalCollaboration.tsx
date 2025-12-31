@@ -6,14 +6,22 @@ import ihslogo from "/imgs/ihs.png";
 import iusatLogo from "/imgs/iusat.png";
 import unescoLogo from "/imgs/unesco.png";
 import HandshakeRoundedIcon from "@mui/icons-material/HandshakeRounded";
+import { useTranslation } from "react-i18next";
+import { useLocation } from "react-router-dom";
 
 export default function InternationalCollaboration() {
+  const { t } = useTranslation("collab");
+  const location = useLocation();
+
+  const currentLang = location.pathname.split("/")[1] || "en";
+  const isRTL = currentLang === "ar";
+
   return (
     <SectionShell
       id="collab"
-      eyebrow="Collaboration"
-      title="International Collaboration"
-      subtitle="Global partnerships that enhance research, education, and innovation."
+      eyebrow={t("eyebrow")}
+      title={t("title")}
+      subtitle={t("subtitle")}
       variant="light"
     >
       <Box
@@ -22,8 +30,10 @@ export default function InternationalCollaboration() {
           flexDirection: { xs: "column", md: "row" },
           gap: 3.5,
           alignItems: "stretch",
+          direction: isRTL ? "rtl" : "ltr",
         }}
       >
+        {/* LEFT: UNESCO Feature Card */}
         <Box sx={{ flex: { xs: "1 1 auto", md: 5 } }}>
           <Box
             onClick={() =>
@@ -79,7 +89,10 @@ export default function InternationalCollaboration() {
                 direction="row"
                 spacing={1.25}
                 alignItems="center"
-                sx={{ gap: { xs: 2, md: 6 } }}
+                sx={{
+                  gap: { xs: 2, md: 6 },
+                  flexDirection: isRTL ? "row-reverse" : "row",
+                }}
               >
                 <Box
                   sx={{
@@ -113,6 +126,7 @@ export default function InternationalCollaboration() {
                     1
                   </Box>
                 </Box>
+
                 <Box
                   sx={{
                     height: 30,
@@ -124,9 +138,10 @@ export default function InternationalCollaboration() {
                     color: "#0B6F73",
                     fontWeight: 900,
                     fontSize: 12.5,
+                    textAlign: isRTL ? "right" : "left",
                   }}
                 >
-                  UNESCO Collaboration
+                  {t("cards.unesco.badge")}
                 </Box>
               </Stack>
             </Stack>
@@ -152,10 +167,9 @@ export default function InternationalCollaboration() {
                     width: "100%",
                     maxWidth: 420,
                     borderRadius: 3,
-                    background: "rgba(255,255,255,0.75)",
+                    backgroundColor: "#F5FBFA",
                     border: "1px solid rgba(11,111,115,0.16)",
                     boxShadow: "0 18px 50px rgba(0,0,0,0.08)",
-                    backdropFilter: "blur(10px)",
                     p: { xs: 2.2, md: 2.5 },
                     display: "grid",
                     gap: { xs: 2, md: 2.25 },
@@ -174,12 +188,7 @@ export default function InternationalCollaboration() {
                     }}
                   />
 
-                  <Box
-                    sx={{
-                      display: "grid",
-                      placeItems: "center",
-                    }}
-                  >
+                  <Box sx={{ display: "grid", placeItems: "center" }}>
                     <Box
                       sx={{
                         width: { xs: 64, md: 76 },
@@ -233,9 +242,10 @@ export default function InternationalCollaboration() {
                       color: "#0B6F73",
                       fontWeight: 900,
                       fontSize: 12.5,
+                      textAlign: "center",
                     }}
                   >
-                    International Collaboration
+                    {t("cards.unesco.pill")}
                   </Box>
                 </Box>
               </Stack>
@@ -243,8 +253,10 @@ export default function InternationalCollaboration() {
           </Box>
         </Box>
 
+        {/* RIGHT: Other Partners */}
         <Box sx={{ flex: { xs: 3, md: 7 } }}>
           <Stack spacing={2.5}>
+            {/* 2 - ENSAC */}
             <Card
               sx={{
                 borderRadius: 2,
@@ -261,20 +273,23 @@ export default function InternationalCollaboration() {
                   boxShadow: "0 12px 28px rgba(0,0,0,0.08)",
                 },
               }}
-              onClick={() => {
+              onClick={() =>
                 window.open(
                   "https://www.univ-grenoble-alpes.fr/",
                   "_blank",
                   "noopener,noreferrer"
-                );
-              }}
+                )
+              }
             >
               <CardContent
                 sx={{
                   p: { xs: 2.5, md: 3 },
                   "&:last-child": { pb: { xs: 2.5, md: 3 } },
                   display: "flex",
-                  flexDirection: { xs: "column", sm: "row" },
+                  flexDirection: {
+                    xs: "column",
+                    sm: isRTL ? "row-reverse" : "row",
+                  },
                   gap: 2.5,
                   alignItems: { xs: "flex-start", sm: "center" },
                 }}
@@ -314,7 +329,7 @@ export default function InternationalCollaboration() {
                   <Typography
                     sx={{ fontWeight: 900, fontSize: 19, color: "#1a1a1a" }}
                   >
-                    ENSAC
+                    {t("cards.ensac.name")}
                   </Typography>
                   <Typography
                     sx={{
@@ -322,9 +337,10 @@ export default function InternationalCollaboration() {
                       mt: 0.5,
                       lineHeight: 1.6,
                       fontSize: "0.95rem",
+                      textAlign: isRTL ? "right" : "left",
                     }}
                   >
-                    (Grenoble Alpes University of France)
+                    {t("cards.ensac.desc")}
                   </Typography>
                 </Box>
 
@@ -342,6 +358,7 @@ export default function InternationalCollaboration() {
               </CardContent>
             </Card>
 
+            {/* 3 - SAPIENZA */}
             <Card
               sx={{
                 borderRadius: 2,
@@ -358,20 +375,23 @@ export default function InternationalCollaboration() {
                   boxShadow: "0 12px 28px rgba(0,0,0,0.08)",
                 },
               }}
-              onClick={() => {
+              onClick={() =>
                 window.open(
                   "https://www.uniroma1.it/",
                   "_blank",
                   "noopener,noreferrer"
-                );
-              }}
+                )
+              }
             >
               <CardContent
                 sx={{
                   p: { xs: 2.5, md: 3 },
                   "&:last-child": { pb: { xs: 2.5, md: 3 } },
                   display: "flex",
-                  flexDirection: { xs: "column", sm: "row" },
+                  flexDirection: {
+                    xs: "column",
+                    sm: isRTL ? "row-reverse" : "row",
+                  },
                   gap: 2.5,
                   alignItems: { xs: "flex-start", sm: "center" },
                 }}
@@ -411,7 +431,7 @@ export default function InternationalCollaboration() {
                   <Typography
                     sx={{ fontWeight: 900, fontSize: 19, color: "#1a1a1a" }}
                   >
-                    SAPIENZA
+                    {t("cards.sapienza.name")}
                   </Typography>
                   <Typography
                     sx={{
@@ -419,9 +439,10 @@ export default function InternationalCollaboration() {
                       mt: 0.5,
                       lineHeight: 1.6,
                       fontSize: "0.95rem",
+                      textAlign: isRTL ? "right" : "left",
                     }}
                   >
-                    (Sapienza University of Rome)
+                    {t("cards.sapienza.desc")}
                   </Typography>
                 </Box>
 
@@ -439,6 +460,7 @@ export default function InternationalCollaboration() {
               </CardContent>
             </Card>
 
+            {/* 4 - IHS */}
             <Card
               sx={{
                 borderRadius: 2,
@@ -460,7 +482,10 @@ export default function InternationalCollaboration() {
                   p: { xs: 2.5, md: 3 },
                   "&:last-child": { pb: { xs: 2.5, md: 3 } },
                   display: "flex",
-                  flexDirection: { xs: "column", sm: "row" },
+                  flexDirection: {
+                    xs: "column",
+                    sm: isRTL ? "row-reverse" : "row",
+                  },
                   gap: 2.5,
                   alignItems: { xs: "flex-start", sm: "center" },
                 }}
@@ -500,7 +525,7 @@ export default function InternationalCollaboration() {
                   <Typography
                     sx={{ fontWeight: 900, fontSize: 19, color: "#1a1a1a" }}
                   >
-                    IHS
+                    {t("cards.ihs.name")}
                   </Typography>
                   <Typography
                     sx={{
@@ -508,9 +533,10 @@ export default function InternationalCollaboration() {
                       mt: 0.5,
                       lineHeight: 1.6,
                       fontSize: "0.95rem",
+                      textAlign: isRTL ? "right" : "left",
                     }}
                   >
-                    (IHS University of Netherlands)
+                    {t("cards.ihs.desc")}
                   </Typography>
                 </Box>
 

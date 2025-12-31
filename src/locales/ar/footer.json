@@ -1,0 +1,52 @@
+{
+  "cta": {
+    "tag": "مجتمع IUSAT",
+    "title": {
+      "line1": "كن جزءًا من مجتمع",
+      "line2": "أكاديمي حديث."
+    },
+    "subtitle": "البرامج والفعاليات والتعاونات — كل شيء في مكان واحد بتجربة مميزة.",
+    "button": "استكشف البرامج"
+  },
+  "brand": {
+    "name": "IUSAT",
+    "desc": "الجامعة الدولية للعلوم والفنون والتكنولوجيا تسعى إلى تعزيز الابتكار والريادة العالمية."
+  },
+  "cols": {
+    "visit": {
+      "title": "زيارة",
+      "links": {
+        "iusat_map": "خريطة IUSAT",
+        "iusat_shop": "متجر IUSAT",
+        "contact_iusat": "تواصل مع IUSAT"
+      }
+    },
+    "students": {
+      "title": "الطلاب",
+      "links": {
+        "accommodation": "السكن",
+        "current_students": "الطلاب الحاليون",
+        "moodle": "مودل",
+        "students_union": "اتحاد الطلاب"
+      }
+    },
+    "staff": {
+      "title": "الموظفون",
+      "links": {
+        "inside_iusat": "داخل IUSAT",
+        "staff_intranet": "بوابة الموظفين",
+        "work_at_iusat": "العمل في IUSAT",
+        "human_resources": "الموارد البشرية"
+      }
+    }
+  },
+  "bottom": {
+    "copyright": "© {{year}} IUSAT. جميع الحقوق محفوظة.",
+    "links": {
+      "privacy": "الخصوصية",
+      "cookies": "ملفات تعريف الارتباط",
+      "accessibility": "إمكانية الوصول",
+      "disclaimer": "إخلاء المسؤولية"
+    }
+  }
+}

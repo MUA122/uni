@@ -1,0 +1,23 @@
+{
+  "eyebrow": "Collaboration",
+  "title": "International Collaboration",
+  "subtitle": "Global partnerships that enhance research, education, and innovation.",
+  "cards": {
+    "unesco": {
+      "badge": "UNESCO Collaboration",
+      "pill": "International Collaboration"
+    },
+    "ensac": {
+      "name": "ENSAC",
+      "desc": "(Grenoble Alpes University of France)"
+    },
+    "sapienza": {
+      "name": "SAPIENZA",
+      "desc": "(Sapienza University of Rome)"
+    },
+    "ihs": {
+      "name": "IHS",
+      "desc": "(IHS University of Netherlands)"
+    }
+  }
+}

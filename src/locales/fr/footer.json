@@ -1,0 +1,52 @@
+{
+  "cta": {
+    "tag": "COMMUNAUTÉ IUSAT",
+    "title": {
+      "line1": "Faites partie d’une",
+      "line2": "communauté académique moderne."
+    },
+    "subtitle": "Programmes, événements, collaborations — tout au même endroit avec une expérience premium.",
+    "button": "Explorer les programmes"
+  },
+  "brand": {
+    "name": "IUSAT",
+    "desc": "L’International University of Sciences, Arts & Technology est dédiée à l’innovation et au leadership mondial."
+  },
+  "cols": {
+    "visit": {
+      "title": "Visiter",
+      "links": {
+        "iusat_map": "Carte IUSAT",
+        "iusat_shop": "Boutique IUSAT",
+        "contact_iusat": "Contacter IUSAT"
+      }
+    },
+    "students": {
+      "title": "Étudiants",
+      "links": {
+        "accommodation": "Hébergement",
+        "current_students": "Étudiants actuels",
+        "moodle": "Moodle",
+        "students_union": "Union des étudiants"
+      }
+    },
+    "staff": {
+      "title": "Personnel",
+      "links": {
+        "inside_iusat": "À l’intérieur de IUSAT",
+        "staff_intranet": "Intranet du personnel",
+        "work_at_iusat": "Travailler à IUSAT",
+        "human_resources": "Ressources humaines"
+      }
+    }
+  },
+  "bottom": {
+    "copyright": "© {{year}} IUSAT. Tous droits réservés.",
+    "links": {
+      "privacy": "Confidentialité",
+      "cookies": "Cookies",
+      "accessibility": "Accessibilité",
+      "disclaimer": "Avertissement"
+    }
+  }
+}
