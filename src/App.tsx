@@ -12,7 +12,7 @@ import Header from "./components/layout/Header";
 import HeroVideo from "./components/hero/HeroVideo";
 import InternationalCollaboration from "./components/sections/InternationalCollaboration";
 import Footer from "./components/layout/Footer";
-
+import AppliNow from "./components/apply/ApplyNow";
 function HomePage() {
   return (
     <>
@@ -21,6 +21,7 @@ function HomePage() {
       <Divider />
       <InternationalCollaboration />
       <Divider />
+      <AppliNow />
       <Footer />
     </>
   );
