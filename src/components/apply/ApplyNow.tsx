@@ -1,4 +1,4 @@
-import  { useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
@@ -28,10 +28,10 @@ export default function ApplyNow() {
   const location = useLocation();
   const navigate = useNavigate();
   const theme = useTheme();
-  
+
   // State for the "Selection" Dialog (Step 1)
   const [open, setOpen] = useState(false);
-  
+
   // State for the "Program Finder" Quiz Modal (Step 2)
   const [finderOpen, setFinderOpen] = useState(false);
 
@@ -44,8 +44,8 @@ export default function ApplyNow() {
 
   // Opens the Quiz Modal
   const handleLearnClick = () => {
-    setOpen(false);      
-    setFinderOpen(true); 
+    setOpen(false);
+    setFinderOpen(true);
   };
 
   const handleDirectClick = () => {
@@ -78,7 +78,12 @@ export default function ApplyNow() {
       >
         {/* Text Content */}
         <Box sx={{ maxWidth: { md: "60%" } }}>
-          <Typography variant="h6" color="primary" gutterBottom sx={{ fontWeight: "bold" }}>
+          <Typography
+            variant="h6"
+            color="primary"
+            gutterBottom
+            sx={{ fontWeight: "bold" }}
+          >
             {t("ctaHeader")}
           </Typography>
           <Typography variant="body1" color="text.secondary">
@@ -101,7 +106,7 @@ export default function ApplyNow() {
               display: "flex",
               alignItems: "center",
               gap: 1.5,
-              
+
               fontWeight: "bold",
               textTransform: "none",
               borderRadius: "50px",
@@ -113,7 +118,7 @@ export default function ApplyNow() {
               transition: "all 0.3s ease",
             }}
           >
-             {/* Span to perfect vertical alignment for Arabic */}
+            {/* Span to perfect vertical alignment for Arabic */}
             <span style={{ position: "relative", top: isRTL ? "2px" : "0" }}>
               {t("applyBtn")}
             </span>
@@ -131,7 +136,15 @@ export default function ApplyNow() {
           sx: { borderRadius: 2, p: 1 },
         }}
       >
-        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", px: 2, pt: 2 }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            px: 2,
+            pt: 2,
+          }}
+        >
           <Typography variant="h5" sx={{ fontWeight: 700 }}>
             {t("dialogTitle")}
           </Typography>
@@ -142,7 +155,6 @@ export default function ApplyNow() {
 
         <DialogContent>
           <Stack spacing={2} sx={{ mt: 1 }}>
-            
             {/* OPTION 1: Learn & Apply (Opens Quiz Modal) */}
             <Card
               variant="outlined"
@@ -166,7 +178,12 @@ export default function ApplyNow() {
                 }}
               />
               <CardActionArea onClick={handleLearnClick} sx={{ p: 3 }}>
-                <Stack direction="row" spacing={2} alignItems="center">
+                <Stack
+                  direction="row"
+                  spacing={2}
+                  alignItems="center"
+                  sx={{ gap: isRTL ? 1.5 : 0 }}
+                >
                   <Box
                     sx={{
                       p: 1.5,
@@ -179,7 +196,10 @@ export default function ApplyNow() {
                     <AutoStoriesIcon />
                   </Box>
                   <Box>
-                    <Typography variant="h6" sx={{ fontWeight: 700, color: "primary.main" }}>
+                    <Typography
+                      variant="h6"
+                      sx={{ fontWeight: 700, color: "primary.main" }}
+                    >
                       {t("optionLearnTitle")}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
@@ -191,9 +211,17 @@ export default function ApplyNow() {
             </Card>
 
             {/* OPTION 2: Direct Apply (Navigates to Form) */}
-            <Card variant="outlined" sx={{ borderColor: theme.palette.divider }}>
+            <Card
+              variant="outlined"
+              sx={{ borderColor: theme.palette.divider }}
+            >
               <CardActionArea onClick={handleDirectClick} sx={{ p: 3 }}>
-                <Stack direction="row" spacing={2} alignItems="center">
+                <Stack
+                  direction="row"
+                  spacing={2}
+                  alignItems="center"
+                  sx={{ gap: isRTL ? 1.5 : 0 }}
+                >
                   <Box
                     sx={{
                       p: 1.5,
@@ -221,11 +249,10 @@ export default function ApplyNow() {
       </Dialog>
 
       {/* --- 2. PROGRAM FINDER MODAL (The Quiz) --- */}
-      <ProgramFinderModal 
-        open={finderOpen} 
-        onClose={() => setFinderOpen(false)} 
+      <ProgramFinderModal
+        open={finderOpen}
+        onClose={() => setFinderOpen(false)}
       />
-
     </SectionShell>
   );
 }

@@ -1,0 +1,34 @@
+{
+  "studyResearch": {
+    "eyebrow": "Study",
+    "title": "Study And Research At IUSAT",
+    "subtitle": "Explore key areas of learning, research, and innovation.",
+
+    "cards": {
+      "academics": {
+        "title": "Academics",
+        "desc": "Programs designed for excellence in education and academic research."
+      },
+      "micro": {
+        "title": "Micro-credentials",
+        "desc": "Short, focused learning paths aligned with international standards."
+      },
+      "unesco": {
+        "title": "UNESCO Chairs",
+        "desc": "Global academic collaboration under UNESCO-supported initiatives."
+      },
+      "innovation": {
+        "title": "I-Hub Innovation",
+        "desc": "An innovation ecosystem supporting startups and applied research."
+      }
+    },
+
+    "popup1": "Thanks for your interest. More details will be available soon.",
+    "popup2": "This section is currently under development.",
+    "popup3": "We are preparing exciting content for this area.",
+    "popup4": "New updates will be published shortly.",
+    "popup5": "Please check back soon for more information.",
+
+    "close": "Close"
+  }
+}

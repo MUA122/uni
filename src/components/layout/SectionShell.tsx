@@ -44,9 +44,7 @@ export default function SectionShell({
           position: "absolute",
           inset: 0,
           pointerEvents: "none",
-          background:
-            "radial-gradient(820px 420px at 18% 0%, rgba(44,197,185,0.18) 0%, rgba(44,197,185,0) 60%)," +
-            "radial-gradient(900px 520px at 88% 20%, rgba(11,111,115,0.16) 0%, rgba(11,111,115,0) 62%)",
+          background: "white",
         }}
       />
       <Container sx={{ position: "relative" }}>

@@ -1,0 +1,34 @@
+{
+  "studyResearch": {
+    "eyebrow": "Études",
+    "title": "Études et Recherche à IUSAT",
+    "subtitle": "Découvrez les domaines clés de l’apprentissage, de la recherche et de l’innovation.",
+
+    "cards": {
+      "academics": {
+        "title": "Programmes académiques",
+        "desc": "Des programmes conçus pour l’excellence en enseignement et en recherche."
+      },
+      "micro": {
+        "title": "Micro-certifications",
+        "desc": "Parcours d’apprentissage courts et ciblés alignés sur les normes internationales."
+      },
+      "unesco": {
+        "title": "Chaires UNESCO",
+        "desc": "Collaboration académique internationale soutenue par l’UNESCO."
+      },
+      "innovation": {
+        "title": "Innovation I-Hub",
+        "desc": "Un écosystème d’innovation soutenant les startups et la recherche appliquée."
+      }
+    },
+
+    "popup1": "Merci pour votre intérêt. Plus de détails seront disponibles prochainement.",
+    "popup2": "Cette section est actuellement en cours de développement.",
+    "popup3": "Nous préparons du contenu passionnant pour cette section.",
+    "popup4": "De nouvelles mises à jour seront publiées prochainement.",
+    "popup5": "Veuillez revenir bientôt pour plus d’informations.",
+
+    "close": "Fermer"
+  }
+}

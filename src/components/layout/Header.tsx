@@ -605,13 +605,13 @@ export default function Header() {
           "&:not(:last-of-type)::after": {
             content: '""',
             position: "absolute",
-            left: "20%",
-            right: "20%",
+            left: "5%",
+            right: "5%",
             bottom: -4,
             height: "1px",
             background:
               "linear-gradient(90deg, transparent, rgba(0,0,0,0.18), transparent)",
-            opacity: 0.6,
+            opacity: 5,
           },
 
           "&.Mui-selected": {
