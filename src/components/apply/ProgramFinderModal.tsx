@@ -265,6 +265,7 @@ export default function ProgramFinderModal({
                 spacing={2}
                 justifyContent="center"
                 alignItems="center"
+                sx={{ gap: 1 }}
               >
                 <Button
                   startIcon={<RestartAltIcon />}

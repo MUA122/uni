@@ -14,6 +14,7 @@ import InternationalCollaboration from "./components/sections/InternationalColla
 import Footer from "./components/layout/Footer";
 import AppliNow from "./components/apply/ApplyNow";
 import StudyResearch from "./components/study/StudyResearch";
+import OurAcademies from "./components/Academies/OurAcademies";
 function HomePage() {
   return (
     <>
@@ -29,6 +30,15 @@ function HomePage() {
         }}
       />
       <InternationalCollaboration />
+      <Divider
+        sx={{
+          height: 3,
+          border: "none",
+          background:
+            "linear-gradient(90deg, transparent, rgba(0,110,113,0.45), transparent)",
+        }}
+      />
+      <OurAcademies />
       <Divider
         sx={{
           height: 3,

@@ -1,0 +1,57 @@
+{
+  "ourAcademies": {
+    "eyebrow": "Academies",
+    "title": "Our Academies",
+    "subtitle": "Discover the academic structure and faculties across all academies.",
+    "including": "Including",
+    "faculties": "faculties",
+    "viewDetails": "View details",
+    "details": "Academy details",
+    "facultyList": "Faculties",
+    "close": "Close",
+    "popupText": "This academy includes multiple faculties. Full academic details will be available soon.",
+    "items": {
+      "iaau": {
+        "title": "International Academy of Architecture and Urbanism",
+        "faculties": {
+          "artsDesign": "Faculty of Arts and Design",
+          "architectureUrbanism": "Faculty of Architecture and Urbanism"
+        }
+      },
+      "aest": {
+        "title": "Academy of Engineering, Sciences & Information Technology",
+        "faculties": {
+          "computingAI": "Faculty of Computing, Information, and Artificial Intelligence",
+          "science": "Faculty of Science",
+          "engineering": "Faculty of Engineering"
+        }
+      },
+      "aem": {
+        "title": "Academy of Economics and Management",
+        "faculties": {
+          "tourismHospitality": "Faculty of Tourism and Hospitality",
+          "businessAdministration": "Faculty of Business Administration"
+        }
+      },
+      "ahss": {
+        "title": "Academy of Humanities and Social Sciences",
+        "faculties": {
+          "media": "Faculty of Media",
+          "languagesTranslation": "Faculty of Languages and Translation",
+          "education": "Faculty of Education",
+          "law": "Faculty of Law"
+        }
+      },
+      "med": {
+        "title": "International Medical Academy",
+        "faculties": {
+          "nursing": "Faculty of Nursing",
+          "physicalTherapy": "Faculty of Physical Therapy",
+          "pharmacy": "Faculty of Pharmacy",
+          "dentistry": "Faculty of Dentistry",
+          "medicine": "Faculty of Medicine"
+        }
+      }
+    }
+  }
+}

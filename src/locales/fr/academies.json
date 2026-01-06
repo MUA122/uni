@@ -1,0 +1,57 @@
+{
+  "ourAcademies": {
+    "eyebrow": "Académies",
+    "title": "Nos Académies",
+    "subtitle": "Découvrez la structure académique et les facultés de chaque académie.",
+    "including": "Comprend",
+    "faculties": "facultés",
+    "viewDetails": "Voir les détails",
+    "details": "Détails de l’académie",
+    "facultyList": "Facultés",
+    "close": "Fermer",
+    "popupText": "Cette académie comprend plusieurs facultés. Les détails académiques complets seront bientôt disponibles.",
+    "items": {
+      "iaau": {
+        "title": "Académie Internationale d’Architecture et d’Urbanisme",
+        "faculties": {
+          "artsDesign": "Faculté des Arts et du Design",
+          "architectureUrbanism": "Faculté d’Architecture et d’Urbanisme"
+        }
+      },
+      "aest": {
+        "title": "Académie d’Ingénierie, des Sciences et des Technologies de l’Information",
+        "faculties": {
+          "computingAI": "Faculté d’Informatique, d’Information et d’Intelligence Artificielle",
+          "science": "Faculté des Sciences",
+          "engineering": "Faculté d’Ingénierie"
+        }
+      },
+      "aem": {
+        "title": "Académie d’Économie et de Management",
+        "faculties": {
+          "tourismHospitality": "Faculté de Tourisme et d’Hôtellerie",
+          "businessAdministration": "Faculté d’Administration des Affaires"
+        }
+      },
+      "ahss": {
+        "title": "Académie des Sciences Humaines et Sociales",
+        "faculties": {
+          "media": "Faculté des Médias",
+          "languagesTranslation": "Faculté des Langues et de la Traduction",
+          "education": "Faculté des Sciences de l’Éducation",
+          "law": "Faculté de Droit"
+        }
+      },
+      "med": {
+        "title": "Académie Médicale Internationale",
+        "faculties": {
+          "nursing": "Faculté de Soins Infirmiers",
+          "physicalTherapy": "Faculté de Kinésithérapie",
+          "pharmacy": "Faculté de Pharmacie",
+          "dentistry": "Faculté d’Odontologie",
+          "medicine": "Faculté de Médecine"
+        }
+      }
+    }
+  }
+}

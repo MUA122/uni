@@ -15,7 +15,16 @@ i18n
     supportedLngs: [...supportedLngs],
     fallbackLng: "en",
 
-    ns: ["nav", "hero", "collab", "footer", "apply", "finder", "study"],
+    ns: [
+      "nav",
+      "hero",
+      "collab",
+      "footer",
+      "apply",
+      "finder",
+      "study",
+      "academies",
+    ],
     defaultNS: "nav",
 
     returnNull: false,
