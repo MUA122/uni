@@ -15,6 +15,11 @@ import Footer from "./components/layout/Footer";
 import AppliNow from "./components/apply/ApplyNow";
 import StudyResearch from "./components/study/StudyResearch";
 import OurAcademies from "./components/Academies/OurAcademies";
+
+import AdminDashboard from "./components/admin/AdminDashboard";
+import AdminLogin from "./components/admin/AdminLogin";
+
+
 function HomePage() {
   return (
     <>
@@ -67,12 +72,20 @@ function AppWithDirectionTheme() {
     <ThemeProvider theme={muiTheme}>
       <CssBaseline />
       <Routes>
+        {/* Redirect root to English */}
         <Route path="/" element={<Navigate to="/en" replace />} />
 
+        {/* Public Website Routes (Wrapped in LangLayout) */}
         <Route path="/:lng" element={<LangLayout />}>
           <Route index element={<HomePage />} />
         </Route>
 
+        {/* 2. Admin Dashboard Route (Standalone) */}
+        {/* This is placed outside LangLayout so it has its own clean layout */}
+        <Route path="/admin/dashboard" element={<AdminDashboard />} />
+        <Route path="/admin/login" element={<AdminLogin />} />
+
+        {/* Catch-all redirect */}
         <Route path="*" element={<Navigate to="/en" replace />} />
       </Routes>
     </ThemeProvider>

@@ -1,6 +1,8 @@
 import React from "react";
 import { Outlet, useParams, Navigate } from "react-router-dom";
 import i18n from "../i18n";
+import AnalyticsConsentBanner from "../components/layout/AnalyticsConsentBanner";
+import AnalyticsTracker from "../components/layout/AnalyticsTracker";
 
 const supported = ["en", "ar", "fr"] as const;
 
@@ -18,5 +20,11 @@ export default function LangLayout() {
     document.documentElement.dir = lng === "ar" ? "rtl" : "ltr";
   }, [lng]);
 
-  return <Outlet />;
+  return (
+    <>
+      <AnalyticsTracker />
+      <Outlet />
+      <AnalyticsConsentBanner />
+    </>
+  );
 }
