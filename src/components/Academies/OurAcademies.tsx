@@ -573,6 +573,7 @@ export default function OurAcademies({ academies }: OurAcademiesProps) {
           },
         }}
       >
+        {/* mu */}
         <DialogTitle
           sx={{
             fontWeight: 950,

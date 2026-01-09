@@ -14,7 +14,7 @@ import InternationalCollaboration from "./components/collaboration/International
 import Footer from "./components/layout/Footer";
 import AppliNow from "./components/apply/ApplyNow";
 import StudyResearch from "./components/study/StudyResearch";
-import OurAcademies from "./components/academies/OurAcademies";
+import OurAcademies from "./components/Academies/OurAcademies";
 
 import AdminDashboard from "./components/admin/AdminDashboard";
 import AdminLogin from "./components/admin/AdminLogin";
