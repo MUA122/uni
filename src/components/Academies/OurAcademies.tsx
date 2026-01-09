@@ -19,8 +19,7 @@ import KeyboardArrowDownRoundedIcon from "@mui/icons-material/KeyboardArrowDownR
 import LockRoundedIcon from "@mui/icons-material/LockRounded";
 import SectionShell from "../layout/SectionShell";
 import { useTranslation } from "react-i18next";
-import { Link as RouterLink } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import iaauLogo from "/imgs/iaau.png";
 import imaLogo from "/imgs/ima.png";
 import ahssLogo from "/imgs/ahss.png";
@@ -66,6 +65,7 @@ export default function OurAcademies({ academies }: OurAcademiesProps) {
 
   const currentLang = location.pathname.split("/")[1] || "en";
   const isRTL = currentLang === "ar";
+  const navigate = useNavigate();
 
   const data: Academy[] = academies ?? [
     {
@@ -248,35 +248,55 @@ export default function OurAcademies({ academies }: OurAcademiesProps) {
             return (
               <Paper
                 key={a.key}
-                component={isLive ? RouterLink : "div"}
-                to={isLive ? `/${currentLang}/iaau` : undefined}
                 role={isLive ? "link" : undefined}
                 tabIndex={isLive ? 0 : -1}
+                aria-disabled={!isLive}
+                onClick={() => {
+                  if (!isLive) return;
+
+                  navigate(`/${currentLang}/iaau`);
+                  window.scrollTo({ top: 0, behavior: "auto" });
+                }}
+                onKeyDown={(e) => {
+                  if (!isLive) return;
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    navigate(`/${currentLang}/iaau`);
+                    window.scrollTo({ top: 0, behavior: "auto" });
+                  }
+                }}
                 sx={{
                   flex: "0 0 auto",
-                  textDecoration: "none",
                   cursor: isLive ? "pointer" : "default",
+                  pointerEvents: isLive ? "auto" : "none",
                   color: "inherit",
+
                   width: {
                     xs: "100%",
                     sm: isFeatured ? 305 : 245,
                     md: isFeatured ? 325 : 250,
                     lg: isFeatured ? 280 : 210,
                   },
+
                   borderRadius: 1.8,
                   position: "relative",
                   overflow: "hidden",
                   background: alpha(theme.palette.background.paper, 0.94),
+
                   border: `1px solid ${alpha(
                     theme.palette.text.primary,
                     isFeatured ? 0.12 : 0.08
                   )}`,
+
                   boxShadow: isFeatured
                     ? `0 26px 110px ${alpha(theme.palette.common.black, 0.18)}`
                     : `0 18px 70px ${alpha(theme.palette.common.black, 0.1)}`,
+
                   transform: isFeatured ? "translateY(-2px)" : "none",
+
                   transition:
                     "transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease",
+
                   "&:hover": isLive
                     ? {
                         transform: isFeatured

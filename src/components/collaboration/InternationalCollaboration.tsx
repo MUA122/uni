@@ -24,7 +24,6 @@ export default function InternationalCollaboration() {
       subtitle={t("subtitle")}
       variant="light"
     >
-      {/* ✅ OUTER LAYOUT: UNESCO فوق + 3 كروت تحت */}
       <Box
         sx={{
           display: "flex",
@@ -34,7 +33,6 @@ export default function InternationalCollaboration() {
           direction: isRTL ? "rtl" : "ltr",
         }}
       >
-        {/* ✅ TOP: UNESCO (FULL WIDTH / ROW) */}
         <Box sx={{ width: "100%" }}>
           <Box
             onClick={() =>
@@ -80,7 +78,6 @@ export default function InternationalCollaboration() {
               }}
             />
 
-            {/* Header row (badge + رقم 1) */}
             <Stack
               direction="row"
               alignItems="center"
@@ -152,7 +149,6 @@ export default function InternationalCollaboration() {
               </Stack>
             </Stack>
 
-            {/* ✅ AGREEMENT ROW (LOGOS + HANDSHAKE) */}
             <Box
               sx={{
                 position: "relative",
@@ -179,7 +175,6 @@ export default function InternationalCollaboration() {
                     p: { xs: 2.2, md: 2.5 },
                   }}
                 >
-                  {/* ✅ هنا التغيير الأساسي: بدل grid عمودي -> row أفقي */}
                   <Stack
                     direction={{
                       xs: "column",
@@ -269,7 +264,6 @@ export default function InternationalCollaboration() {
           </Box>
         </Box>
 
-        {/* ✅ BELOW: 3 MAIN CARDS (تحت) */}
         <Box
           sx={{
             display: "grid",
