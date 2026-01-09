@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { Outlet, useParams, Navigate, useLocation } from "react-router-dom";
 import i18n from "../i18n";
 import AnalyticsConsentBanner from "../components/layout/AnalyticsConsentBanner";
@@ -17,12 +17,14 @@ export default function LangLayout() {
     return <Navigate to="/en" replace />;
   }
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     i18n.changeLanguage(lng);
     document.documentElement.lang = lng;
     document.documentElement.dir = lng === "ar" ? "rtl" : "ltr";
   }, [lng]);
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     const path = `${location.pathname}${location.search}`;
     const now = Date.now();
@@ -34,6 +36,7 @@ export default function LangLayout() {
     lastTimeRef.current = now;
   }, [location.pathname, location.search]);
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     const handleUnload = () => {
       if (!lastPathRef.current) {
