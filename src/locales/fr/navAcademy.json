@@ -1,0 +1,30 @@
+{
+  "brand": {
+    "short": "IAAU"
+  },
+  "top": {
+    "programs": "Programmes",
+    "admissions": "Admissions",
+    "research": "Recherche",
+    "about": "À propos"
+  },
+  "items": {
+    "undergrad": "Licence",
+    "postgrad": "Master & Doctorat",
+    "short": "Formations courtes",
+    "apply": "Comment postuler",
+    "fees": "Frais et bourses",
+    "faq": "FAQ",
+    "labs": "Laboratoires & studios",
+    "publications": "Publications",
+    "mission": "Mission & vision",
+    "team": "Direction",
+    "contact": "Contact"
+  },
+  "search": {
+    "placeholder": "Explorer..."
+  },
+  "mobile": {
+    "menu": "Menu"
+  }
+}

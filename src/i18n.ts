@@ -24,6 +24,8 @@ i18n
       "finder",
       "study",
       "academies",
+      "heroAcademy",
+      "navAcademy",
     ],
     defaultNS: "nav",
 

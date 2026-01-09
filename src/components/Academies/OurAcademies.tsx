@@ -19,6 +19,7 @@ import KeyboardArrowDownRoundedIcon from "@mui/icons-material/KeyboardArrowDownR
 import LockRoundedIcon from "@mui/icons-material/LockRounded";
 import SectionShell from "../layout/SectionShell";
 import { useTranslation } from "react-i18next";
+import { Link as RouterLink } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import iaauLogo from "/imgs/iaau.png";
 import imaLogo from "/imgs/ima.png";
@@ -204,12 +205,7 @@ export default function OurAcademies({ academies }: OurAcademiesProps) {
   const LIVE_ACADEMY_KEY = "iaau";
 
   const [open, setOpen] = React.useState(false);
-  const [active, setActive] = React.useState<Academy | null>(null);
-
-  const openAcademy = React.useCallback((a: Academy) => {
-    setActive(a);
-    setOpen(true);
-  }, []);
+  const [active] = React.useState<Academy | null>(null);
 
   const closeAcademy = React.useCallback(() => {
     setOpen(false);
@@ -252,27 +248,22 @@ export default function OurAcademies({ academies }: OurAcademiesProps) {
             return (
               <Paper
                 key={a.key}
-                role={isLive ? "button" : undefined}
-                aria-disabled={!isLive}
+                component={isLive ? RouterLink : "div"}
+                to={isLive ? `/${currentLang}/iaau` : undefined}
+                role={isLive ? "link" : undefined}
                 tabIndex={isLive ? 0 : -1}
-                onClick={() => {
-                  openAcademy(a);
-                }}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") openAcademy(a);
-                }}
                 sx={{
                   flex: "0 0 auto",
+                  textDecoration: "none",
+                  cursor: isLive ? "pointer" : "default",
+                  color: "inherit",
                   width: {
                     xs: "100%",
                     sm: isFeatured ? 305 : 245,
                     md: isFeatured ? 325 : 250,
                     lg: isFeatured ? 280 : 210,
                   },
-
-                  minWidth: { xs: "100%", sm: 50 },
                   borderRadius: 1.8,
-                  cursor: " pointer",
                   position: "relative",
                   overflow: "hidden",
                   background: alpha(theme.palette.background.paper, 0.94),
@@ -285,7 +276,7 @@ export default function OurAcademies({ academies }: OurAcademiesProps) {
                     : `0 18px 70px ${alpha(theme.palette.common.black, 0.1)}`,
                   transform: isFeatured ? "translateY(-2px)" : "none",
                   transition:
-                    "transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease, filter 220ms ease",
+                    "transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease",
                   "&:hover": isLive
                     ? {
                         transform: isFeatured
@@ -296,20 +287,6 @@ export default function OurAcademies({ academies }: OurAcademiesProps) {
                           0.18
                         )}`,
                         borderColor: alpha(a.colors.main, 0.45),
-                      }
-                    : undefined,
-                  "&:focus-visible": isLive
-                    ? {
-                        outline: "none",
-                        boxShadow: `0 0 0 4px ${alpha(a.colors.main, 0.22)}`,
-                      }
-                    : undefined,
-                  "&::before": isFeatured
-                    ? {
-                        content: '""',
-                        position: "absolute",
-                        inset: 0,
-                        pointerEvents: "none",
                       }
                     : undefined,
                 }}
