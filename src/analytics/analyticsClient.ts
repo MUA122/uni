@@ -9,6 +9,14 @@ const SESSION_KEY = "analyticsSessionId";
 const STARTED_KEY = "analyticsVisitStarted";
 const CONSENT_KEY = "analyticsGeoConsent";
 
+function getVisitorId() {
+  return getOrCreateId(VISITOR_KEY, localStorage);
+}
+
+function getSessionId() {
+  return getOrCreateId(SESSION_KEY, sessionStorage);
+}
+
 export type GeoConsent = "unset" | "granted" | "denied";
 
 function getOrCreateId(key: string, storage: Storage) {
@@ -53,8 +61,8 @@ export function setGeoConsent(value: GeoConsent) {
 }
 
 export async function startVisit(extra?: GeoData) {
-  const visitorId = getOrCreateId(VISITOR_KEY, localStorage);
-  const sessionId = getOrCreateId(SESSION_KEY, sessionStorage);
+  const visitorId = getVisitorId();
+  const sessionId = getSessionId();
   const payload = {
     session_id: sessionId,
     visitor_id: visitorId,
@@ -83,6 +91,69 @@ export function startVisitIfNeeded() {
     return;
   }
   void startVisit();
+}
+
+export async function trackPageView(path: string, durationMs?: number) {
+  const visitorId = getVisitorId();
+  const sessionId = getSessionId();
+  const payload = {
+    session_id: sessionId,
+    visitor_id: visitorId,
+    path,
+    title: document.title || "",
+    duration_ms: typeof durationMs === "number" ? Math.max(0, Math.round(durationMs)) : undefined,
+    created_at: new Date().toISOString(),
+  };
+  try {
+    await fetch(`${ANALYTICS_BASE}/api/analytics/pageview`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+  } catch {
+    // Best effort; do not block the UI.
+  }
+}
+
+export async function trackEvent(category: string, action: string, label?: string, value?: number, path?: string) {
+  const visitorId = getVisitorId();
+  const sessionId = getSessionId();
+  const payload = {
+    session_id: sessionId,
+    visitor_id: visitorId,
+    category,
+    action,
+    label: label || "",
+    value,
+    path: path || window.location.pathname,
+    created_at: new Date().toISOString(),
+  };
+  try {
+    await fetch(`${ANALYTICS_BASE}/api/analytics/event`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+  } catch {
+    // Best effort; do not block the UI.
+  }
+}
+
+export async function endVisit() {
+  const sessionId = getSessionId();
+  const payload = {
+    session_id: sessionId,
+    ended_at: new Date().toISOString(),
+  };
+  try {
+    await fetch(`${ANALYTICS_BASE}/api/analytics/visit/end`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+  } catch {
+    // Best effort; do not block the UI.
+  }
 }
 
 export async function lookupGeo() {
