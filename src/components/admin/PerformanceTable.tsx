@@ -1,10 +1,7 @@
-import { Paper, Stack, Table, TableBody, TableCell, TableHead, TableRow, Typography } from "@mui/material";
+import "antd/dist/reset.css";
 
-const palette = {
-  textMain: "#17212C",
-  textMuted: "#5C6B7A",
-  shadow: "0 10px 26px rgba(16, 24, 40, 0.08)",
-};
+import { Card, Table, Typography, Space, Divider } from "antd";
+import type { ColumnsType } from "antd/es/table";
 
 type PerformanceRow = {
   path: string;
@@ -18,69 +15,80 @@ type PerformanceTableProps = {
 };
 
 function formatMs(value: number) {
-  if (!value) {
-    return "0.0s";
-  }
+  if (!value) return "0.0s";
   return `${(value / 1000).toFixed(1)}s`;
 }
 
-function VitalsTable({ title, rows }: { title: string; rows: PerformanceRow[] }) {
-  return (
-    <Stack spacing={1}>
-      <Typography variant="subtitle2" sx={{ fontWeight: 700, color: palette.textMain }}>
-        {title}
-      </Typography>
-      <Table size="small">
-        <TableHead>
-          <TableRow>
-            <TableCell sx={{ color: palette.textMuted, fontWeight: 600 }}>Page path</TableCell>
-            <TableCell sx={{ color: palette.textMuted, fontWeight: 600 }} align="right">
-              LCP
-            </TableCell>
-            <TableCell sx={{ color: palette.textMuted, fontWeight: 600 }} align="right">
-              FCP
-            </TableCell>
-            <TableCell sx={{ color: palette.textMuted, fontWeight: 600 }} align="right">
-              CLS
-            </TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.length === 0 ? (
-            <TableRow>
-              <TableCell colSpan={4} sx={{ color: palette.textMuted }}>
-                No data yet
-              </TableCell>
-            </TableRow>
-          ) : (
-            rows.map((row) => (
-              <TableRow key={row.path}>
-                <TableCell sx={{ fontWeight: 600 }}>{row.path}</TableCell>
-                <TableCell align="right">{formatMs(row.lcp_p75_ms)}</TableCell>
-                <TableCell align="right">{formatMs(row.fcp_p75_ms)}</TableCell>
-                <TableCell align="right">{row.cls_p75.toFixed(2)}</TableCell>
-              </TableRow>
-            ))
-          )}
-        </TableBody>
-      </Table>
-    </Stack>
-  );
-}
-
 export default function PerformanceTable({ items }: PerformanceTableProps) {
+  const columns: ColumnsType<PerformanceRow> = [
+    {
+      title: "Page path",
+      dataIndex: "path",
+      key: "path",
+      render: (v: string) => <Typography.Text strong>{v}</Typography.Text>,
+    },
+    {
+      title: "LCP",
+      dataIndex: "lcp_p75_ms",
+      key: "lcp",
+      align: "right",
+      sorter: (a, b) => a.lcp_p75_ms - b.lcp_p75_ms,
+      render: (v: number) => formatMs(v),
+    },
+    {
+      title: "FCP",
+      dataIndex: "fcp_p75_ms",
+      key: "fcp",
+      align: "right",
+      sorter: (a, b) => a.fcp_p75_ms - b.fcp_p75_ms,
+      render: (v: number) => formatMs(v),
+    },
+    {
+      title: "CLS",
+      dataIndex: "cls_p75",
+      key: "cls",
+      align: "right",
+      sorter: (a, b) => a.cls_p75 - b.cls_p75,
+      render: (v: number) => v.toFixed(2),
+    },
+  ];
+
   const corePages = items.slice(0, 3);
   const secondaryPages = items.slice(3);
 
   return (
-    <Paper sx={{ p: 2.5, borderRadius: 3, boxShadow: palette.shadow, height: "100%" }}>
-      <Stack spacing={2}>
-        <Typography variant="subtitle1" sx={{ fontWeight: 700, color: palette.textMain }}>
-          Web Vitals Performance
-        </Typography>
-        <VitalsTable title="Core Pages" rows={corePages} />
-        <VitalsTable title="Secondary Pages" rows={secondaryPages} />
-      </Stack>
-    </Paper>
+    <Card
+      title={<span style={{ fontWeight: 700 }}>Web Vitals Performance</span>}
+      style={{ borderRadius: 16, height: "100%" }}
+      bodyStyle={{ paddingTop: 8 }}
+    >
+      <Space direction="vertical" size={10} style={{ width: "100%" }}>
+        <div>
+          <Typography.Text strong>Core Pages</Typography.Text>
+          <Table<PerformanceRow>
+            rowKey="path"
+            size="small"
+            columns={columns}
+            dataSource={corePages}
+            pagination={false}
+            locale={{ emptyText: "No data yet" }}
+          />
+        </div>
+
+        <Divider style={{ margin: "6px 0" }} />
+
+        <div>
+          <Typography.Text strong>Secondary Pages</Typography.Text>
+          <Table<PerformanceRow>
+            rowKey="path"
+            size="small"
+            columns={columns}
+            dataSource={secondaryPages}
+            pagination={false}
+            locale={{ emptyText: "No data yet" }}
+          />
+        </div>
+      </Space>
+    </Card>
   );
 }

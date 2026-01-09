@@ -10,12 +10,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ant-design/icons": "^6.1.0",
+    "@ant-design/plots": "^2.6.8",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
     "@mui/icons-material": "^7.3.6",
     "@mui/material": "^7.3.6",
     "@mui/system": "^7.3.6",
     "@mui/utils": "^7.3.6",
+    "antd": "^6.1.4",
     "framer-motion": "^12.23.26",
     "i18next": "^25.7.3",
     "i18next-resources-to-backend": "^1.2.1",

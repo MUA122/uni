@@ -1,15 +1,17 @@
-import { useState } from "react";
-import { Box, Button, Card, Stack, TextField, Typography } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import "antd/dist/reset.css";
 
-const palette = {
-  bg: "#F2F4F7",
-  card: "#FFFFFF",
-  teal: "#0F7D84",
-  textMain: "#17212C",
-  textMuted: "#5C6B7A",
-  shadow: "0 10px 26px rgba(16, 24, 40, 0.08)",
-};
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+  Button,
+  Card,
+  Form,
+  Input,
+  Space,
+  Typography,
+  Alert,
+  theme as antdTheme,
+} from "antd";
 
 type TokenResponse = {
   access: string;
@@ -20,25 +22,26 @@ export default function AdminLogin() {
   const navigate = useNavigate();
   const analyticsBase = (import.meta.env.VITE_ANALYTICS_API_BASE || "http://127.0.0.1:8000").replace(/\/$/, "");
 
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const { token } = antdTheme.useToken();
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
+  const handleFinish = async (values: { username: string; password: string }) => {
     setLoading(true);
     setError(null);
     try {
       const response = await fetch(`${analyticsBase}/api/analytics/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify(values),
       });
+
       if (!response.ok) {
         const message = await response.text();
         throw new Error(message || "Login failed.");
       }
+
       const data = (await response.json()) as TokenResponse;
       localStorage.setItem("analyticsAdminToken", data.access);
       localStorage.setItem("analyticsAdminRefreshToken", data.refresh);
@@ -51,57 +54,66 @@ export default function AdminLogin() {
   };
 
   return (
-    <Box sx={{ minHeight: "100vh", backgroundColor: palette.bg, display: "grid", placeItems: "center", px: 2 }}>
-      <Card sx={{ width: "100%", maxWidth: 420, p: 4, borderRadius: 3, boxShadow: palette.shadow }}>
-        <Stack spacing={3}>
-          <Box>
-            <Typography variant="h5" sx={{ fontWeight: 700, color: palette.textMain }}>
+    <div
+      style={{
+        minHeight: "100vh",
+        display: "grid",
+        placeItems: "center",
+        padding: 16,
+        background: token.colorFillQuaternary,
+      }}
+    >
+      <Card
+        style={{
+          width: "100%",
+          maxWidth: 420,
+          borderRadius: 16,
+          boxShadow: token.boxShadowSecondary,
+        }}
+        bodyStyle={{ padding: 28 }}
+      >
+        <Space direction="vertical" size={18} style={{ width: "100%" }}>
+          <div>
+            <Typography.Title level={3} style={{ margin: 0 }}>
               Admin Login
-            </Typography>
-            <Typography variant="body2" sx={{ color: palette.textMuted }}>
-              Sign in to access analytics.
-            </Typography>
-          </Box>
-          <Box component="form" onSubmit={handleSubmit}>
-            <Stack spacing={2.5}>
-              <TextField
-                label="Username"
-                value={username}
-                onChange={(event) => setUsername(event.target.value)}
-                fullWidth
-                required
-              />
-              <TextField
-                label="Password"
-                type="password"
-                value={password}
-                onChange={(event) => setPassword(event.target.value)}
-                fullWidth
-                required
-              />
-              {error && (
-                <Typography variant="body2" sx={{ color: "#E76F51" }}>
-                  {error}
-                </Typography>
-              )}
-              <Button
-                type="submit"
-                variant="contained"
-                disabled={loading}
-                sx={{
-                  backgroundColor: palette.teal,
-                  textTransform: "none",
-                  fontWeight: 600,
-                  boxShadow: "none",
-                  "&:hover": { backgroundColor: "#0C6C72" },
-                }}
-              >
-                {loading ? "Signing in..." : "Sign In"}
-              </Button>
-            </Stack>
-          </Box>
-        </Stack>
+            </Typography.Title>
+            <Typography.Text type="secondary">Sign in to access analytics.</Typography.Text>
+          </div>
+
+          {error && <Alert type="error" showIcon message={error} />}
+
+          <Form layout="vertical" onFinish={handleFinish} requiredMark={false}>
+            <Form.Item
+              label="Username"
+              name="username"
+              rules={[{ required: true, message: "Please enter your username" }]}
+            >
+              <Input placeholder="Enter username" autoComplete="username" />
+            </Form.Item>
+
+            <Form.Item
+              label="Password"
+              name="password"
+              rules={[{ required: true, message: "Please enter your password" }]}
+            >
+              <Input.Password placeholder="Enter password" autoComplete="current-password" />
+            </Form.Item>
+
+            <Button
+              htmlType="submit"
+              type="primary"
+              loading={loading}
+              block
+              style={{
+                height: 40,
+                fontWeight: 600,
+              }}
+            >
+              Sign In
+            </Button>
+          </Form>
+        </Space>
       </Card>
-    </Box>
+    </div>
   );
 }
