@@ -10,15 +10,14 @@ import LangLayout from "./routing/LangLayout";
 
 import Header from "./components/layout/Header";
 import HeroVideo from "./components/hero/HeroVideo";
-import InternationalCollaboration from "./components/sections/InternationalCollaboration";
+import InternationalCollaboration from "./components/collaboration/InternationalCollaboration";
 import Footer from "./components/layout/Footer";
 import AppliNow from "./components/apply/ApplyNow";
 import StudyResearch from "./components/study/StudyResearch";
-import OurAcademies from "./components/Academies/OurAcademies";
+import OurAcademies from "./components/academies/OurAcademies";
 
 import AdminDashboard from "./components/admin/AdminDashboard";
 import AdminLogin from "./components/admin/AdminLogin";
-
 
 function HomePage() {
   return (

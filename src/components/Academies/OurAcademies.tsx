@@ -16,6 +16,7 @@ import {
 } from "@mui/material";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import KeyboardArrowDownRoundedIcon from "@mui/icons-material/KeyboardArrowDownRounded";
+import LockRoundedIcon from "@mui/icons-material/LockRounded";
 import SectionShell from "../layout/SectionShell";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
@@ -200,6 +201,8 @@ export default function OurAcademies({ academies }: OurAcademiesProps) {
     },
   ];
 
+  const LIVE_ACADEMY_KEY = "iaau";
+
   const [open, setOpen] = React.useState(false);
   const [active, setActive] = React.useState<Academy | null>(null);
 
@@ -227,92 +230,117 @@ export default function OurAcademies({ academies }: OurAcademiesProps) {
         <Box
           sx={{
             display: "flex",
-            flexWrap: "wrap",
-            gap: { xs: 2, md: 2.6 },
+            flexDirection: { xs: "column", sm: "row" },
+            flexWrap: { xs: "wrap", sm: "nowrap" },
+            gap: { xs: 1.4, md: 2 },
             alignItems: "stretch",
+            pb: 1,
+            WebkitOverflowScrolling: "touch",
+            scrollSnapType: { xs: "none", sm: "x mandatory" },
+            "& > *": { scrollSnapAlign: { sm: "start" } },
+            "&::-webkit-scrollbar": { height: { xs: 0, sm: 8 } },
+            "&::-webkit-scrollbar-thumb": {
+              background: alpha(theme.palette.text.primary, 0.18),
+              borderRadius: 99,
+            },
           }}
         >
           {data.map((a) => {
+            const isLive = a.key === LIVE_ACADEMY_KEY;
+            const isFeatured = isLive;
+
             return (
               <Paper
                 key={a.key}
-                role="button"
-                tabIndex={0}
-                onClick={() => openAcademy(a)}
+                role={isLive ? "button" : undefined}
+                aria-disabled={!isLive}
+                tabIndex={isLive ? 0 : -1}
+                onClick={() => {
+                  openAcademy(a);
+                }}
                 onKeyDown={(e) => {
                   if (e.key === "Enter" || e.key === " ") openAcademy(a);
                 }}
                 sx={{
-                  flex: "1 1 290px",
-                  minWidth: { xs: "100%", sm: 320, md: 340 },
-                  maxWidth: { xs: "100%", md: 420 },
-                  borderRadius: 1.5,
-                  cursor: "pointer",
+                  flex: "0 0 auto",
+                  width: {
+                    xs: "100%",
+                    sm: isFeatured ? 305 : 245,
+                    md: isFeatured ? 325 : 250,
+                    lg: isFeatured ? 280 : 210,
+                  },
+
+                  minWidth: { xs: "100%", sm: 50 },
+                  borderRadius: 1.8,
+                  cursor: " pointer",
                   position: "relative",
                   overflow: "hidden",
                   background: alpha(theme.palette.background.paper, 0.94),
                   border: `1px solid ${alpha(
                     theme.palette.text.primary,
-                    0.08
+                    isFeatured ? 0.12 : 0.08
                   )}`,
-                  boxShadow: `0 18px 70px ${alpha(
-                    theme.palette.common.black,
-                    0.1
-                  )}`,
+                  boxShadow: isFeatured
+                    ? `0 26px 110px ${alpha(theme.palette.common.black, 0.18)}`
+                    : `0 18px 70px ${alpha(theme.palette.common.black, 0.1)}`,
+                  transform: isFeatured ? "translateY(-2px)" : "none",
                   transition:
-                    "transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease",
-                  "&:hover": {
-                    transform: "translateY(-3px)",
-                    boxShadow: `0 26px 90px ${alpha(
-                      theme.palette.common.black,
-                      0.14
-                    )}`,
-                    borderColor: alpha(a.colors.main, 0.35),
-                  },
-                  "&:focus-visible": {
-                    outline: "none",
-                    boxShadow: `0 0 0 4px ${alpha(a.colors.main, 0.22)}`,
-                  },
+                    "transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease, filter 220ms ease",
+                  "&:hover": isLive
+                    ? {
+                        transform: isFeatured
+                          ? "translateY(-5px)"
+                          : "translateY(-3px)",
+                        boxShadow: `0 30px 100px ${alpha(
+                          theme.palette.common.black,
+                          0.18
+                        )}`,
+                        borderColor: alpha(a.colors.main, 0.45),
+                      }
+                    : undefined,
+                  "&:focus-visible": isLive
+                    ? {
+                        outline: "none",
+                        boxShadow: `0 0 0 4px ${alpha(a.colors.main, 0.22)}`,
+                      }
+                    : undefined,
+                  "&::before": isFeatured
+                    ? {
+                        content: '""',
+                        position: "absolute",
+                        inset: 0,
+                        pointerEvents: "none",
+                      }
+                    : undefined,
                 }}
               >
                 <Box
                   sx={{
-                    position: "absolute",
-                    insetInlineStart: 0,
-                    top: 0,
-                    bottom: 0,
-                    width: 7,
-                    background: a.colors.main,
-                    opacity: 0.98,
-                  }}
-                />
-
-                <Box
-                  sx={{
-                    p: { xs: 2.2, md: 2.6 },
+                    p: { xs: 1.6, md: 1.9 },
                     display: "flex",
                     flexDirection: "column",
-                    gap: 1.7,
+                    gap: 1.15,
+                    filter: !isLive ? "saturate(0.85)" : "none",
                   }}
                 >
                   <Stack
                     direction="row"
                     alignItems="center"
                     justifyContent="space-between"
-                    spacing={2}
+                    spacing={1.5}
                   >
                     <Box
                       sx={{
                         display: "inline-flex",
                         alignItems: "center",
-                        px: 1.25,
-                        py: 0.7,
+                        px: 1,
+                        py: 0.55,
                         borderRadius: 999,
                         background: a.colors.main,
                         color: getReadableTextColor(a.colors.main),
                         fontWeight: 950,
                         letterSpacing: "0.08em",
-                        fontSize: 12,
+                        fontSize: 11,
                         border: `1px solid ${alpha(
                           theme.palette.common.black,
                           0.1
@@ -324,14 +352,15 @@ export default function OurAcademies({ academies }: OurAcademiesProps) {
 
                     <Box
                       sx={{
-                        width: 38,
-                        height: 38,
+                        width: 34,
+                        height: 34,
                         borderRadius: 999,
                         display: "grid",
                         placeItems: "center",
                         background: alpha(a.colors.main, 0.08),
                         border: `1px solid ${alpha(a.colors.main, 0.18)}`,
                         color: a.colors.main,
+                        opacity: isLive ? 1 : 0.6,
                       }}
                     >
                       <KeyboardArrowDownRoundedIcon />
@@ -340,13 +369,10 @@ export default function OurAcademies({ academies }: OurAcademiesProps) {
 
                   <Box
                     sx={{
-                      height: { xs: 170, md: 220 },
-                      borderRadius: 2.5,
-                      background: alpha(theme.palette.common.black, 0.02),
-                      border: `1px solid ${alpha(
-                        theme.palette.text.primary,
-                        0.06
-                      )}`,
+                      height: { xs: 140, md: isFeatured ? 185 : 170 },
+                      borderRadius: 2.2,
+                      background: "transparent",
+                      border: "none",
                       display: "grid",
                       placeItems: "center",
                       position: "relative",
@@ -366,13 +392,13 @@ export default function OurAcademies({ academies }: OurAcademiesProps) {
                       src={a.logoSrc}
                       alt={a.code}
                       sx={{
-                        height: { xs: 120, md: 155 },
+                        height: { xs: 95, md: isFeatured ? 125 : 115 },
                         width: "auto",
-                        maxWidth: "92%",
+                        maxWidth: "90%",
                         display: "block",
                         filter: `drop-shadow(0 18px 26px ${alpha(
                           theme.palette.common.black,
-                          0.14
+                          isFeatured ? 0.18 : 0.14
                         )})`,
                       }}
                     />
@@ -382,9 +408,13 @@ export default function OurAcademies({ academies }: OurAcademiesProps) {
                     sx={{
                       fontWeight: 950,
                       letterSpacing: "-0.03em",
-                      fontSize: { xs: 18.5, md: 20.5 },
-                      lineHeight: 1.18,
+                      fontSize: { xs: 15.5, md: isFeatured ? 17.25 : 16.5 },
+                      lineHeight: 1.15,
                       color: theme.palette.text.primary,
+                      display: "-webkit-box",
+                      WebkitLineClamp: 3,
+                      WebkitBoxOrient: "vertical",
+                      overflow: "hidden",
                     }}
                   >
                     {t(a.titleKey, a.titleFallback)}
@@ -394,13 +424,16 @@ export default function OurAcademies({ academies }: OurAcademiesProps) {
                     direction="row"
                     alignItems="center"
                     justifyContent="space-between"
-                    spacing={2}
+                    spacing={1.5}
                   >
                     <Typography
                       sx={{
                         color: alpha(theme.palette.text.primary, 0.64),
                         fontWeight: 750,
-                        fontSize: 14,
+                        fontSize: 12.5,
+                        whiteSpace: "nowrap",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
                       }}
                     >
                       {t("ourAcademies.including", "Including")}{" "}
@@ -418,24 +451,108 @@ export default function OurAcademies({ academies }: OurAcademiesProps) {
 
                     <Box
                       sx={{
-                        height: 30,
-                        px: 1.2,
+                        height: 28,
+                        px: 1,
                         borderRadius: 999,
                         display: "inline-flex",
                         alignItems: "center",
-                        gap: 0.9,
+                        gap: 0.8,
                         background: alpha(a.colors.main, 0.08),
                         border: `1px solid ${alpha(a.colors.main, 0.16)}`,
                         color: a.colors.main,
                         fontWeight: 950,
-                        fontSize: 12.5,
+                        fontSize: 11.5,
                         whiteSpace: "nowrap",
+                        flexShrink: 0,
+                        opacity: isLive ? 1 : 0.55,
                       }}
                     >
                       {t("ourAcademies.viewDetails", "View details")}
                     </Box>
                   </Stack>
                 </Box>
+
+                {/* Coming soon */}
+                {!isLive && (
+                  <Box
+                    sx={{
+                      position: "absolute",
+                      inset: 0,
+                      zIndex: 10,
+                      display: "grid",
+                      placeItems: "center",
+                      p: 2,
+                      background: `linear-gradient(180deg, ${alpha(
+                        theme.palette.common.black,
+                        0.58
+                      )}, ${alpha(theme.palette.common.black, 0.42)})`,
+                      backdropFilter: "blur(1px) saturate(140%)",
+                      WebkitBackdropFilter: "blur(1px) saturate(140%)",
+                      borderRadius: "inherit",
+                      pointerEvents: "auto",
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        gap: 1,
+                        textAlign: "center",
+                      }}
+                    >
+                      <Box
+                        sx={{
+                          width: 44,
+                          height: 44,
+                          borderRadius: 999,
+                          display: "grid",
+                          placeItems: "center",
+                          background: alpha(theme.palette.common.white, 0.12),
+                          border: `1px solid ${alpha(
+                            theme.palette.common.white,
+                            0.22
+                          )}`,
+                          boxShadow: `0 18px 60px ${alpha(
+                            theme.palette.common.black,
+                            0.35
+                          )}`,
+                        }}
+                      >
+                        <LockRoundedIcon
+                          sx={{
+                            color: alpha(theme.palette.common.white, 0.92),
+                            fontSize: 22,
+                          }}
+                        />
+                      </Box>
+
+                      <Typography
+                        sx={{
+                          color: alpha(theme.palette.common.white, 0.92),
+                          fontWeight: 950,
+                          letterSpacing: "0.12em",
+                          textTransform: "uppercase",
+                          fontSize: 11.5,
+                        }}
+                      >
+                        {t("ourAcademies.comingSoon", "Coming Soon")}
+                      </Typography>
+
+                      <Typography
+                        sx={{
+                          color: alpha(theme.palette.common.white, 0.78),
+                          fontWeight: 700,
+                          fontSize: 12.25,
+                          maxWidth: 180,
+                          lineHeight: 1.5,
+                        }}
+                      >
+                        {t("ourAcademies.lockedHint", "Tab to show details")}
+                      </Typography>
+                    </Box>
+                  </Box>
+                )}
               </Paper>
             );
           })}

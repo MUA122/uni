@@ -63,7 +63,10 @@ export default function SectionShell({
               {eyebrow}
             </Typography>
           )}
-          <Typography variant="h2" sx={{ fontSize: { xs: 30, md: 46 } }}>
+          <Typography
+            variant="h2"
+            sx={{ fontSize: { xs: 30, md: 46 }, color: "primary.main" }}
+          >
             {title}
           </Typography>
           {subtitle && (

@@ -9,6 +9,8 @@
     "details": "Academy details",
     "facultyList": "Faculties",
     "close": "Close",
+    "comingSoon": "Coming Soon",
+    "lockedHint": "Tap to view details",
     "popupText": "This academy includes multiple faculties. Full academic details will be available soon.",
     "items": {
       "iaau": {

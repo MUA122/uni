@@ -24,17 +24,18 @@ export default function InternationalCollaboration() {
       subtitle={t("subtitle")}
       variant="light"
     >
+      {/* ✅ OUTER LAYOUT: UNESCO فوق + 3 كروت تحت */}
       <Box
         sx={{
           display: "flex",
-          flexDirection: { xs: "column", md: "row" },
+          flexDirection: "column",
           gap: 3.5,
           alignItems: "stretch",
           direction: isRTL ? "rtl" : "ltr",
         }}
       >
-        {/* LEFT: UNESCO Feature Card */}
-        <Box sx={{ flex: { xs: "1 1 auto", md: 5 } }}>
+        {/* ✅ TOP: UNESCO (FULL WIDTH / ROW) */}
+        <Box sx={{ width: "100%" }}>
           <Box
             onClick={() =>
               window.open(
@@ -44,25 +45,29 @@ export default function InternationalCollaboration() {
               )
             }
             sx={{
-              height: "100%",
-              minHeight: { xs: 320, md: 420 },
+              width: "100%",
+              minHeight: { xs: 260, md: 260 },
               borderRadius: { xs: 2, md: 2 },
               cursor: "pointer",
               position: "relative",
               overflow: "hidden",
               backgroundColor: "#F5FBFA",
-              boxShadow: "0 22px 70px rgba(2, 24, 27, 0.10)",
-              border: "3px solid #0B6F73",
               p: { xs: 2.5, md: 3 },
               display: "flex",
               flexDirection: "column",
               justifyContent: "space-between",
+              background: "rgba(255, 255, 255, 0.72)",
+              border: "3px solid #0B6F73",
+              borderColor: "rgba(11,111,115,0.18)",
+              transform: "translateY(-2px)",
+              boxShadow: "0 12px 28px rgba(0,0,0,0.08)",
+              transition:
+                "transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease, background 220ms ease",
               gap: { xs: 2, md: 2.5 },
               "&:hover": {
-                boxShadow: "0 28px 90px rgba(2, 24, 27, 0.14)",
-                transform: "translateY(-2px)",
+                background: "rgba(255, 255, 255, 0.72)",
+                border: "3px solid #0B6F73",
               },
-              transition: "transform 220ms ease, box-shadow 220ms ease",
             }}
           >
             <Box
@@ -75,6 +80,7 @@ export default function InternationalCollaboration() {
               }}
             />
 
+            {/* Header row (badge + رقم 1) */}
             <Stack
               direction="row"
               alignItems="center"
@@ -146,6 +152,7 @@ export default function InternationalCollaboration() {
               </Stack>
             </Stack>
 
+            {/* ✅ AGREEMENT ROW (LOGOS + HANDSHAKE) */}
             <Box
               sx={{
                 position: "relative",
@@ -165,62 +172,71 @@ export default function InternationalCollaboration() {
                 <Box
                   sx={{
                     width: "100%",
-                    maxWidth: 420,
                     borderRadius: 3,
                     backgroundColor: "#F5FBFA",
                     border: "1px solid rgba(11,111,115,0.16)",
                     boxShadow: "0 18px 50px rgba(0,0,0,0.08)",
                     p: { xs: 2.2, md: 2.5 },
-                    display: "grid",
-                    gap: { xs: 2, md: 2.25 },
                   }}
                 >
-                  <Box
-                    component="img"
-                    src={iusatLogo}
-                    alt="IUSAT"
-                    sx={{
-                      height: { xs: 100, md: 160 },
-                      width: "auto",
-                      mx: "auto",
-                      display: "block",
-                      filter: "drop-shadow(0 12px 18px rgba(0,0,0,0.10))",
+                  {/* ✅ هنا التغيير الأساسي: بدل grid عمودي -> row أفقي */}
+                  <Stack
+                    direction={{
+                      xs: "column",
+                      md: isRTL ? "row-reverse" : "row",
                     }}
-                  />
-
-                  <Box sx={{ display: "grid", placeItems: "center" }}>
+                    alignItems="center"
+                    justifyContent="space-between"
+                    spacing={{ xs: 2, md: 3 }}
+                    sx={{ width: "100%" }}
+                  >
+                    {/* University Logo */}
                     <Box
+                      component="img"
+                      src={iusatLogo}
+                      alt="IUSAT"
                       sx={{
-                        width: { xs: 64, md: 76 },
-                        height: { xs: 64, md: 76 },
-                        borderRadius: "50%",
-                        display: "grid",
-                        placeItems: "center",
-                        background:
-                          "linear-gradient(180deg, rgba(11,111,115,1) 30%, rgba(44, 121, 197, 1) 100%)",
-                        boxShadow: "0 22px 46px rgba(11,111,115,0.22)",
+                        height: { xs: 90, md: 120 },
+                        width: "auto",
+                        filter: "drop-shadow(0 12px 18px rgba(0,0,0,0.10))",
                       }}
-                    >
-                      <HandshakeRoundedIcon
-                        sx={{ fontSize: { xs: 30, md: 34 }, color: "#fff" }}
-                      />
-                    </Box>
-                  </Box>
+                    />
 
-                  <Box
-                    component="img"
-                    src={unescoLogo}
-                    alt="UNESCO"
-                    sx={{
-                      height: { xs: 70, md: 110 },
-                      width: "auto",
-                      mx: "auto",
-                      display: "block",
-                      filter: "drop-shadow(0 12px 18px rgba(0,0,0,0.10))",
-                    }}
-                  />
+                    {/* Handshake */}
+                    <Box sx={{ display: "grid", placeItems: "center" }}>
+                      <Box
+                        sx={{
+                          width: { xs: 64, md: 76 },
+                          height: { xs: 64, md: 76 },
+                          borderRadius: "50%",
+                          display: "grid",
+                          placeItems: "center",
+                          background:
+                            "linear-gradient(180deg, rgba(11,111,115,1) 30%, rgba(44, 121, 197, 1) 100%)",
+                          boxShadow: "0 22px 46px rgba(11,111,115,0.22)",
+                        }}
+                      >
+                        <HandshakeRoundedIcon
+                          sx={{ fontSize: { xs: 30, md: 34 }, color: "#fff" }}
+                        />
+                      </Box>
+                    </Box>
+
+                    {/* UNESCO Logo */}
+                    <Box
+                      component="img"
+                      src={unescoLogo}
+                      alt="UNESCO"
+                      sx={{
+                        height: { xs: 70, md: 85 },
+                        width: "auto",
+                        filter: "drop-shadow(0 12px 18px rgba(0,0,0,0.10))",
+                      }}
+                    />
+                  </Stack>
                 </Box>
 
+                {/* Pill */}
                 <Box
                   sx={{
                     display: "flex",
@@ -253,46 +269,53 @@ export default function InternationalCollaboration() {
           </Box>
         </Box>
 
-        {/* RIGHT: Other Partners */}
-        <Box sx={{ flex: { xs: 3, md: 7 } }}>
-          <Stack spacing={2.5}>
-            {/* 2 - ENSAC */}
-            <Card
-              sx={{
-                borderRadius: 2,
-                p: 2,
+        {/* ✅ BELOW: 3 MAIN CARDS (تحت) */}
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: { xs: "1fr", md: "repeat(3, 1fr)" },
+            gap: 2.5,
+          }}
+        >
+          {/* 2 - ENSAC */}
+          <Card
+            sx={{
+              borderRadius: 2,
+              p: 2,
+              background: "rgba(255, 255, 255, 0.72)",
+              border: "3px solid #0B6F73",
+              borderColor: "rgba(11,111,115,0.18)",
+              transform: "translateY(-2px)",
+              boxShadow: "0 12px 28px rgba(0,0,0,0.08)",
+              cursor: "pointer",
+              transition:
+                "transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease, background 220ms ease",
+              "&:hover": {
                 background: "rgba(255, 255, 255, 0.72)",
                 border: "3px solid #0B6F73",
-                cursor: "pointer",
-                transition:
-                  "transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease, background 220ms ease",
-                "&:hover": {
-                  borderColor: "rgba(11,111,115,0.18)",
-                  background: "rgba(255,255,255,0.82)",
-                  transform: "translateY(-2px)",
-                  boxShadow: "0 12px 28px rgba(0,0,0,0.08)",
-                },
+              },
+            }}
+            onClick={() =>
+              window.open(
+                "https://www.univ-grenoble-alpes.fr/",
+                "_blank",
+                "noopener,noreferrer"
+              )
+            }
+          >
+            <CardContent
+              sx={{
+                p: { xs: 2.5, md: 3 },
+                "&:last-child": { pb: { xs: 2.5, md: 3 } },
+                display: "flex",
+                flexDirection: "column",
+                gap: 2,
               }}
-              onClick={() =>
-                window.open(
-                  "https://www.univ-grenoble-alpes.fr/",
-                  "_blank",
-                  "noopener,noreferrer"
-                )
-              }
             >
-              <CardContent
-                sx={{
-                  p: { xs: 2.5, md: 3 },
-                  "&:last-child": { pb: { xs: 2.5, md: 3 } },
-                  display: "flex",
-                  flexDirection: {
-                    xs: "column",
-                    sm: isRTL ? "row-reverse" : "row",
-                  },
-                  gap: 2.5,
-                  alignItems: { xs: "flex-start", sm: "center" },
-                }}
+              <Stack
+                direction={isRTL ? "row-reverse" : "row"}
+                alignItems="center"
+                spacing={2}
               >
                 <Box
                   sx={{
@@ -315,13 +338,12 @@ export default function InternationalCollaboration() {
 
                 <Box
                   sx={{
-                    width: { xs: "40px", sm: "8px" },
-                    height: { xs: "6px", sm: "50px" },
+                    width: "8px",
+                    height: "50px",
                     borderRadius: 4,
                     background:
                       "linear-gradient(180deg, #0b6f73 0%, #2cc5b9 100%)",
                     flexShrink: 0,
-                    alignSelf: { xs: "center", sm: "auto" },
                   }}
                 />
 
@@ -343,58 +365,62 @@ export default function InternationalCollaboration() {
                     {t("cards.ensac.desc")}
                   </Typography>
                 </Box>
+              </Stack>
 
-                <Box
-                  component="img"
-                  src={ucalogo}
-                  alt="UGA Logo"
-                  sx={{
-                    height: { xs: 50, md: 80 },
-                    width: "auto",
-                    transition: "transform 0.3s ease",
-                    "&:hover": { transform: "scale(1.05)" },
-                  }}
-                />
-              </CardContent>
-            </Card>
+              <Box
+                component="img"
+                src={ucalogo}
+                alt="UGA Logo"
+                sx={{
+                  height: { xs: 50, md: 70 },
+                  width: "auto",
+                  alignSelf: isRTL ? "flex-start" : "flex-end",
+                  transition: "transform 0.3s ease",
+                  "&:hover": { transform: "scale(1.05)" },
+                }}
+              />
+            </CardContent>
+          </Card>
 
-            {/* 3 - SAPIENZA */}
-            <Card
-              sx={{
-                borderRadius: 2,
-                p: 2,
+          {/* 3 - SAPIENZA */}
+          <Card
+            sx={{
+              borderRadius: 2,
+              p: 2,
+              background: "rgba(255, 255, 255, 0.72)",
+              border: "3px solid #0B6F73",
+              borderColor: "rgba(11,111,115,0.18)",
+              transform: "translateY(-2px)",
+              boxShadow: "0 12px 28px rgba(0,0,0,0.08)",
+              cursor: "pointer",
+              transition:
+                "transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease, background 220ms ease",
+              "&:hover": {
                 background: "rgba(255, 255, 255, 0.72)",
                 border: "3px solid #0B6F73",
-                cursor: "pointer",
-                transition:
-                  "transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease, background 220ms ease",
-                "&:hover": {
-                  borderColor: "rgba(11,111,115,0.18)",
-                  background: "rgba(255,255,255,0.82)",
-                  transform: "translateY(-2px)",
-                  boxShadow: "0 12px 28px rgba(0,0,0,0.08)",
-                },
+              },
+            }}
+            onClick={() =>
+              window.open(
+                "https://www.uniroma1.it/",
+                "_blank",
+                "noopener,noreferrer"
+              )
+            }
+          >
+            <CardContent
+              sx={{
+                p: { xs: 2.5, md: 3 },
+                "&:last-child": { pb: { xs: 2.5, md: 3 } },
+                display: "flex",
+                flexDirection: "column",
+                gap: 2,
               }}
-              onClick={() =>
-                window.open(
-                  "https://www.uniroma1.it/",
-                  "_blank",
-                  "noopener,noreferrer"
-                )
-              }
             >
-              <CardContent
-                sx={{
-                  p: { xs: 2.5, md: 3 },
-                  "&:last-child": { pb: { xs: 2.5, md: 3 } },
-                  display: "flex",
-                  flexDirection: {
-                    xs: "column",
-                    sm: isRTL ? "row-reverse" : "row",
-                  },
-                  gap: 2.5,
-                  alignItems: { xs: "flex-start", sm: "center" },
-                }}
+              <Stack
+                direction={isRTL ? "row-reverse" : "row"}
+                alignItems="center"
+                spacing={2}
               >
                 <Box
                   sx={{
@@ -417,13 +443,12 @@ export default function InternationalCollaboration() {
 
                 <Box
                   sx={{
-                    width: { xs: "40px", sm: "8px" },
-                    height: { xs: "6px", sm: "50px" },
+                    width: "8px",
+                    height: "50px",
                     borderRadius: 4,
                     background:
                       "linear-gradient(180deg, #0b6f73 0%, #2cc5b9 100%)",
                     flexShrink: 0,
-                    alignSelf: { xs: "center", sm: "auto" },
                   }}
                 />
 
@@ -445,50 +470,55 @@ export default function InternationalCollaboration() {
                     {t("cards.sapienza.desc")}
                   </Typography>
                 </Box>
+              </Stack>
 
-                <Box
-                  component="img"
-                  src={saplogo}
-                  alt="Sapienza Logo"
-                  sx={{
-                    height: { xs: 50, md: 80 },
-                    width: "auto",
-                    transition: "transform 0.3s ease",
-                    "&:hover": { transform: "scale(1.05)" },
-                  }}
-                />
-              </CardContent>
-            </Card>
+              <Box
+                component="img"
+                src={saplogo}
+                alt="Sapienza Logo"
+                sx={{
+                  height: { xs: 50, md: 70 },
+                  width: "auto",
+                  alignSelf: isRTL ? "flex-start" : "flex-end",
+                  transition: "transform 0.3s ease",
+                  "&:hover": { transform: "scale(1.05)" },
+                }}
+              />
+            </CardContent>
+          </Card>
 
-            {/* 4 - IHS */}
-            <Card
-              sx={{
-                borderRadius: 2,
-                p: 2,
+          {/* 4 - IHS */}
+          <Card
+            sx={{
+              borderRadius: 2,
+              p: 2,
+              background: "rgba(255, 255, 255, 0.72)",
+              border: "3px solid #0B6F73",
+              borderColor: "rgba(11,111,115,0.18)",
+              transform: "translateY(-2px)",
+              boxShadow: "0 12px 28px rgba(0,0,0,0.08)",
+              cursor: "pointer",
+              transition:
+                "transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease, background 220ms ease",
+              "&:hover": {
                 background: "rgba(255, 255, 255, 0.72)",
                 border: "3px solid #0B6F73",
-                transition:
-                  "transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease, background 220ms ease",
-                "&:hover": {
-                  borderColor: "rgba(11,111,115,0.18)",
-                  background: "rgba(255,255,255,0.82)",
-                  transform: "translateY(-2px)",
-                  boxShadow: "0 12px 28px rgba(0,0,0,0.08)",
-                },
+              },
+            }}
+          >
+            <CardContent
+              sx={{
+                p: { xs: 2.5, md: 3 },
+                "&:last-child": { pb: { xs: 2.5, md: 3 } },
+                display: "flex",
+                flexDirection: "column",
+                gap: 2,
               }}
             >
-              <CardContent
-                sx={{
-                  p: { xs: 2.5, md: 3 },
-                  "&:last-child": { pb: { xs: 2.5, md: 3 } },
-                  display: "flex",
-                  flexDirection: {
-                    xs: "column",
-                    sm: isRTL ? "row-reverse" : "row",
-                  },
-                  gap: 2.5,
-                  alignItems: { xs: "flex-start", sm: "center" },
-                }}
+              <Stack
+                direction={isRTL ? "row-reverse" : "row"}
+                alignItems="center"
+                spacing={2}
               >
                 <Box
                   sx={{
@@ -511,13 +541,12 @@ export default function InternationalCollaboration() {
 
                 <Box
                   sx={{
-                    width: { xs: "40px", sm: "8px" },
-                    height: { xs: "6px", sm: "50px" },
+                    width: "8px",
+                    height: "50px",
                     borderRadius: 4,
                     background:
                       "linear-gradient(180deg, #0b6f73 0%, #2cc5b9 100%)",
                     flexShrink: 0,
-                    alignSelf: { xs: "center", sm: "auto" },
                   }}
                 />
 
@@ -539,21 +568,22 @@ export default function InternationalCollaboration() {
                     {t("cards.ihs.desc")}
                   </Typography>
                 </Box>
+              </Stack>
 
-                <Box
-                  component="img"
-                  src={ihslogo}
-                  alt="IHS Logo"
-                  sx={{
-                    height: { xs: 50, md: 80 },
-                    width: "auto",
-                    transition: "transform 0.3s ease",
-                    "&:hover": { transform: "scale(1.05)" },
-                  }}
-                />
-              </CardContent>
-            </Card>
-          </Stack>
+              <Box
+                component="img"
+                src={ihslogo}
+                alt="IHS Logo"
+                sx={{
+                  height: { xs: 50, md: 70 },
+                  width: "auto",
+                  alignSelf: isRTL ? "flex-start" : "flex-end",
+                  transition: "transform 0.3s ease",
+                  "&:hover": { transform: "scale(1.05)" },
+                }}
+              />
+            </CardContent>
+          </Card>
         </Box>
       </Box>
     </SectionShell>
