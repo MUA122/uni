@@ -1,7 +1,6 @@
 import { useEffect, useRef } from "react";
 import { Outlet, useParams, Navigate, useLocation } from "react-router-dom";
 import i18n from "../i18n";
-import AnalyticsConsentBanner from "../components/layout/AnalyticsConsentBanner";
 import AnalyticsTracker from "../components/layout/AnalyticsTracker";
 import { trackPageView } from "../analytics/analyticsClient";
 
@@ -55,7 +54,6 @@ export default function LangLayout() {
     <>
       <AnalyticsTracker />
       <Outlet />
-      <AnalyticsConsentBanner />
     </>
   );
 }
