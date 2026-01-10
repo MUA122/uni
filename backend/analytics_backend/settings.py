@@ -161,6 +161,8 @@ CORS_ALLOWED_ORIGINS = [
     for origin in os.environ.get("CORS_ALLOWED_ORIGINS", ",".join(default_cors)).split(",")
     if origin.strip()
 ]
+from corsheaders.defaults import default_headers
+CORS_ALLOW_HEADERS = list(default_headers) + ["x-analytics-key"]
 
 # -------------------------
 # Analytics config
