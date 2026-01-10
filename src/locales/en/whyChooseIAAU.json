@@ -1,0 +1,22 @@
+{
+  "tagline": "Why IAAU",
+  "title": {
+    "before": "Why choose",
+    "brand": "IAAU",
+    "after": "?"
+  },
+  "subtitle": "Modern learning, practical outcomes, and a supportive academic community designed to help you grow.",
+  "learnMore": "Learn more",
+  "cards": [
+    {
+      "badge": "Programs",
+      "title": "Industry-aligned learning",
+      "desc": "Courses designed with real market needs in mind—so you build skills that matter and stay job-ready."
+    },
+    {
+      "badge": "Experience",
+      "title": "Hands-on projects & mentorship",
+      "desc": "Learn by doing with guided projects, feedback, and mentoring that helps you level up faster."
+    }
+  ]
+}

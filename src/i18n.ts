@@ -26,6 +26,7 @@ i18n
       "academies",
       "heroAcademy",
       "navAcademy",
+      "whyChooseIAAU",
     ],
     defaultNS: "nav",
 

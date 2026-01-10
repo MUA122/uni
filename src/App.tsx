@@ -31,6 +31,7 @@ import AcademyHeroImage from "./components/academy/hero/AcademyHeroImage";
 ================================ */
 import AdminDashboard from "./components/admin/AdminDashboard";
 import AdminLogin from "./components/admin/AdminLogin";
+import WhyChooseIAAU from "./components/academy/component/WhyChoose";
 
 /* ===============================
    Pages
@@ -84,6 +85,7 @@ function AcademyHomePage() {
     <>
       <AcademyHeader />
       <AcademyHeroImage />
+      <WhyChooseIAAU />
       <AcademyFooter />
     </>
   );
