@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+from urllib.parse import urlparse, parse_qs
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -60,11 +61,38 @@ WSGI_APPLICATION = "analytics_backend.wsgi.application"
 ASGI_APPLICATION = "analytics_backend.asgi.application"
 
 # -------------------------
-# Database (SQLite default, Postgres via env)
+# Database (DATABASE_URL > env vars > SQLite)
 # -------------------------
+DATABASE_URL = os.environ.get("DATABASE_URL", "").strip()
 DB_ENGINE = os.environ.get("DJANGO_DB_ENGINE", "django.db.backends.sqlite3").strip()
 
-if DB_ENGINE == "django.db.backends.postgresql":
+if DATABASE_URL:
+    parsed = urlparse(DATABASE_URL)
+    scheme = parsed.scheme.split("+")[0]
+    if scheme in ("postgres", "postgresql", "psql"):
+        engine = "django.db.backends.postgresql"
+    elif scheme == "mysql":
+        engine = "django.db.backends.mysql"
+    elif scheme == "sqlite":
+        engine = "django.db.backends.sqlite3"
+    else:
+        engine = "django.db.backends.postgresql"
+
+    db_config = {
+        "ENGINE": engine,
+        "NAME": parsed.path.lstrip("/") or "postgres",
+        "USER": parsed.username or "",
+        "PASSWORD": parsed.password or "",
+        "HOST": parsed.hostname or "",
+        "PORT": str(parsed.port or ""),
+    }
+
+    query = parse_qs(parsed.query)
+    if "sslmode" in query:
+        db_config["OPTIONS"] = {"sslmode": query["sslmode"][0]}
+
+    DATABASES = {"default": db_config}
+elif DB_ENGINE == "django.db.backends.postgresql":
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql",
