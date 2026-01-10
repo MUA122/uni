@@ -2,36 +2,53 @@ from django.urls import path
 
 from .views import (
     AuthLoginView,
-    ConversionsView,
-    DevicesView,
-    ErrorLogCreateView,
-    EventCreateView,
-    GeoView,
-    OverviewView,
+    VisitStartView,
+    VisitEndView,
     PageViewCreateView,
+    EventCreateView,
     PerformanceCreateView,
-    PerformanceView,
-    ReferrersView,
+    ErrorLogCreateView,
+    OverviewView,
     TimeseriesView,
     TopPagesView,
-    VisitEndView,
-    VisitStartView,
+    ReferrersView,
+    GeoView,
+    DevicesView,
+    ConversionsView,
+    PerformanceReportView,
+    ExportCsvView,
 )
 
 urlpatterns = [
-    path("auth/login", AuthLoginView.as_view(), name="auth-login"),
+    # -------------------------
+    # Auth
+    # -------------------------
+    path("auth/login", AuthLoginView.as_view(), name="analytics-auth-login"),
+
+    # -------------------------
+    # Ingestion (AllowAny + ingest key enforced in views)
+    # -------------------------
     path("visit/start", VisitStartView.as_view(), name="visit-start"),
     path("visit/end", VisitEndView.as_view(), name="visit-end"),
-    path("pageview", PageViewCreateView.as_view(), name="pageview"),
-    path("event", EventCreateView.as_view(), name="event"),
-    path("perf", PerformanceCreateView.as_view(), name="perf"),
-    path("error", ErrorLogCreateView.as_view(), name="error"),
-    path("admin/overview", OverviewView.as_view(), name="admin-overview"),
-    path("admin/timeseries", TimeseriesView.as_view(), name="admin-timeseries"),
-    path("admin/top-pages", TopPagesView.as_view(), name="admin-top-pages"),
-    path("admin/referrers", ReferrersView.as_view(), name="admin-referrers"),
-    path("admin/geo", GeoView.as_view(), name="admin-geo"),
-    path("admin/devices", DevicesView.as_view(), name="admin-devices"),
-    path("admin/conversions", ConversionsView.as_view(), name="admin-conversions"),
-    path("admin/performance", PerformanceView.as_view(), name="admin-performance"),
+    path("pageview", PageViewCreateView.as_view(), name="pageview-create"),
+    path("event", EventCreateView.as_view(), name="event-create"),
+    path("perf", PerformanceCreateView.as_view(), name="performance-create"),
+    path("error", ErrorLogCreateView.as_view(), name="error-create"),
+
+    # -------------------------
+    # Admin reporting (JWT required)
+    # -------------------------
+    path("admin/overview", OverviewView.as_view(), name="analytics-overview"),
+    path("admin/timeseries", TimeseriesView.as_view(), name="analytics-timeseries"),
+    path("admin/top-pages", TopPagesView.as_view(), name="analytics-top-pages"),
+    path("admin/referrers", ReferrersView.as_view(), name="analytics-referrers"),
+    path("admin/geo", GeoView.as_view(), name="analytics-geo"),
+    path("admin/devices", DevicesView.as_view(), name="analytics-devices"),
+    path("admin/conversions", ConversionsView.as_view(), name="analytics-conversions"),
+    path("admin/performance", PerformanceReportView.as_view(), name="analytics-performance"),
+
+    # -------------------------
+    # Export
+    # -------------------------
+    path("admin/export/csv", ExportCsvView.as_view(), name="analytics-export-csv"),
 ]

@@ -33,7 +33,7 @@ Include `Authorization: Bearer <access>` for admin endpoints.
 - `POST /api/analytics/event`
 - `POST /api/analytics/perf`
 - `POST /api/analytics/error`
-`visit/start` accepts optional `country` and `city` when consented.
+All ingestion requests must include `X-Analytics-Key` when `ANALYTICS_INGEST_KEY` is set.
 
 ## Admin reporting (JWT required)
 - `GET /api/analytics/admin/overview?range=30d`
@@ -50,6 +50,15 @@ Supported ranges: `today`, `7d`, `30d`, `90d`, `1y`.
 ## Geo (consent-based)
 Perform geo lookup on the client after the user consents, then send `country`/`city`
 in `visit/start`. No IPs are stored server-side.
+
+## Ingestion security (recommended)
+Set a shared secret on the backend:
+- `ANALYTICS_INGEST_KEY=your-secret`
+
+Then set the frontend build env var:
+- `VITE_ANALYTICS_INGEST_KEY=your-secret`
+
+All ingestion calls will include `X-Analytics-Key`.
 
 ## Retention
 Run `python manage.py purge_old_analytics` on a daily cron to delete data older than the retention window.

@@ -1,9 +1,9 @@
-from rest_framework.throttling import ScopedRateThrottle
+from rest_framework.throttling import AnonRateThrottle
 
 
-class IngestThrottle(ScopedRateThrottle):
+class IngestThrottle(AnonRateThrottle):
     scope = "ingest"
 
 
-class IngestBurstThrottle(ScopedRateThrottle):
+class IngestBurstThrottle(AnonRateThrottle):
     scope = "ingest_burst"

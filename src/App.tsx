@@ -89,6 +89,18 @@ function AcademyHomePage() {
   );
 }
 
+function AdminRoute({ children }: { children: React.ReactNode }) {
+  const location = useLocation();
+  const token = typeof window !== "undefined" ? localStorage.getItem("analyticsAdminToken") : null;
+
+  if (!token) {
+    const next = encodeURIComponent(`${location.pathname}${location.search}`);
+    return <Navigate to={`/admin/login?next=${next}`} replace />;
+  }
+
+  return <>{children}</>;
+}
+
 /* ===============================
    App With Theme + Routing
 ================================ */
@@ -179,7 +191,14 @@ function AppWithDirectionTheme() {
 
         {/* Admin (Standalone) */}
         <Route path="/admin/login" element={<AdminLogin />} />
-        <Route path="/admin/dashboard" element={<AdminDashboard />} />
+        <Route
+          path="/admin/dashboard"
+          element={
+            <AdminRoute>
+              <AdminDashboard />
+            </AdminRoute>
+          }
+        />
 
         {/* Fallback */}
         <Route path="*" element={<Navigate to="/en" replace />} />

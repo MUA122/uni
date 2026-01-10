@@ -8,7 +8,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "unsafe-dev-key")
 DEBUG = os.environ.get("DJANGO_DEBUG", "false").lower() == "true"
 
-ALLOWED_HOSTS = [host.strip() for host in os.environ.get("DJANGO_ALLOWED_HOSTS", "*").split(",") if host.strip()]
+ALLOWED_HOSTS = [
+    host.strip()
+    for host in os.environ.get("DJANGO_ALLOWED_HOSTS", "*").split(",")
+    if host.strip()
+]
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -55,12 +59,29 @@ TEMPLATES = [
 WSGI_APPLICATION = "analytics_backend.wsgi.application"
 ASGI_APPLICATION = "analytics_backend.asgi.application"
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+# -------------------------
+# Database (SQLite default, Postgres via env)
+# -------------------------
+DB_ENGINE = os.environ.get("DJANGO_DB_ENGINE", "django.db.backends.sqlite3").strip()
+
+if DB_ENGINE == "django.db.backends.postgresql":
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": os.environ.get("DJANGO_DB_NAME", "uni_analytics_db"),
+            "USER": os.environ.get("DJANGO_DB_USER", "postgres"),
+            "PASSWORD": os.environ.get("DJANGO_DB_PASSWORD", ""),
+            "HOST": os.environ.get("DJANGO_DB_HOST", "127.0.0.1"),
+            "PORT": os.environ.get("DJANGO_DB_PORT", "5432"),
+        }
     }
-}
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
 
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
@@ -80,6 +101,12 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+# -------------------------
+# DRF + JWT + throttles
+# -------------------------
+DEFAULT_INGEST = os.environ.get("ANALYTICS_THROTTLE_INGEST", "120/min")
+DEFAULT_INGEST_BURST = os.environ.get("ANALYTICS_THROTTLE_INGEST_BURST", "300/min")
+
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
@@ -91,11 +118,14 @@ REST_FRAMEWORK = {
         "rest_framework.throttling.ScopedRateThrottle",
     ),
     "DEFAULT_THROTTLE_RATES": {
-        "ingest": "120/min",
-        "ingest_burst": "300/min",
+        "ingest": DEFAULT_INGEST,
+        "ingest_burst": DEFAULT_INGEST_BURST,
     },
 }
 
+# -------------------------
+# CORS
+# -------------------------
 CORS_ALLOW_ALL_ORIGINS = os.environ.get("CORS_ALLOW_ALL_ORIGINS", "false").lower() == "true"
 default_cors = ["http://localhost:5173"]
 CORS_ALLOWED_ORIGINS = [
@@ -104,6 +134,9 @@ CORS_ALLOWED_ORIGINS = [
     if origin.strip()
 ]
 
+# -------------------------
+# Analytics config
+# -------------------------
 ANALYTICS_ALLOWED_RANGES = {
     "today": 1,
     "7d": 7,
@@ -112,5 +145,19 @@ ANALYTICS_ALLOWED_RANGES = {
     "1y": 365,
 }
 ANALYTICS_DEFAULT_RANGE = "30d"
+
 ANALYTICS_RETENTION_DAYS = int(os.environ.get("ANALYTICS_RETENTION_DAYS", "365"))
-ANALYTICS_ROLLUP_ENABLED = os.environ.get("ANALYTICS_ROLLUP_ENABLED", "true").lower() == "true"
+
+# Support BOTH env var names:
+# - older: ANALYTICS_ROLLUP_ENABLED
+# - render screenshot: ANALYTICS_USE_ROLLUPS
+_rollup_env = os.environ.get("ANALYTICS_ROLLUP_ENABLED", "").strip()
+if not _rollup_env:
+    _rollup_env = os.environ.get("ANALYTICS_USE_ROLLUPS", "true").strip()
+ANALYTICS_ROLLUP_ENABLED = _rollup_env.lower() == "true"
+
+# Optional GeoIP path (will be empty on free tier unless you mount a disk/file)
+ANALYTICS_GEOIP_CITY_MMDB = os.environ.get("ANALYTICS_GEOIP_CITY_MMDB", "")
+
+# Ingestion protection (shared secret header)
+ANALYTICS_INGEST_KEY = os.environ.get("ANALYTICS_INGEST_KEY", "")

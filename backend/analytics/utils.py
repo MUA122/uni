@@ -1,8 +1,10 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from functools import lru_cache
+import ipaddress
 from datetime import timedelta
-from typing import Iterable
+from typing import Iterable, Tuple
 
 from django.conf import settings
 from django.utils import timezone
@@ -15,50 +17,119 @@ class DateRange:
     key: str
 
 
-def parse_range_param(range_key: str | None) -> DateRange:
-    allowed = settings.ANALYTICS_ALLOWED_RANGES
-    key = range_key or settings.ANALYTICS_DEFAULT_RANGE
-    if key not in allowed:
-        key = settings.ANALYTICS_DEFAULT_RANGE
-    end = timezone.now()
-    if key == "today":
-        start = end.replace(hour=0, minute=0, second=0, microsecond=0)
-    else:
-        start = end - timedelta(days=allowed[key])
+RANGE_PRESETS = {
+    "today": timedelta(days=1),
+    "7d": timedelta(days=7),
+    "30d": timedelta(days=30),
+    "90d": timedelta(days=90),
+    "1y": timedelta(days=365),
+}
+
+
+def parse_range_param(range_param: str | None) -> DateRange:
+    now = timezone.now()
+    key = (range_param or "30d").strip().lower()
+    delta = RANGE_PRESETS.get(key, RANGE_PRESETS["30d"])
+    start = now - delta
+    end = now
     return DateRange(start=start, end=end, key=key)
 
 
-def previous_range(date_range: DateRange) -> DateRange:
-    delta = date_range.end - date_range.start
-    end = date_range.start
+def previous_range(current: DateRange) -> DateRange:
+    delta = current.end - current.start
+    end = current.start
     start = end - delta
-    return DateRange(start=start, end=end, key=f"prev_{date_range.key}")
-
-
-def percentile(values: Iterable[float], p: float) -> float:
-    sorted_values = sorted(values)
-    if not sorted_values:
-        return 0.0
-    if p <= 0:
-        return float(sorted_values[0])
-    if p >= 1:
-        return float(sorted_values[-1])
-    k = (len(sorted_values) - 1) * p
-    f = int(k)
-    c = min(f + 1, len(sorted_values) - 1)
-    if f == c:
-        return float(sorted_values[int(k)])
-    d0 = sorted_values[f] * (c - k)
-    d1 = sorted_values[c] * (k - f)
-    return float(d0 + d1)
+    return DateRange(start=start, end=end, key=f"prev_{current.key}")
 
 
 def classify_referrer(referrer: str) -> str:
-    referrer = (referrer or "").lower()
     if not referrer:
         return "direct"
-    if any(engine in referrer for engine in ["google.", "bing.", "yahoo.", "duckduckgo."]):
-        return "search"
-    if any(social in referrer for social in ["facebook.", "instagram.", "twitter.", "linkedin.", "tiktok."]):
-        return "social"
-    return "referral"
+    r = referrer.lower()
+    if "google." in r:
+        return "google"
+    if "facebook." in r or "fb." in r:
+        return "facebook"
+    if "instagram." in r:
+        return "instagram"
+    if "linkedin." in r:
+        return "linkedin"
+    if "twitter." in r or "x.com" in r:
+        return "twitter"
+    return "other"
+
+
+def percentile(values: Iterable[float], p: float) -> float:
+    v = sorted(values)
+    if not v:
+        return 0.0
+    if p <= 0:
+        return float(v[0])
+    if p >= 1:
+        return float(v[-1])
+    k = (len(v) - 1) * p
+    f = int(k)
+    c = min(f + 1, len(v) - 1)
+    if f == c:
+        return float(v[f])
+    d0 = v[f] * (c - k)
+    d1 = v[c] * (k - f)
+    return float(d0 + d1)
+
+
+def validate_ingest_key(request) -> bool:
+    """Validate X-Analytics-Key header (best-effort shared secret).
+
+    If ANALYTICS_INGEST_KEY is not set, ingestion is allowed (dev-friendly).
+    """
+    expected = getattr(settings, "ANALYTICS_INGEST_KEY", "")
+    if not expected:
+        return True
+    provided = request.META.get("HTTP_X_ANALYTICS_KEY", "")
+    # Constant-time compare (defense-in-depth).
+    try:
+        from hmac import compare_digest
+
+        return compare_digest(provided, expected)
+    except Exception:
+        return provided == expected
+
+
+def get_client_ip(request) -> str:
+    """Return the best-effort public client IP behind proxies."""
+    # Cloudflare
+    cf_ip = request.META.get("HTTP_CF_CONNECTING_IP")
+    if cf_ip:
+        return cf_ip.strip()
+
+    # Standard proxy header (first IP is the original client)
+    xff = request.META.get("HTTP_X_FORWARDED_FOR")
+    if xff:
+        first = xff.split(",")[0].strip()
+        if first:
+            return first
+
+    # Fallback
+    return (request.META.get("REMOTE_ADDR") or "").strip()
+
+
+@lru_cache(maxsize=512)
+def is_public_ip(ip_str: str) -> bool:
+    try:
+        ip = ipaddress.ip_address(ip_str)
+        return not (
+            ip.is_private
+            or ip.is_loopback
+            or ip.is_link_local
+            or ip.is_multicast
+            or ip.is_reserved
+        )
+    except Exception:
+        return False
+
+
+def best_effort_public_ip(request) -> str:
+    ip = get_client_ip(request)
+    if ip and is_public_ip(ip):
+        return ip
+    return ""

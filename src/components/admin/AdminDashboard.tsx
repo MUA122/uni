@@ -1,7 +1,7 @@
 import "antd/dist/reset.css";
 
 import { useEffect, useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import type { MenuProps } from "antd";
 import {
   Avatar,
@@ -24,6 +24,7 @@ import {
   SettingOutlined,
   CalendarOutlined,
   DownOutlined,
+  LogoutOutlined,
 } from "@ant-design/icons";
 import {
   CartesianGrid,
@@ -82,6 +83,8 @@ type DevicesResponse = {
   os: { name: string; count: number }[];
 };
 
+type GeoItem = { country: string; city: string; count: number };
+
 type PerformanceItem = {
   path: string;
   lcp_p75_ms: number;
@@ -117,6 +120,7 @@ function toChartPoints(series: TimeseriesResponse | null) {
 
 export default function AdminDashboard() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { token } = antdTheme.useToken();
 
   // Admin theme tokens (match your teal system)
@@ -136,10 +140,9 @@ export default function AdminDashboard() {
     /\/$/,
     ""
   );
-  const tokenAccess =
-    localStorage.getItem("analyticsAdminToken") ||
-    import.meta.env.VITE_ANALYTICS_JWT ||
-    "";
+  const getAccessToken = () =>
+    localStorage.getItem("analyticsAdminToken") || import.meta.env.VITE_ANALYTICS_JWT || "";
+  const getRefreshToken = () => localStorage.getItem("analyticsAdminRefreshToken") || "";
 
   const [rangeKey, setRangeKey] = useState<(typeof rangeOptions)[number]["key"]>("7d");
   const [comparePrev, setComparePrev] = useState(false);
@@ -151,19 +154,60 @@ export default function AdminDashboard() {
   const [pageviewsSeries, setPageviewsSeries] = useState<TimeseriesResponse | null>(null);
   const [topPages, setTopPages] = useState<TopPageRow[]>([]);
   const [referrers, setReferrers] = useState<ReferrerItem[]>([]);
+  const [geoItems, setGeoItems] = useState<GeoItem[]>([]);
   const [devices, setDevices] = useState<DevicesResponse | null>(null);
   const [performance, setPerformance] = useState<PerformanceItem[]>([]);
 
   const selectedRangeLabel =
     rangeOptions.find((o) => o.key === rangeKey)?.label || "Last 7 days";
 
+  const handleLogout = () => {
+    localStorage.removeItem("analyticsAdminToken");
+    localStorage.removeItem("analyticsAdminRefreshToken");
+    const next = encodeURIComponent(`${location.pathname}${location.search}`);
+    navigate(`/admin/login?next=${next}`);
+  };
+
+  async function refreshAccessToken() {
+    const refreshToken = getRefreshToken();
+    if (!refreshToken) {
+      throw new Error("Session expired.");
+    }
+    const res = await fetch(`${analyticsBase}/api/auth/token/refresh`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ refresh: refreshToken }),
+    });
+    if (!res.ok) {
+      throw new Error("Session expired.");
+    }
+    const data = (await res.json()) as { access: string };
+    localStorage.setItem("analyticsAdminToken", data.access);
+    return data.access;
+  }
+
   async function fetchJson<T>(path: string): Promise<T> {
+    const tokenAccess = getAccessToken();
     const res = await fetch(`${analyticsBase}${path}`, {
       headers: {
         "Content-Type": "application/json",
         ...(tokenAccess ? { Authorization: `Bearer ${tokenAccess}` } : {}),
       },
     });
+    if (res.status === 401) {
+      const newAccess = await refreshAccessToken();
+      const retry = await fetch(`${analyticsBase}${path}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${newAccess}`,
+        },
+      });
+      if (!retry.ok) {
+        const msg = await retry.text();
+        throw new Error(msg || `Request failed: ${retry.status}`);
+      }
+      return (await retry.json()) as T;
+    }
     if (!res.ok) {
       const msg = await res.text();
       throw new Error(msg || `Request failed: ${res.status}`);
@@ -172,8 +216,9 @@ export default function AdminDashboard() {
   }
 
   useEffect(() => {
-    if (!tokenAccess) {
-      navigate("/admin/login");
+    if (!getAccessToken()) {
+      const next = encodeURIComponent(`${location.pathname}${location.search}`);
+      navigate(`/admin/login?next=${next}`);
       return;
     }
 
@@ -187,6 +232,7 @@ export default function AdminDashboard() {
           pageviewsRes,
           topPagesRes,
           referrersRes,
+          geoRes,
           devicesRes,
           perfRes,
         ] = await Promise.all([
@@ -207,6 +253,7 @@ export default function AdminDashboard() {
           fetchJson<{ items: ReferrerItem[] }>(
             `/api/analytics/admin/referrers?range=${rangeKey}`
           ),
+          fetchJson<{ items: GeoItem[] }>(`/api/analytics/admin/geo?range=${rangeKey}`),
           fetchJson<DevicesResponse>(`/api/analytics/admin/devices?range=${rangeKey}`),
           fetchJson<{ items: PerformanceItem[] }>(
             `/api/analytics/admin/performance?range=${rangeKey}`
@@ -218,17 +265,22 @@ export default function AdminDashboard() {
         setPageviewsSeries(pageviewsRes);
         setTopPages(topPagesRes.items || []);
         setReferrers(referrersRes.items || []);
+        setGeoItems(geoRes.items || []);
         setDevices(devicesRes);
         setPerformance(perfRes.items || []);
       } catch (e) {
-        setError(e instanceof Error ? e.message : "Failed to load analytics");
+        const message = e instanceof Error ? e.message : "Failed to load analytics";
+        setError(message);
+        if (message.toLowerCase().includes("expired")) {
+          handleLogout();
+        }
       } finally {
         setLoading(false);
       }
     };
 
     void run();
-  }, [rangeKey, comparePrev, navigate, tokenAccess, analyticsBase]);
+  }, [rangeKey, comparePrev, navigate, analyticsBase, location.pathname, location.search]);
 
   const trafficItems: TrafficItem[] = useMemo(() => {
     const palette = ["#006E71", "#00A2CE", ORANGE, "#7C3AED", "#94A3B8"];
@@ -238,6 +290,18 @@ export default function AdminDashboard() {
       color: palette[idx % palette.length],
     }));
   }, [referrers]);
+
+  const topCountries = useMemo(() => {
+    const counts = new Map<string, number>();
+    geoItems.forEach((item) => {
+      const key = item.country || "Unknown";
+      counts.set(key, (counts.get(key) || 0) + item.count);
+    });
+    return Array.from(counts.entries())
+      .map(([country, count]) => ({ country, count }))
+      .sort((a, b) => b.count - a.count)
+      .slice(0, 5);
+  }, [geoItems]);
 
   const kpi = overview?.totals;
   const chartSessions = toChartPoints(sessionsSeries);
@@ -251,6 +315,59 @@ export default function AdminDashboard() {
 
   const onRangeClick: MenuProps["onClick"] = ({ key }) => {
     setRangeKey(key as (typeof rangeOptions)[number]["key"]);
+  };
+
+  const handleExportCsv = async () => {
+    try {
+      const tokenAccess = getAccessToken();
+      if (!tokenAccess) {
+        const next = encodeURIComponent(`${location.pathname}${location.search}`);
+        navigate(`/admin/login?next=${next}`);
+        return;
+      }
+      const res = await fetch(
+        `${analyticsBase}/api/analytics/admin/export.csv?range=${rangeKey}`,
+        {
+          headers: { Authorization: `Bearer ${tokenAccess}` },
+        }
+      );
+      if (res.status === 401) {
+        const newAccess = await refreshAccessToken();
+        const retry = await fetch(
+          `${analyticsBase}/api/analytics/admin/export.csv?range=${rangeKey}`,
+          {
+            headers: { Authorization: `Bearer ${newAccess}` },
+          }
+        );
+        if (!retry.ok) {
+          throw new Error("Export failed.");
+        }
+        const blob = await retry.blob();
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = `analytics-${rangeKey}.csv`;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        URL.revokeObjectURL(url);
+        return;
+      }
+      if (!res.ok) {
+        throw new Error("Export failed.");
+      }
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `analytics-${rangeKey}.csv`;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Export failed.");
+    }
   };
 
   return (
@@ -298,9 +415,14 @@ export default function AdminDashboard() {
           />
 
           <div style={{ position: "absolute", bottom: 16, left: 16, right: 16 }}>
-            <Button icon={<SettingOutlined />} block>
-              Settings
-            </Button>
+            <Space direction="vertical" size={8} style={{ width: "100%" }}>
+              <Button icon={<SettingOutlined />} block>
+                Settings
+              </Button>
+              <Button danger icon={<LogoutOutlined />} block onClick={handleLogout}>
+                Logout
+              </Button>
+            </Space>
           </div>
         </Layout.Sider>
 
@@ -336,7 +458,7 @@ export default function AdminDashboard() {
                 </Space>
 
                 <Button icon={<SettingOutlined />} />
-                <Button type="primary" icon={<DownloadOutlined />}>
+                <Button type="primary" icon={<DownloadOutlined />} onClick={handleExportCsv}>
                   Export CSV
                 </Button>
               </Space>
@@ -492,8 +614,31 @@ export default function AdminDashboard() {
               <TrafficChart items={trafficItems} />
             </div>
 
-            <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: 16 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "1.2fr 1fr", gap: 16 }}>
               <PerformanceTable items={performance} />
+              <Card
+                title={<span style={{ fontWeight: 700 }}>Top Countries</span>}
+                extra={<Typography.Text type="secondary">{selectedRangeLabel}</Typography.Text>}
+                style={{ borderRadius: 18 }}
+              >
+                {topCountries.length === 0 ? (
+                  <Typography.Text type="secondary">No geo data yet</Typography.Text>
+                ) : (
+                  <div style={{ display: "grid", gap: 10 }}>
+                    {topCountries.map((item) => (
+                      <div
+                        key={item.country}
+                        style={{ display: "flex", justifyContent: "space-between" }}
+                      >
+                        <Typography.Text>{item.country}</Typography.Text>
+                        <Typography.Text strong>
+                          {numberFormatter.format(item.count)}
+                        </Typography.Text>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </Card>
             </div>
 
             {loading && <div style={{ marginTop: 12, opacity: 0.7 }}>Loading analytics...</div>}

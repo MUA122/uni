@@ -21,7 +21,13 @@ from .serializers import (
     VisitStartSerializer,
 )
 from .throttles import IngestBurstThrottle, IngestThrottle
-from .utils import classify_referrer, parse_range_param, percentile, previous_range
+from .utils import (
+    classify_referrer,
+    parse_range_param,
+    percentile,
+    previous_range,
+    validate_ingest_key,
+)
 
 
 class AuthLoginView(APIView):
@@ -47,9 +53,17 @@ def get_or_create_visit(session_id, visitor_id, started_at=None):
 
 
 def rollups_available(date_range) -> bool:
-    if not settings.ANALYTICS_ROLLUP_ENABLED:
+    enabled = getattr(settings, "ANALYTICS_ROLLUP_ENABLED", None)
+    if enabled is None:
+        enabled = getattr(settings, "ANALYTICS_USE_ROLLUPS", False)
+
+    if not enabled:
         return False
-    return DailyRollup.objects.filter(date__gte=date_range.start.date(), date__lte=date_range.end.date()).exists()
+
+    return DailyRollup.objects.filter(
+        date__gte=date_range.start.date(),
+        date__lte=date_range.end.date(),
+    ).exists()
 
 
 class VisitStartView(APIView):
@@ -57,12 +71,15 @@ class VisitStartView(APIView):
     throttle_classes = [IngestThrottle, IngestBurstThrottle]
 
     def post(self, request):
+        if not validate_ingest_key(request):
+            return Response({"detail": "Invalid ingestion key."}, status=403)
+
         serializer = VisitStartSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         data = serializer.validated_data
         started_at = data.get("started_at") or timezone.now()
 
-        Visit.objects.update_or_create(
+        visit, created = Visit.objects.get_or_create(
             session_id=data["session_id"],
             defaults={
                 "visitor_id": data["visitor_id"],
@@ -82,6 +99,34 @@ class VisitStartView(APIView):
                 "city": data.get("city", ""),
             },
         )
+
+        if not created:
+            # Do NOT overwrite started_at for an existing session; keep the first timestamp.
+            update_fields = []
+            for field, value in {
+                "visitor_id": data["visitor_id"],
+                "referrer": data.get("referrer", ""),
+                "landing_path": data.get("landing_path", ""),
+                "utm_source": data.get("utm_source", ""),
+                "utm_medium": data.get("utm_medium", ""),
+                "utm_campaign": data.get("utm_campaign", ""),
+                "utm_term": data.get("utm_term", ""),
+                "utm_content": data.get("utm_content", ""),
+                "device_type": data.get("device_type", ""),
+                "browser": data.get("browser", ""),
+                "os": data.get("os", ""),
+                "language": data.get("language", ""),
+                # Geo can be added later; allow overwrite only if provided and non-empty.
+                "country": data.get("country", "") or visit.country,
+                "city": data.get("city", "") or visit.city,
+            }.items():
+                if getattr(visit, field) != value:
+                    setattr(visit, field, value)
+                    update_fields.append(field)
+
+            if update_fields:
+                visit.save(update_fields=update_fields + ["updated_at"])
+
         return Response({"status": "ok"})
 
 
@@ -90,6 +135,9 @@ class VisitEndView(APIView):
     throttle_classes = [IngestThrottle, IngestBurstThrottle]
 
     def post(self, request):
+        if not validate_ingest_key(request):
+            return Response({"detail": "Invalid ingestion key."}, status=403)
+
         serializer = VisitEndSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         data = serializer.validated_data
@@ -103,6 +151,9 @@ class PageViewCreateView(APIView):
     throttle_classes = [IngestThrottle, IngestBurstThrottle]
 
     def post(self, request):
+        if not validate_ingest_key(request):
+            return Response({"detail": "Invalid ingestion key."}, status=403)
+
         serializer = PageViewSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         data = serializer.validated_data
@@ -123,6 +174,9 @@ class EventCreateView(APIView):
     throttle_classes = [IngestThrottle, IngestBurstThrottle]
 
     def post(self, request):
+        if not validate_ingest_key(request):
+            return Response({"detail": "Invalid ingestion key."}, status=403)
+
         serializer = EventSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         data = serializer.validated_data
@@ -144,6 +198,9 @@ class PerformanceCreateView(APIView):
     throttle_classes = [IngestThrottle, IngestBurstThrottle]
 
     def post(self, request):
+        if not validate_ingest_key(request):
+            return Response({"detail": "Invalid ingestion key."}, status=403)
+
         serializer = PerformanceSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         data = serializer.validated_data
@@ -165,6 +222,9 @@ class ErrorLogCreateView(APIView):
     throttle_classes = [IngestThrottle, IngestBurstThrottle]
 
     def post(self, request):
+        if not validate_ingest_key(request):
+            return Response({"detail": "Invalid ingestion key."}, status=403)
+
         serializer = ErrorLogSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         data = serializer.validated_data
@@ -334,7 +394,9 @@ class ReferrersView(APIView):
     def get(self, request):
         date_range = parse_range_param(request.query_params.get("range"))
         counts = defaultdict(int)
-        for visit in Visit.objects.filter(started_at__gte=date_range.start, started_at__lte=date_range.end).only("referrer"):
+        for visit in Visit.objects.filter(
+            started_at__gte=date_range.start, started_at__lte=date_range.end
+        ).only("referrer"):
             counts[classify_referrer(visit.referrer)] += 1
         items = [{"source": key, "count": value} for key, value in counts.items()]
         items.sort(key=lambda item: item["count"], reverse=True)
@@ -353,10 +415,7 @@ class GeoView(APIView):
             .annotate(count=Count("id"))
             .order_by("-count")
         )
-        items = [
-            {"country": row["country"], "city": row["city"] or "", "count": row["count"]}
-            for row in visits
-        ]
+        items = [{"country": row["country"], "city": row["city"] or "", "count": row["count"]} for row in visits]
         return Response({"items": items})
 
 
@@ -404,11 +463,12 @@ class ConversionsView(APIView):
         return Response({"items": items})
 
 
-class PerformanceView(APIView):
+class PerformanceReportView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
         date_range = parse_range_param(request.query_params.get("range"))
+
         rows = Performance.objects.filter(created_at__gte=date_range.start, created_at__lte=date_range.end).values(
             "path",
             "ttfb_ms",
@@ -423,6 +483,7 @@ class PerformanceView(APIView):
                 value = row[key]
                 if value is not None:
                     bucket[key].append(float(value))
+
         items = []
         for path, values in buckets.items():
             items.append(
@@ -436,3 +497,42 @@ class PerformanceView(APIView):
             )
         items.sort(key=lambda item: item["lcp_p75_ms"], reverse=True)
         return Response({"items": items})
+
+
+class ExportCsvView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        import csv
+        import io
+        from django.http import HttpResponse
+
+        date_range = parse_range_param(request.query_params.get("range"))
+        qs = (
+            PageView.objects.filter(created_at__gte=date_range.start, created_at__lte=date_range.end)
+            .values("path")
+            .annotate(
+                pageviews=Count("id"),
+                unique_visitors=Count("visit__visitor_id", distinct=True),
+                avg_time_ms=Avg("duration_ms"),
+            )
+            .order_by("-pageviews")
+        )
+
+        buf = io.StringIO()
+        writer = csv.writer(buf)
+        writer.writerow(["path", "pageviews", "unique_visitors", "avg_time_sec"])
+
+        for row in qs:
+            writer.writerow(
+                [
+                    row["path"],
+                    row["pageviews"],
+                    row["unique_visitors"],
+                    round((row["avg_time_ms"] or 0) / 1000, 2),
+                ]
+            )
+
+        resp = HttpResponse(buf.getvalue(), content_type="text/csv")
+        resp["Content-Disposition"] = 'attachment; filename="analytics_export.csv"'
+        return resp

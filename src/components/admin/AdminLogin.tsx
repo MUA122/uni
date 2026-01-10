@@ -1,7 +1,7 @@
 import "antd/dist/reset.css";
 
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   Button,
   Card,
@@ -20,6 +20,7 @@ type TokenResponse = {
 
 export default function AdminLogin() {
   const navigate = useNavigate();
+  const location = useLocation();
   const analyticsBase = (import.meta.env.VITE_ANALYTICS_API_BASE || "http://127.0.0.1:8000").replace(/\/$/, "");
 
   const { token } = antdTheme.useToken();
@@ -45,7 +46,13 @@ export default function AdminLogin() {
       const data = (await response.json()) as TokenResponse;
       localStorage.setItem("analyticsAdminToken", data.access);
       localStorage.setItem("analyticsAdminRefreshToken", data.refresh);
-      navigate("/admin/dashboard");
+      const params = new URLSearchParams(location.search);
+      const next = params.get("next");
+      if (next && next.startsWith("/")) {
+        navigate(next);
+      } else {
+        navigate("/admin/dashboard");
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Login failed.");
     } finally {

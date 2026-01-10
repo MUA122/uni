@@ -28,10 +28,10 @@ class VisitEndSerializer(serializers.Serializer):
 class PageViewSerializer(serializers.Serializer):
     session_id = serializers.UUIDField()
     visitor_id = serializers.UUIDField()
-    path = serializers.CharField()
+    path = serializers.CharField(required=False, allow_blank=True)
     title = serializers.CharField(required=False, allow_blank=True)
-    duration_ms = serializers.IntegerField(required=False, min_value=0)
-    scroll_depth = serializers.IntegerField(required=False, min_value=0)
+    duration_ms = serializers.IntegerField(required=False)
+    scroll_depth = serializers.FloatField(required=False)
     created_at = serializers.DateTimeField(required=False)
 
 
@@ -49,7 +49,7 @@ class EventSerializer(serializers.Serializer):
 class PerformanceSerializer(serializers.Serializer):
     session_id = serializers.UUIDField()
     visitor_id = serializers.UUIDField()
-    path = serializers.CharField()
+    path = serializers.CharField(required=False, allow_blank=True)
     ttfb_ms = serializers.FloatField(required=False)
     fcp_ms = serializers.FloatField(required=False)
     lcp_ms = serializers.FloatField(required=False)
