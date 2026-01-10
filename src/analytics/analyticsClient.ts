@@ -22,7 +22,7 @@ const STARTED_KEY = "analyticsVisitStarted";
 const CONSENT_KEY = "analyticsGeoConsent";
 
 function getVisitorId() {
-  let id = localStorage.getItem(VISITOR_ID_KEY);
+  let id = localStorage.getItem(VISITOR_ID_KEY) ?? "";
   if (!id) {
     id =
       (crypto as any).randomUUID?.() ||
@@ -33,7 +33,7 @@ function getVisitorId() {
 }
 
 function getSessionId() {
-  let id = sessionStorage.getItem(SESSION_ID_KEY);
+  let id = sessionStorage.getItem(SESSION_ID_KEY) ?? "";
   if (!id) {
     id =
       (crypto as any).randomUUID?.() ||
@@ -218,13 +218,14 @@ export async function trackPerformance(metrics: {
 }) {
   const visitorId = getVisitorId();
   const sessionId = getSessionId();
+  const { path: metricPath, ...rest } = metrics;
 
   const payload: any = {
     session_id: sessionId,
     visitor_id: visitorId,
-    path: metrics.path,
+    path: metricPath,
     created_at: new Date().toISOString(),
-    ...metrics,
+    ...rest,
   };
 
   try {
