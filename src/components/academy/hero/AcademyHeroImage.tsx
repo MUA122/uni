@@ -75,7 +75,7 @@ export default function AcademyHeroImage() {
               textAlign: isRTL ? "right" : "left",
               ml: isRTL ? "auto" : 0,
               mr: isRTL ? 0 : "auto",
-              alignItems: isRTL ? "flex-end" : "flex-start",
+              m: 0.2,
             }}
           >
             <Typography
@@ -123,9 +123,7 @@ export default function AcademyHeroImage() {
               sx={{
                 pt: 2,
                 width: { xs: "100%", sm: "auto" },
-                ...(isRTL
-                  ? { flexDirection: { xs: "column", sm: "row-reverse" } }
-                  : {}),
+                gap: isRTL ? 1 : 0,
               }}
             >
               <Button

@@ -1,0 +1,22 @@
+{
+  "tagline": "Pourquoi IAAU",
+  "title": {
+    "before": "Pourquoi choisir",
+    "brand": "IAAU",
+    "after": " ?"
+  },
+  "subtitle": "Un apprentissage moderne, des résultats concrets et une communauté académique bienveillante pour vous aider à progresser.",
+  "learnMore": "En savoir plus",
+  "cards": [
+    {
+      "badge": "Programmes",
+      "title": "Formation alignée sur le marché",
+      "desc": "Des cours pensés selon les besoins réels du marché afin de développer des compétences utiles et rester opérationnel."
+    },
+    {
+      "badge": "Expérience",
+      "title": "Projets pratiques & mentorat",
+      "desc": "Apprenez en pratiquant avec des projets guidés, des retours réguliers et un mentorat pour progresser plus vite."
+    }
+  ]
+}
