@@ -136,22 +136,27 @@ export default function AdminDashboard() {
     []
   );
 
-  const analyticsBase = (import.meta.env.VITE_ANALYTICS_API_BASE || "http://127.0.0.1:8000").replace(
-    /\/$/,
-    ""
-  );
+  const analyticsBase = (
+    import.meta.env.VITE_ANALYTICS_API_BASE || "http://127.0.0.1:8000"
+  ).replace(/\/$/, "");
   const getAccessToken = () =>
-    localStorage.getItem("analyticsAdminToken") || import.meta.env.VITE_ANALYTICS_JWT || "";
-  const getRefreshToken = () => localStorage.getItem("analyticsAdminRefreshToken") || "";
+    localStorage.getItem("analyticsAdminToken") ||
+    import.meta.env.VITE_ANALYTICS_JWT ||
+    "";
+  const getRefreshToken = () =>
+    localStorage.getItem("analyticsAdminRefreshToken") || "";
 
-  const [rangeKey, setRangeKey] = useState<(typeof rangeOptions)[number]["key"]>("7d");
+  const [rangeKey, setRangeKey] =
+    useState<(typeof rangeOptions)[number]["key"]>("7d");
   const [comparePrev, setComparePrev] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const [overview, setOverview] = useState<OverviewResponse | null>(null);
-  const [sessionsSeries, setSessionsSeries] = useState<TimeseriesResponse | null>(null);
-  const [pageviewsSeries, setPageviewsSeries] = useState<TimeseriesResponse | null>(null);
+  const [sessionsSeries, setSessionsSeries] =
+    useState<TimeseriesResponse | null>(null);
+  const [pageviewsSeries, setPageviewsSeries] =
+    useState<TimeseriesResponse | null>(null);
   const [topPages, setTopPages] = useState<TopPageRow[]>([]);
   const [referrers, setReferrers] = useState<ReferrerItem[]>([]);
   const [geoItems, setGeoItems] = useState<GeoItem[]>([]);
@@ -253,8 +258,12 @@ export default function AdminDashboard() {
           fetchJson<{ items: ReferrerItem[] }>(
             `/api/analytics/admin/referrers?range=${rangeKey}`
           ),
-          fetchJson<{ items: GeoItem[] }>(`/api/analytics/admin/geo?range=${rangeKey}`),
-          fetchJson<DevicesResponse>(`/api/analytics/admin/devices?range=${rangeKey}`),
+          fetchJson<{ items: GeoItem[] }>(
+            `/api/analytics/admin/geo?range=${rangeKey}`
+          ),
+          fetchJson<DevicesResponse>(
+            `/api/analytics/admin/devices?range=${rangeKey}`
+          ),
           fetchJson<{ items: PerformanceItem[] }>(
             `/api/analytics/admin/performance?range=${rangeKey}`
           ),
@@ -269,7 +278,8 @@ export default function AdminDashboard() {
         setDevices(devicesRes);
         setPerformance(perfRes.items || []);
       } catch (e) {
-        const message = e instanceof Error ? e.message : "Failed to load analytics";
+        const message =
+          e instanceof Error ? e.message : "Failed to load analytics";
         setError(message);
         if (message.toLowerCase().includes("expired")) {
           handleLogout();
@@ -280,7 +290,14 @@ export default function AdminDashboard() {
     };
 
     void run();
-  }, [rangeKey, comparePrev, navigate, analyticsBase, location.pathname, location.search]);
+  }, [
+    rangeKey,
+    comparePrev,
+    navigate,
+    analyticsBase,
+    location.pathname,
+    location.search,
+  ]);
 
   const trafficItems: TrafficItem[] = useMemo(() => {
     const palette = ["#006E71", "#00A2CE", ORANGE, "#7C3AED", "#94A3B8"];
@@ -323,7 +340,9 @@ export default function AdminDashboard() {
     try {
       const tokenAccess = getAccessToken();
       if (!tokenAccess) {
-        const next = encodeURIComponent(`${location.pathname}${location.search}`);
+        const next = encodeURIComponent(
+          `${location.pathname}${location.search}`
+        );
         navigate(`/admin/login?next=${next}`);
         return;
       }
@@ -374,7 +393,9 @@ export default function AdminDashboard() {
 
   return (
     <ConfigProvider theme={adminTheme}>
-      <Layout style={{ minHeight: "100vh", background: token.colorFillQuaternary }}>
+      <Layout
+        style={{ minHeight: "100vh", background: token.colorFillQuaternary }}
+      >
         <Layout.Sider
           width={240}
           theme="light"
@@ -383,7 +404,14 @@ export default function AdminDashboard() {
             background: token.colorBgContainer,
           }}
         >
-          <div style={{ padding: 20, display: "flex", gap: 12, alignItems: "center" }}>
+          <div
+            style={{
+              padding: 20,
+              display: "flex",
+              gap: 12,
+              alignItems: "center",
+            }}
+          >
             <div
               style={{
                 width: 36,
@@ -411,17 +439,28 @@ export default function AdminDashboard() {
             mode="inline"
             defaultSelectedKeys={["dashboard"]}
             items={[
-              { key: "dashboard", icon: <DashboardOutlined />, label: "Dashboard" },
+              {
+                key: "dashboard",
+                icon: <DashboardOutlined />,
+                label: "Dashboard",
+              },
               { key: "reports", icon: <BarChartOutlined />, label: "Reports" },
             ]}
           />
 
-          <div style={{ position: "absolute", bottom: 16, left: 16, right: 16 }}>
+          <div
+            style={{ position: "absolute", bottom: 16, left: 16, right: 16 }}
+          >
             <Space direction="vertical" size={8} style={{ width: "100%" }}>
               <Button icon={<SettingOutlined />} block>
                 Settings
               </Button>
-              <Button danger icon={<LogoutOutlined />} block onClick={handleLogout}>
+              <Button
+                danger
+                icon={<LogoutOutlined />}
+                block
+                onClick={handleLogout}
+              >
                 Logout
               </Button>
             </Space>
@@ -446,7 +485,11 @@ export default function AdminDashboard() {
 
               <Space size={10} wrap>
                 <Dropdown
-                  menu={{ items: rangeItems, onClick: onRangeClick, selectedKeys: [rangeKey] }}
+                  menu={{
+                    items: rangeItems,
+                    onClick: onRangeClick,
+                    selectedKeys: [rangeKey],
+                  }}
                   trigger={["click"]}
                 >
                   <Button icon={<CalendarOutlined />}>
@@ -460,13 +503,21 @@ export default function AdminDashboard() {
                 </Space>
 
                 <Button icon={<SettingOutlined />} />
-                <Button type="primary" icon={<DownloadOutlined />} onClick={handleExportCsv}>
+                <Button
+                  type="primary"
+                  icon={<DownloadOutlined />}
+                  onClick={handleExportCsv}
+                >
                   Export CSV
                 </Button>
               </Space>
             </div>
 
-            {error && <div style={{ marginBottom: 12, color: token.colorError }}>{error}</div>}
+            {error && (
+              <div style={{ marginBottom: 12, color: token.colorError }}>
+                {error}
+              </div>
+            )}
 
             {/* KPI cards */}
             <div
@@ -478,21 +529,33 @@ export default function AdminDashboard() {
               }}
             >
               <Card style={{ borderRadius: 18 }}>
-                <Statistic title="Sessions" value={kpi?.sessions ?? 0} valueStyle={{ fontWeight: 800 }} />
+                <Statistic
+                  title="Sessions"
+                  value={kpi?.sessions ?? 0}
+                  valueStyle={{ fontWeight: 800 }}
+                />
                 <Button type="primary" size="small" style={{ marginTop: 12 }}>
                   View Report
                 </Button>
               </Card>
 
               <Card style={{ borderRadius: 18 }}>
-                <Statistic title="Unique Visitors" value={kpi?.unique_visitors ?? 0} valueStyle={{ fontWeight: 800 }} />
+                <Statistic
+                  title="Unique Visitors"
+                  value={kpi?.unique_visitors ?? 0}
+                  valueStyle={{ fontWeight: 800 }}
+                />
                 <Button type="primary" size="small" style={{ marginTop: 12 }}>
                   View Report
                 </Button>
               </Card>
 
               <Card style={{ borderRadius: 18 }}>
-                <Statistic title="Pageviews" value={kpi?.pageviews ?? 0} valueStyle={{ fontWeight: 800 }} />
+                <Statistic
+                  title="Pageviews"
+                  value={kpi?.pageviews ?? 0}
+                  valueStyle={{ fontWeight: 800 }}
+                />
                 <Button type="primary" size="small" style={{ marginTop: 12 }}>
                   View Report
                 </Button>
@@ -521,7 +584,11 @@ export default function AdminDashboard() {
               </Card>
 
               <Card style={{ borderRadius: 18 }}>
-                <Statistic title="Conversions" value={kpi?.conversions ?? 0} valueStyle={{ fontWeight: 800 }} />
+                <Statistic
+                  title="Conversions"
+                  value={kpi?.conversions ?? 0}
+                  valueStyle={{ fontWeight: 800 }}
+                />
                 <Button type="primary" size="small" style={{ marginTop: 12 }}>
                   View Report
                 </Button>
@@ -529,10 +596,23 @@ export default function AdminDashboard() {
             </div>
 
             {/* Main row */}
-            <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: 16, marginBottom: 16 }}>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "2fr 1fr",
+                gap: 16,
+                marginBottom: 16,
+              }}
+            >
               <Card
-                title={<span style={{ fontWeight: 700 }}>Sessions & Pageviews</span>}
-                extra={<Typography.Text type="secondary">{selectedRangeLabel}</Typography.Text>}
+                title={
+                  <span style={{ fontWeight: 700 }}>Sessions & Pageviews</span>
+                }
+                extra={
+                  <Typography.Text type="secondary">
+                    {selectedRangeLabel}
+                  </Typography.Text>
+                }
                 style={{ borderRadius: 18 }}
               >
                 <div style={{ height: 280 }}>
@@ -545,55 +625,125 @@ export default function AdminDashboard() {
                       }))}
                       margin={{ top: 10, right: 12, left: 4, bottom: 0 }}
                     >
-                      <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.35} />
-                      <XAxis dataKey="date" tickLine={false} axisLine={false} fontSize={12} />
+                      <CartesianGrid
+                        strokeDasharray="3 3"
+                        strokeOpacity={0.35}
+                      />
+                      <XAxis
+                        dataKey="date"
+                        tickLine={false}
+                        axisLine={false}
+                        fontSize={12}
+                      />
                       <YAxis tickLine={false} axisLine={false} fontSize={12} />
                       <Tooltip />
-                      <Line type="monotone" dataKey="sessions" stroke="#00A2CE" strokeWidth={2.5} dot={false} />
-                      <Line type="monotone" dataKey="pageviews" stroke={ORANGE} strokeWidth={2.5} dot={false} />
+                      <Line
+                        type="monotone"
+                        dataKey="sessions"
+                        stroke="#00A2CE"
+                        strokeWidth={2.5}
+                        dot={false}
+                      />
+                      <Line
+                        type="monotone"
+                        dataKey="pageviews"
+                        stroke={ORANGE}
+                        strokeWidth={2.5}
+                        dot={false}
+                      />
                     </LineChart>
                   </ResponsiveContainer>
                 </div>
               </Card>
 
-              <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+              <div
+                style={{ display: "flex", flexDirection: "column", gap: 16 }}
+              >
                 <Card style={{ borderRadius: 18 }}>
                   <Space size={12}>
-                    <Avatar size={42} src="https://i.pravatar.cc/120?img=12" />
+                    <Avatar size={42} />
                     <div>
-                      <Typography.Text strong>Jimmy Sullivan</Typography.Text>
+                      <Typography.Text strong>DR.Noha</Typography.Text>
                       <br />
-                      <Typography.Text type="secondary">@jsullivans</Typography.Text>
+                      <Typography.Text type="secondary">
+                        @drnoha
+                      </Typography.Text>
                     </div>
                   </Space>
                 </Card>
 
-                <Card title={<span style={{ fontWeight: 700 }}>Top Pages</span>} style={{ borderRadius: 18 }}>
+                <Card
+                  title={<span style={{ fontWeight: 700 }}>Top Pages</span>}
+                  style={{ borderRadius: 18 }}
+                >
                   {(topPages || []).slice(0, 4).map((p) => (
-                    <div key={p.path} style={{ display: "flex", justifyContent: "space-between", padding: "6px 0" }}>
+                    <div
+                      key={p.path}
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        padding: "6px 0",
+                      }}
+                    >
                       <Typography.Text>{p.path}</Typography.Text>
-                      <Typography.Text strong>{numberFormatter.format(p.pageviews)}</Typography.Text>
+                      <Typography.Text strong>
+                        {numberFormatter.format(p.pageviews)}
+                      </Typography.Text>
                     </div>
                   ))}
-                  {topPages.length === 0 && <Typography.Text type="secondary">No data yet</Typography.Text>}
+                  {topPages.length === 0 && (
+                    <Typography.Text type="secondary">
+                      No data yet
+                    </Typography.Text>
+                  )}
                 </Card>
 
-                <Card title={<span style={{ fontWeight: 700 }}>Device & Browser</span>} style={{ borderRadius: 18 }}>
+                <Card
+                  title={
+                    <span style={{ fontWeight: 700 }}>Device & Browser</span>
+                  }
+                  style={{ borderRadius: 18 }}
+                >
                   <div style={{ display: "grid", gap: 10 }}>
-                    <div style={{ display: "flex", justifyContent: "space-between" }}>
-                      <Typography.Text strong>{devices?.devices?.[0]?.type ?? "desktop"}</Typography.Text>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <Typography.Text strong>
+                        {devices?.devices?.[0]?.type ?? "desktop"}
+                      </Typography.Text>
                       <Typography.Text type="secondary">
-                        {numberFormatter.format(devices?.devices?.[0]?.count ?? 0)}
+                        {numberFormatter.format(
+                          devices?.devices?.[0]?.count ?? 0
+                        )}
                       </Typography.Text>
                     </div>
-                    <div style={{ display: "flex", justifyContent: "space-between" }}>
-                      <Typography.Text strong>{devices?.browsers?.[0]?.name ?? "Chrome"}</Typography.Text>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <Typography.Text strong>
+                        {devices?.browsers?.[0]?.name ?? "Chrome"}
+                      </Typography.Text>
                       <Typography.Text type="secondary">
-                        {numberFormatter.format(devices?.browsers?.[0]?.count ?? 0)}
+                        {numberFormatter.format(
+                          devices?.browsers?.[0]?.count ?? 0
+                        )}
                       </Typography.Text>
                     </div>
-                    <div style={{ display: "flex", justifyContent: "space-between" }}>
-                      <Typography.Text strong>{devices?.os?.[0]?.name ?? "Windows"}</Typography.Text>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <Typography.Text strong>
+                        {devices?.os?.[0]?.name ?? "Windows"}
+                      </Typography.Text>
                       <Typography.Text type="secondary">
                         {numberFormatter.format(devices?.os?.[0]?.count ?? 0)}
                       </Typography.Text>
@@ -604,7 +754,14 @@ export default function AdminDashboard() {
             </div>
 
             {/* Bottom row */}
-            <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: 16, marginBottom: 16 }}>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "2fr 1fr",
+                gap: 16,
+                marginBottom: 16,
+              }}
+            >
               <TopPagesTable
                 rows={topPages.map((p) => ({
                   path: p.path,
@@ -616,21 +773,36 @@ export default function AdminDashboard() {
               <TrafficChart items={trafficItems} />
             </div>
 
-            <div style={{ display: "grid", gridTemplateColumns: "1.2fr 1fr", gap: 16 }}>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1.2fr 1fr",
+                gap: 16,
+              }}
+            >
               <PerformanceTable items={performance} />
               <Card
                 title={<span style={{ fontWeight: 700 }}>Top Locations</span>}
-                extra={<Typography.Text type="secondary">{selectedRangeLabel}</Typography.Text>}
+                extra={
+                  <Typography.Text type="secondary">
+                    {selectedRangeLabel}
+                  </Typography.Text>
+                }
                 style={{ borderRadius: 18 }}
               >
                 {topLocations.length === 0 ? (
-                  <Typography.Text type="secondary">No geo data yet</Typography.Text>
+                  <Typography.Text type="secondary">
+                    No geo data yet
+                  </Typography.Text>
                 ) : (
                   <div style={{ display: "grid", gap: 10 }}>
                     {topLocations.map((item) => (
                       <div
                         key={item.label}
-                        style={{ display: "flex", justifyContent: "space-between" }}
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                        }}
                       >
                         <Typography.Text>{item.label}</Typography.Text>
                         <Typography.Text strong>
@@ -643,7 +815,11 @@ export default function AdminDashboard() {
               </Card>
             </div>
 
-            {loading && <div style={{ marginTop: 12, opacity: 0.7 }}>Loading analytics...</div>}
+            {loading && (
+              <div style={{ marginTop: 12, opacity: 0.7 }}>
+                Loading analytics...
+              </div>
+            )}
           </Layout.Content>
         </Layout>
       </Layout>
