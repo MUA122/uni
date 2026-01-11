@@ -133,3 +133,29 @@ def best_effort_public_ip(request) -> str:
     if ip and is_public_ip(ip):
         return ip
     return ""
+
+
+@lru_cache(maxsize=50_000)
+def geo_lookup_ip(ip: str) -> Tuple[str, str]:
+    """Resolve IP to (country, city) using GeoLite2 if configured."""
+    if not ip or not is_public_ip(ip):
+        return ("", "")
+
+    mmdb_path = getattr(settings, "ANALYTICS_GEOIP_CITY_MMDB", "")
+    if not mmdb_path:
+        return ("", "")
+
+    try:
+        import geoip2.database  # type: ignore
+
+        with geoip2.database.Reader(mmdb_path) as reader:
+            resp = reader.city(ip)
+            country = ""
+            city = ""
+            if getattr(resp, "country", None):
+                country = resp.country.name or resp.country.iso_code or ""
+            if getattr(resp, "city", None):
+                city = resp.city.name or ""
+            return (country or "", city or "")
+    except Exception:
+        return ("", "")

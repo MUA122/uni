@@ -50,6 +50,25 @@ function getDeviceType() {
   return "desktop";
 }
 
+function getBrowserName() {
+  const ua = navigator.userAgent.toLowerCase();
+  if (ua.includes("edg/")) return "Edge";
+  if (ua.includes("chrome/")) return "Chrome";
+  if (ua.includes("safari/")) return "Safari";
+  if (ua.includes("firefox/")) return "Firefox";
+  return "Other";
+}
+
+function getOsName() {
+  const ua = navigator.userAgent.toLowerCase();
+  if (ua.includes("windows")) return "Windows";
+  if (ua.includes("android")) return "Android";
+  if (ua.includes("iphone") || ua.includes("ipad") || ua.includes("ipod")) return "iOS";
+  if (ua.includes("mac os") || ua.includes("macintosh")) return "macOS";
+  if (ua.includes("linux")) return "Linux";
+  return "Other";
+}
+
 function getUtmParams(): UTMParams {
   const params = new URLSearchParams(window.location.search);
   const utm: UTMParams = {};
@@ -102,6 +121,8 @@ export async function startVisit(extra?: GeoData) {
     referrer: document.referrer || "",
     landing_path: window.location.pathname,
     device_type: getDeviceType(),
+    browser: getBrowserName(),
+    os: getOsName(),
     language: navigator.language || "",
     ...getUtmParams(),
     ...extra,

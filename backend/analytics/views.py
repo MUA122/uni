@@ -23,6 +23,8 @@ from .serializers import (
 from .throttles import IngestBurstThrottle, IngestThrottle
 from .utils import (
     classify_referrer,
+    best_effort_public_ip,
+    geo_lookup_ip,
     parse_range_param,
     percentile,
     previous_range,
@@ -79,6 +81,14 @@ class VisitStartView(APIView):
         data = serializer.validated_data
         started_at = data.get("started_at") or timezone.now()
 
+        client_country = data.get("country", "")
+        client_city = data.get("city", "")
+        ip = best_effort_public_ip(request)
+        geoip_country, geoip_city = geo_lookup_ip(ip)
+
+        effective_country = client_country or geoip_country
+        effective_city = client_city or geoip_city
+
         visit, created = Visit.objects.get_or_create(
             session_id=data["session_id"],
             defaults={
@@ -95,8 +105,12 @@ class VisitStartView(APIView):
                 "browser": data.get("browser", ""),
                 "os": data.get("os", ""),
                 "language": data.get("language", ""),
-                "country": data.get("country", ""),
-                "city": data.get("city", ""),
+                "country": effective_country,
+                "city": effective_city,
+                "client_country": client_country,
+                "client_city": client_city,
+                "geoip_country": geoip_country,
+                "geoip_city": geoip_city,
             },
         )
 
@@ -116,9 +130,12 @@ class VisitStartView(APIView):
                 "browser": data.get("browser", ""),
                 "os": data.get("os", ""),
                 "language": data.get("language", ""),
-                # Geo can be added later; allow overwrite only if provided and non-empty.
-                "country": data.get("country", "") or visit.country,
-                "city": data.get("city", "") or visit.city,
+                "client_country": client_country or visit.client_country,
+                "client_city": client_city or visit.client_city,
+                "geoip_country": geoip_country or visit.geoip_country,
+                "geoip_city": geoip_city or visit.geoip_city,
+                "country": effective_country or visit.country,
+                "city": effective_city or visit.city,
             }.items():
                 if getattr(visit, field) != value:
                     setattr(visit, field, value)

@@ -24,6 +24,10 @@ class Visit(models.Model):
 
     country = models.CharField(max_length=64, blank=True, default="")
     city = models.CharField(max_length=128, blank=True, default="")
+    client_country = models.CharField(max_length=64, blank=True, default="")
+    client_city = models.CharField(max_length=128, blank=True, default="")
+    geoip_country = models.CharField(max_length=64, blank=True, default="")
+    geoip_city = models.CharField(max_length=128, blank=True, default="")
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
