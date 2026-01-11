@@ -291,14 +291,16 @@ export default function AdminDashboard() {
     }));
   }, [referrers]);
 
-  const topCountries = useMemo(() => {
+  const topLocations = useMemo(() => {
     const counts = new Map<string, number>();
     geoItems.forEach((item) => {
-      const key = item.country || "Unknown";
+      const country = item.country || "Unknown";
+      const city = item.city || "";
+      const key = city ? `${country} — ${city}` : country;
       counts.set(key, (counts.get(key) || 0) + item.count);
     });
     return Array.from(counts.entries())
-      .map(([country, count]) => ({ country, count }))
+      .map(([label, count]) => ({ label, count }))
       .sort((a, b) => b.count - a.count)
       .slice(0, 5);
   }, [geoItems]);
@@ -617,20 +619,20 @@ export default function AdminDashboard() {
             <div style={{ display: "grid", gridTemplateColumns: "1.2fr 1fr", gap: 16 }}>
               <PerformanceTable items={performance} />
               <Card
-                title={<span style={{ fontWeight: 700 }}>Top Countries</span>}
+                title={<span style={{ fontWeight: 700 }}>Top Locations</span>}
                 extra={<Typography.Text type="secondary">{selectedRangeLabel}</Typography.Text>}
                 style={{ borderRadius: 18 }}
               >
-                {topCountries.length === 0 ? (
+                {topLocations.length === 0 ? (
                   <Typography.Text type="secondary">No geo data yet</Typography.Text>
                 ) : (
                   <div style={{ display: "grid", gap: 10 }}>
-                    {topCountries.map((item) => (
+                    {topLocations.map((item) => (
                       <div
-                        key={item.country}
+                        key={item.label}
                         style={{ display: "flex", justifyContent: "space-between" }}
                       >
-                        <Typography.Text>{item.country}</Typography.Text>
+                        <Typography.Text>{item.label}</Typography.Text>
                         <Typography.Text strong>
                           {numberFormatter.format(item.count)}
                         </Typography.Text>
