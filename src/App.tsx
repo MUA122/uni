@@ -7,6 +7,8 @@ import { createTheme } from "@mui/material/styles";
 
 import { theme as baseTheme } from "./theme";
 import LangLayout from "./routing/LangLayout";
+import academyLogo from "/imgs/iaau.png";
+import iusatLogo from "/imgs/iusat.png";
 
 /* ===============================
    University Components
@@ -93,7 +95,10 @@ function AcademyHomePage() {
 
 function AdminRoute({ children }: { children: React.ReactNode }) {
   const location = useLocation();
-  const token = typeof window !== "undefined" ? localStorage.getItem("analyticsAdminToken") : null;
+  const token =
+    typeof window !== "undefined"
+      ? localStorage.getItem("analyticsAdminToken")
+      : null;
 
   if (!token) {
     const next = encodeURIComponent(`${location.pathname}${location.search}`);
@@ -124,14 +129,14 @@ function AppWithDirectionTheme() {
           : "IAAU | International Academy of Architecture & Urbanism";
 
       // eslint-disable-next-line react-hooks/immutability
-      setFavicon("/imgs/iaau.png");
+      setFavicon(academyLogo);
     } else {
       document.title =
         currentLang === "ar"
           ? "IUSAT | الجامعة الدولية"
           : "IUSAT | International University";
 
-      setFavicon("/imgs/favicon.png");
+      setFavicon(iusatLogo);
     }
   }, [currentLang, isAcademy]);
 
