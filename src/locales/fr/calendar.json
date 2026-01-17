@@ -1,0 +1,26 @@
+{
+  "title": "Calendrier",
+  "subtitle": "Choisissez le mois / l'année et filtrez les événements",
+  "today": "Aujourd'hui",
+  "dayDetails": "Détails du jour",
+  "noEvents": "Aucun événement pour ce jour !",
+  "filters": {
+    "all": "Tous",
+    "events": "Événements",
+    "important": "Important"
+  },
+  "events": {
+    "openDay": "Journée portes ouvertes à l’académie IAAU - Rejoignez-nous pour plus de détails.",
+    "iusatDay": "Journée d'activité spéciale IUSAT.",
+    "admissionsOpen": "Les admissions sont ouvertes, postulez maintenant !"
+  },
+  "weekDays": {
+    "sun": "DIM",
+    "mon": "LUN",
+    "tue": "MAR",
+    "wed": "MER",
+    "thu": "JEU",
+    "fri": "VEN",
+    "sat": "SAM"
+  }
+}

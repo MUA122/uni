@@ -1,0 +1,26 @@
+{
+  "title": "Calendar",
+  "subtitle": "Choose month / year & filter events",
+  "today": "Today",
+  "dayDetails": "Day Details",
+  "noEvents": "No events in this day !",
+  "filters": {
+    "all": "All",
+    "events": "Events",
+    "important": "Important"
+  },
+  "events": {
+    "iaauDay": "Open Day at IAAU academy - Join us for full details.",
+    "iusatDay": "IUSAT special activity day.",
+    "unescoDay": "UNESCO announces a new partnership with IUSAT to promote sustainable education."
+  },
+  "weekDays": {
+    "sun": "SUN",
+    "mon": "MON",
+    "tue": "TUE",
+    "wed": "WED",
+    "thu": "THU",
+    "fri": "FRI",
+    "sat": "SAT"
+  }
+}

@@ -27,6 +27,9 @@ i18n
       "heroAcademy",
       "navAcademy",
       "whyChooseIAAU",
+      "latestNews",
+      "calendar",
+      "meetOurPartners",
     ],
     defaultNS: "nav",
 

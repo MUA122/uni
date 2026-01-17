@@ -34,6 +34,10 @@ import AcademyHeroImage from "./components/academy/hero/AcademyHeroImage";
 import AdminDashboard from "./components/admin/AdminDashboard";
 import AdminLogin from "./components/admin/AdminLogin";
 import WhyChooseIAAU from "./components/academy/component/WhyChoose";
+import LatestNews from "./components/latest/LatestNews";
+import MeetOurPartners from "./components/meet/MeetOurPartners";
+import ModernCalendar from "./components/calendar/ModernCalendar";
+import { calendarEvents } from "./components/calendar/calendarData";
 
 /* ===============================
    Pages
@@ -44,7 +48,6 @@ function HomePage() {
       <Header />
       <HeroVideo />
       <StudyResearch />
-
       <Divider
         sx={{
           height: 3,
@@ -53,9 +56,7 @@ function HomePage() {
             "linear-gradient(90deg, transparent, rgba(0,110,113,0.45), transparent)",
         }}
       />
-
       <InternationalCollaboration />
-
       <Divider
         sx={{
           height: 3,
@@ -64,9 +65,7 @@ function HomePage() {
             "linear-gradient(90deg, transparent, rgba(0,110,113,0.45), transparent)",
         }}
       />
-
       <OurAcademies />
-
       <Divider
         sx={{
           height: 3,
@@ -75,8 +74,35 @@ function HomePage() {
             "linear-gradient(90deg, transparent, rgba(0,110,113,0.45), transparent)",
         }}
       />
-
       <AppliNow />
+      <Divider
+        sx={{
+          height: 3,
+          border: "none",
+          background:
+            "linear-gradient(90deg, transparent, rgba(0,110,113,0.45), transparent)",
+        }}
+      />
+      <LatestNews />
+      <Divider
+        sx={{
+          height: 3,
+          border: "none",
+          background:
+            "linear-gradient(90deg, transparent, rgba(0,110,113,0.45), transparent)",
+        }}
+      />
+      <MeetOurPartners />
+      <Divider
+        sx={{
+          height: 3,
+          border: "none",
+          background:
+            "linear-gradient(90deg, transparent, rgba(0,110,113,0.45), transparent)",
+        }}
+      />
+      <ModernCalendar data={calendarEvents} />
+      ;
       <Footer />
     </>
   );

@@ -1,0 +1,15 @@
+{
+  "eyebrow": "Rencontrez nos partenaires",
+  "title": "Rencontrez nos partenaires",
+  "subtitle": "",
+  "items": {
+    "opening": {
+      "title": "Ouverture",
+      "desc": "Ceci est un texte fictif qui peut être remplacé plus tard par un vrai contenu. Il sert uniquement d’exemple."
+    },
+    "microCredentials": {
+      "title": "Micro-certifications",
+      "desc": "Ceci est un texte fictif qui peut être remplacé plus tard par un vrai contenu. Il sert uniquement d’exemple."
+    }
+  }
+}

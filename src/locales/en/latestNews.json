@@ -1,0 +1,15 @@
+{
+  "eyebrow": "Latest news",
+  "title": "Latest news",
+  "subtitle": "",
+  "items": {
+    "opening": {
+      "title": "opening",
+      "desc": "opening description "
+    },
+    "microCredentials": {
+      "title": "Micro-Credentials",
+      "desc": "Micro-Credentials description "
+    }
+  }
+}

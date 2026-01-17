@@ -11,17 +11,18 @@
     "close": "Close",
     "comingSoon": "Coming Soon",
     "lockedHint": "Tap to view details",
+    "internationalAcademyOf": "International Academy of",
     "popupText": "This academy includes multiple faculties. Full academic details will be available soon.",
     "items": {
       "iaau": {
-        "title": "International Academy of Architecture and Urbanism",
+        "title": "Architecture and Urbanism",
         "faculties": {
           "artsDesign": "Faculty of Arts and Design",
           "architectureUrbanism": "Faculty of Architecture and Urbanism"
         }
       },
       "aest": {
-        "title": "Academy of Engineering, Sciences & Information Technology",
+        "title": "Engineering, Sciences & Information Technology",
         "faculties": {
           "computingAI": "Faculty of Computing, Information, and Artificial Intelligence",
           "science": "Faculty of Science",
@@ -29,14 +30,14 @@
         }
       },
       "aem": {
-        "title": "Academy of Economics and Management",
+        "title": "Economics and Management",
         "faculties": {
           "tourismHospitality": "Faculty of Tourism and Hospitality",
           "businessAdministration": "Faculty of Business Administration"
         }
       },
       "ahss": {
-        "title": "Academy of Humanities and Social Sciences",
+        "title": "Humanities and Social Sciences",
         "faculties": {
           "media": "Faculty of Media",
           "languagesTranslation": "Faculty of Languages and Translation",
@@ -45,7 +46,7 @@
         }
       },
       "med": {
-        "title": "International Medical Academy",
+        "title": " Medical ",
         "faculties": {
           "nursing": "Faculty of Nursing",
           "physicalTherapy": "Faculty of Physical Therapy",
