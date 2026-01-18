@@ -5,15 +5,15 @@
     "cards": {
       "academics": {
         "title": "Macro-credentials",
-        "desc": "Comprehensive degree programs designed for in-depth knowledge and skills."
+        "desc": "B.Sc./ M.Sc. Programs"
       },
       "micro": {
         "title": "Micro-credentials",
-        "desc": "Short, focused learning paths aligned with international standards."
+        "desc": "Professional Certificates"
       },
       "unesco": {
         "title": "UNESCO Chairs",
-        "desc": "Global academic collaboration under UNESCO-supported initiatives."
+        "desc": "Research & innovate "
       },
       "innovation": {
         "title": "I-Hub Innovation",

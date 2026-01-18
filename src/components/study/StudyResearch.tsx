@@ -13,15 +13,15 @@ import {
 import SchoolRoundedIcon from "@mui/icons-material/SchoolRounded";
 import WorkspacePremiumRoundedIcon from "@mui/icons-material/WorkspacePremiumRounded";
 import AccountBalanceRoundedIcon from "@mui/icons-material/AccountBalanceRounded";
-import LightbulbRoundedIcon from "@mui/icons-material/LightbulbRounded";
 import KeyboardArrowDownRoundedIcon from "@mui/icons-material/KeyboardArrowDownRounded";
 import ArrowForwardRoundedIcon from "@mui/icons-material/ArrowForwardRounded";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 import SectionShell from "../layout/SectionShell";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 
-type CardKey = "academics" | "micro" | "unesco" | "innovation";
+type CardKey = "academics" | "micro" | "unesco";
 
 type DropdownItem = {
   label: string;
@@ -124,16 +124,17 @@ function CardShell({
             >
               <Typography
                 sx={{
-                  fontWeight: 900,
-                  letterSpacing: "-0.02em",
-                  fontSize: { xs: 14.5, md: 15.5 },
-                  color: theme.palette.text.primary,
-                  whiteSpace: "nowrap",
+                  mt: 0.7,
+                  fontSize: { xs: 12.75, md: 13.25 },
+                  lineHeight: 1.55,
+                  color: alpha(theme.palette.text.primary, 0.68),
+                  display: "-webkit-box",
+                  WebkitLineClamp: 2,
+                  WebkitBoxOrient: "vertical",
                   overflow: "hidden",
-                  textOverflow: "ellipsis",
                 }}
               >
-                {title}
+                {desc}
               </Typography>
 
               <Box
@@ -157,17 +158,16 @@ function CardShell({
 
             <Typography
               sx={{
-                mt: 0.7,
-                fontSize: { xs: 12.75, md: 13.25 },
-                lineHeight: 1.55,
-                color: alpha(theme.palette.text.primary, 0.68),
-                display: "-webkit-box",
-                WebkitLineClamp: 2,
-                WebkitBoxOrient: "vertical",
+                fontWeight: 900,
+                letterSpacing: "-0.02em",
+                fontSize: { xs: 14.5, md: 15.5 },
+                color: theme.palette.text.primary,
+                whiteSpace: "nowrap",
                 overflow: "hidden",
+                textOverflow: "ellipsis",
               }}
             >
-              {desc}
+              {title}
             </Typography>
           </Box>
         </Stack>
@@ -216,14 +216,24 @@ function CardShell({
                     {item.label}
                   </Typography>
                 </Box>
-
-                <ArrowForwardRoundedIcon
-                  sx={{
-                    fontSize: 18,
-                    mt: 0.35,
-                    color: alpha(theme.palette.text.primary, 0.45),
-                  }}
-                />
+                {isRTL && (
+                  <ArrowBackIcon
+                    sx={{
+                      fontSize: 18,
+                      mt: 0.35,
+                      color: alpha(theme.palette.text.primary, 0.45),
+                    }}
+                  />
+                )}
+                {!isRTL && (
+                  <ArrowForwardRoundedIcon
+                    sx={{
+                      fontSize: 18,
+                      mt: 0.35,
+                      color: alpha(theme.palette.text.primary, 0.45),
+                    }}
+                  />
+                )}
               </Box>
             ))}
           </Stack>
@@ -284,14 +294,6 @@ export default function StudyResearchPills() {
           label: t(
             "studyResearch.dropdown.unesco.chair1522",
             "Chair UNESCO ID: 1522EG2026\nSustainable Urban Regeneration: Bridging Heritage, Planning, and Digital Innovation",
-          ),
-        },
-      ],
-      innovation: [
-        {
-          label: t(
-            "studyResearch.dropdown.innovation.startups",
-            "Startups & incubation",
           ),
         },
       ],
@@ -361,7 +363,7 @@ export default function StudyResearchPills() {
             onToggle={handleToggle}
           />
 
-          <CardShell
+          {/* <CardShell
             cardKey="innovation"
             icon={<LightbulbRoundedIcon sx={{ fontSize: 18 }} />}
             title={t(
@@ -376,7 +378,7 @@ export default function StudyResearchPills() {
             expanded={expandedKey === "innovation"}
             items={dropdownData.innovation}
             onToggle={handleToggle}
-          />
+          /> */}
         </Box>
       </Box>
     </SectionShell>

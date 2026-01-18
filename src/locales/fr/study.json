@@ -5,15 +5,15 @@
     "cards": {
       "academics": {
         "title": "Macro-certifications",
-        "desc": "Programmes complets conçus pour développer des connaissances et compétences approfondies."
+        "desc": "Programmes de licence/master"
       },
       "micro": {
         "title": "Micro-certifications",
-        "desc": "Parcours d’apprentissage courts et ciblés, alignés sur les normes internationales."
+        "desc": "Certificats professionnels"
       },
       "unesco": {
         "title": "Chaires UNESCO",
-        "desc": "Collaboration académique mondiale dans le cadre d’initiatives soutenues par l’UNESCO."
+        "desc": "Recherche et innovation"
       },
       "innovation": {
         "title": "Innovation I-Hub",

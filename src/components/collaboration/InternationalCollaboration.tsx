@@ -213,60 +213,6 @@ export default function InternationalCollaboration() {
                     justifyContent="center"
                     sx={{ width: "100%" }}
                   >
-                    {/* IUSAT Pill */}
-                    <Box
-                      sx={{
-                        width: "100%",
-                        borderRadius: 8,
-                        background: "#fff",
-                        display: "grid",
-                        placeItems: "center",
-
-                        py: isRTL ? { xs: 2.0, md: 2.4 } : { xs: 2.6, md: 3.2 },
-                        px: isRTL ? { xs: 1.6, md: 2.0 } : { xs: 2.2, md: 2.8 },
-
-                        boxShadow: "0 22px 50px rgba(0,0,0,0.20)",
-                        transition: "transform 240ms ease",
-                        "&:hover": { transform: "scale(1.03)" },
-                      }}
-                    >
-                      <Box
-                        component="img"
-                        src={iusatLogo}
-                        alt="IUSAT"
-                        sx={{
-                          width: isRTL ? "48%" : "40%",
-                          maxWidth: isRTL
-                            ? { xs: 95, md: 120 }
-                            : { xs: 130, md: 170 },
-                          height: "auto",
-                          objectFit: "contain",
-                        }}
-                      />
-                      <Typography
-                        sx={{
-                          color: "#0B6F73",
-                          fontWeight: 900,
-                          fontSize: isRTL ? 15 : 18,
-                        }}
-                      >
-                        IUSAT
-                      </Typography>
-                    </Box>
-
-                    {/* Handshake */}
-                    <Box sx={{ display: "grid", placeItems: "center" }}>
-                      <HandshakeRoundedIcon
-                        sx={{
-                          fontSize: isRTL
-                            ? { xs: 22, md: 24 }
-                            : { xs: 26, md: 28 },
-                          color: "rgba(255,255,255,0.95)",
-                          filter: "drop-shadow(0 10px 22px rgba(0,0,0,0.35))",
-                        }}
-                      />
-                    </Box>
-
                     {/* UNESCO Pill */}
                     <Box
                       sx={{
@@ -307,6 +253,59 @@ export default function InternationalCollaboration() {
                         }}
                       >
                         UNESCO
+                      </Typography>
+                    </Box>
+
+                    {/* Handshake */}
+                    <Box sx={{ display: "grid", placeItems: "center" }}>
+                      <HandshakeRoundedIcon
+                        sx={{
+                          fontSize: isRTL
+                            ? { xs: 22, md: 24 }
+                            : { xs: 26, md: 28 },
+                          color: "rgba(255,255,255,0.95)",
+                          filter: "drop-shadow(0 10px 22px rgba(0,0,0,0.35))",
+                        }}
+                      />
+                    </Box>
+                    {/* IUSAT Pill */}
+                    <Box
+                      sx={{
+                        width: "100%",
+                        borderRadius: 8,
+                        background: "#fff",
+                        display: "grid",
+                        placeItems: "center",
+
+                        py: isRTL ? { xs: 2.0, md: 2.4 } : { xs: 2.6, md: 3.2 },
+                        px: isRTL ? { xs: 1.6, md: 2.0 } : { xs: 2.2, md: 2.8 },
+
+                        boxShadow: "0 22px 50px rgba(0,0,0,0.20)",
+                        transition: "transform 240ms ease",
+                        "&:hover": { transform: "scale(1.03)" },
+                      }}
+                    >
+                      <Box
+                        component="img"
+                        src={iusatLogo}
+                        alt="IUSAT"
+                        sx={{
+                          width: isRTL ? "48%" : "40%",
+                          maxWidth: isRTL
+                            ? { xs: 95, md: 120 }
+                            : { xs: 130, md: 170 },
+                          height: "auto",
+                          objectFit: "contain",
+                        }}
+                      />
+                      <Typography
+                        sx={{
+                          color: "#0B6F73",
+                          fontWeight: 900,
+                          fontSize: isRTL ? 15 : 18,
+                        }}
+                      >
+                        IUSAT
                       </Typography>
                     </Box>
                   </Stack>

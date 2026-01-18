@@ -147,7 +147,7 @@ function DesktopNav({ isRTL }: { isRTL: boolean }) {
     <Box
       sx={{
         display: { xs: "none", md: "flex" },
-        gap: 0.5,
+        gap: 1.5,
         alignItems: "center",
         flexDirection: isRTL ? "row-reverse" : "row",
         justifyContent: "center",
@@ -385,7 +385,6 @@ function MobileNavDrawer({
             }}
           />
         </Box>
-
 
         {NAV.map((section) =>
           section.items.length === 0 ? (
@@ -878,7 +877,7 @@ export default function Header() {
                   borderRadius: "50px",
                   px: 2,
                   py: 0.6,
-                  width: { sm: 180, md: "auto" },
+                  width: { sm: 180, md: "20%" },
                 }}
               >
                 <SearchIcon sx={{ fontSize: 18, color: "rgba(0,0,0,0.4)" }} />
