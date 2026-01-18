@@ -1,9 +1,8 @@
 {
   "top": {
-    "learn": "Apprendre",
-    "research": "Recherche",
-    "innovate": "Innovation",
-    "consultancy": "Consultance",
+    "study": "Études et Recherche",
+    "collaboration": "Collaboration Internationale",
+    "academies": "Nos Académies",
     "about": "À propos"
   },
   "items": {
@@ -12,16 +11,13 @@
     "professional_certificates": "Certificats professionnels",
     "cross_academy_learning": "Apprentissage inter-académique",
     "lifelong_learning": "Apprentissage tout au long de la vie",
-
     "unesco_chair": "Chaire UNESCO",
     "research_themes": "Axes de recherche",
     "think_tanks": "Groupes de réflexion",
     "publications": "Publications",
-
     "ihub_innovation": "Innovation iHub",
     "industry_partnerships": "Partenariats industriels",
     "startups_incubation": "Startups et incubation",
-
     "vision_mission": "Vision et mission",
     "founding_story": "Histoire de la fondation",
     "leadership": "Direction",

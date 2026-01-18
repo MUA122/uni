@@ -1,6 +1,6 @@
 // App.tsx
 import { useEffect, useMemo } from "react";
-import { ThemeProvider, CssBaseline } from "@mui/material";
+import { ThemeProvider, CssBaseline, Box } from "@mui/material";
 import Divider from "@mui/material/Divider";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { createTheme } from "@mui/material/styles";
@@ -47,7 +47,9 @@ function HomePage() {
     <>
       <Header />
       <HeroVideo />
-      <StudyResearch />
+      <Box id="study-research">
+        <StudyResearch />
+      </Box>
       <Divider
         sx={{
           height: 3,
@@ -56,7 +58,9 @@ function HomePage() {
             "linear-gradient(90deg, transparent, rgba(0,110,113,0.45), transparent)",
         }}
       />
-      <InternationalCollaboration />
+      <Box id="collaboration">
+        <InternationalCollaboration />
+      </Box>
       <Divider
         sx={{
           height: 3,
@@ -65,7 +69,9 @@ function HomePage() {
             "linear-gradient(90deg, transparent, rgba(0,110,113,0.45), transparent)",
         }}
       />
-      <OurAcademies />
+      <Box id="academies">
+        <OurAcademies />
+      </Box>
       <Divider
         sx={{
           height: 3,
@@ -102,7 +108,6 @@ function HomePage() {
         }}
       />
       <ModernCalendar data={calendarEvents} />
-      ;
       <Footer />
     </>
   );
@@ -151,8 +156,8 @@ function AppWithDirectionTheme() {
         currentLang === "ar"
           ? "IAAU | الأكاديمية الدولية للعمارة والتخطيط العمراني"
           : currentLang === "fr"
-          ? "IAAU | Académie Internationale d’Architecture et d’Urbanisme"
-          : "IAAU | International Academy of Architecture & Urbanism";
+            ? "IAAU | Académie Internationale d’Architecture et d’Urbanisme"
+            : "IAAU | International Academy of Architecture & Urbanism";
 
       // eslint-disable-next-line react-hooks/immutability
       setFavicon(academyLogo);

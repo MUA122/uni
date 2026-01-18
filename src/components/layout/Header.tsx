@@ -8,22 +8,22 @@ import {
   Button,
   InputBase,
   IconButton,
-  Popper,
-  Paper,
-  Grow,
-  ClickAwayListener,
-  Stack,
-  Divider,
   Drawer,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
   List,
   ListItemButton,
   ListItemText,
   useTheme,
   Select,
   MenuItem,
+  Popper,
+  Paper,
+  Grow,
+  ClickAwayListener,
+  Stack,
+  Divider,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -32,7 +32,7 @@ import iusatLogo from "/imgs/iusat.png";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-type NavKey = "learn" | "research" | "innovate" | "consultancy" | "about";
+type NavKey = "study" | "collaboration" | "academies" | "about";
 
 type NavItem = {
   key: NavKey;
@@ -43,40 +43,22 @@ type NavItem = {
 
 const NAV: NavItem[] = [
   {
-    key: "research",
-    label: "Research",
-    href: "",
-    items: [
-      { id: "unesco_chair", label: "UNESCO Chair", href: "#research-unesco" },
-      {
-        id: "research_themes",
-        label: "Research themes",
-        href: "#research-themes",
-      },
-      { id: "think_tanks", label: "Think tanks", href: "#research-thinktanks" },
-      {
-        id: "publications",
-        label: "Publications",
-        href: "#research-publications",
-      },
-    ],
+    key: "study",
+    label: "Study and Research",
+    href: "#study-research",
+    items: [],
   },
   {
-    key: "consultancy",
-    label: "Consultancy",
-    href: "",
-    items: [
-      {
-        id: "industry_partnerships",
-        label: "Industry partnerships",
-        href: "#research-industrypartnerships",
-      },
-      {
-        id: "running_projects",
-        label: "Running projects",
-        href: "#research-runningprojects",
-      },
-    ],
+    key: "collaboration",
+    label: "International Collaboration",
+    href: "#collaboration",
+    items: [],
+  },
+  {
+    key: "academies",
+    label: "Our Academies",
+    href: "#academies",
+    items: [],
   },
   {
     key: "about",
@@ -174,8 +156,10 @@ function DesktopNav({ isRTL }: { isRTL: boolean }) {
       {navList.map((item) => (
         <Button
           key={item.key}
-          href={item.href}
-          onMouseEnter={(e) => openMenu(item.key, e.currentTarget)}
+          href={item.href || undefined}
+          onMouseEnter={(e) => {
+            if (item.items.length > 0) openMenu(item.key, e.currentTarget);
+          }}
           onMouseLeave={scheduleClose}
           sx={{
             textTransform: "none",
@@ -402,99 +386,137 @@ function MobileNavDrawer({
           />
         </Box>
 
-        {NAV.map((section) => (
-          <Accordion
-            key={section.key}
-            disableGutters
-            elevation={0}
-            sx={{
-              background: "transparent",
-              borderRadius: 1,
-              overflow: "hidden",
-              mb: 1,
-              width: "100%",
-              border: "1px solid rgba(0,0,0,0.06)",
-            }}
-          >
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
+
+        {NAV.map((section) =>
+          section.items.length === 0 ? (
+            <ListItemButton
+              key={section.key}
+              component="a"
+              href={section.href}
+              onClick={onClose}
               sx={{
-                minHeight: "unset",
-                py: 0.6,
+                borderRadius: "14px",
+                py: 1.5,
                 px: 2,
-                "&.Mui-expanded": { minHeight: "unset" },
-                "& .MuiAccordionSummary-content": {
-                  margin: 0,
-                  "&.Mui-expanded": { margin: 0 },
+                mb: 1,
+                display: "flex",
+                flexDirection: isRTL ? "row-reverse" : "row",
+                border: "1px solid rgba(0,0,0,0.06)",
+                "&:hover": {
+                  bgcolor: "rgba(0,110,113,0.08)",
                 },
               }}
             >
-              <Typography sx={{ fontWeight: 800, lineHeight: 1.2, m: 0, p: 0 }}>
-                {navLabel(section.key, section.label)}
-              </Typography>
-            </AccordionSummary>
+              <ListItemText
+                primary={
+                  <Typography
+                    sx={{
+                      fontWeight: 700,
+                      textAlign: isRTL ? "right" : "left",
+                      color: theme.palette.text.primary,
+                    }}
+                  >
+                    {navLabel(section.key, section.label)}
+                  </Typography>
+                }
+              />
+            </ListItemButton>
+          ) : (
+            <Accordion
+              key={section.key}
+              disableGutters
+              elevation={0}
+              sx={{
+                background: "transparent",
+                borderRadius: 1,
+                overflow: "hidden",
+                mb: 1,
+                width: "100%",
+                border: "1px solid rgba(0,0,0,0.06)",
+              }}
+            >
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                sx={{
+                  minHeight: "unset",
+                  py: 0.6,
+                  px: 2,
+                  "&.Mui-expanded": { minHeight: "unset" },
+                  "& .MuiAccordionSummary-content": {
+                    margin: 0,
+                    "&.Mui-expanded": { margin: 0 },
+                  },
+                }}
+              >
+                <Typography
+                  sx={{ fontWeight: 800, lineHeight: 1.2, m: 0, p: 0 }}
+                >
+                  {navLabel(section.key, section.label)}
+                </Typography>
+              </AccordionSummary>
 
-            <AccordionDetails sx={{ pt: 0.5 }}>
-              <List disablePadding>
-                {section.items.map((item, index) => (
-                  <Box key={item.id}>
-                    <ListItemButton
-                      component="a"
-                      href={item.href}
-                      onClick={onClose}
-                      sx={{
-                        borderRadius: 14,
-                        py: 1.1,
-                        display: "flex",
-                        flexDirection: isRTL ? "row-reverse" : "row",
-                        "&:hover .mobileText": {
-                          color: theme.palette.primary.main,
-                        },
-                      }}
-                    >
-                      <Box
+              <AccordionDetails sx={{ pt: 0.5 }}>
+                <List disablePadding>
+                  {section.items.map((item, index) => (
+                    <Box key={item.id}>
+                      <ListItemButton
+                        component="a"
+                        href={item.href}
+                        onClick={onClose}
                         sx={{
-                          width: 8,
-                          height: 8,
-                          borderRadius: "50%",
-                          bgcolor: theme.palette.primary.main,
-                          ml: isRTL ? 1.2 : 0,
-                          mr: isRTL ? 0 : 1.2,
-                          flexShrink: 0,
+                          borderRadius: 14,
+                          py: 1.1,
+                          display: "flex",
+                          flexDirection: isRTL ? "row-reverse" : "row",
+                          "&:hover .mobileText": {
+                            color: theme.palette.primary.main,
+                          },
                         }}
-                      />
+                      >
+                        <Box
+                          sx={{
+                            width: 8,
+                            height: 8,
+                            borderRadius: "50%",
+                            bgcolor: theme.palette.primary.main,
+                            ml: isRTL ? 1.2 : 0,
+                            mr: isRTL ? 0 : 1.2,
+                            flexShrink: 0,
+                          }}
+                        />
 
-                      <ListItemText
-                        primary={
-                          <Typography
-                            className="mobileText"
-                            sx={{
-                              fontWeight: 650,
-                              textAlign: isRTL ? "right" : "left",
-                            }}
-                          >
-                            {itemLabel(item.id, item.label)}
-                          </Typography>
-                        }
-                      />
-                    </ListItemButton>
+                        <ListItemText
+                          primary={
+                            <Typography
+                              className="mobileText"
+                              sx={{
+                                fontWeight: 650,
+                                textAlign: isRTL ? "right" : "left",
+                              }}
+                            >
+                              {itemLabel(item.id, item.label)}
+                            </Typography>
+                          }
+                        />
+                      </ListItemButton>
 
-                    {index !== section.items.length - 1 && (
-                      <Box
-                        sx={{
-                          height: "2px",
-                          mx: 3.5,
-                          background:
-                            "linear-gradient(90deg, transparent, rgba(0,0,0,0.12), transparent)",
-                        }}
-                      />
-                    )}
-                  </Box>
-                ))}
-              </List>
-            </AccordionDetails>
-          </Accordion>
-        ))}
+                      {index !== section.items.length - 1 && (
+                        <Box
+                          sx={{
+                            height: "2px",
+                            mx: 3.5,
+                            background:
+                              "linear-gradient(90deg, transparent, rgba(0,0,0,0.12), transparent)",
+                          }}
+                        />
+                      )}
+                    </Box>
+                  ))}
+                </List>
+              </AccordionDetails>
+            </Accordion>
+          ),
+        )}
 
         <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
           <Box

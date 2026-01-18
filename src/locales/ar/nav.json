@@ -1,9 +1,8 @@
 {
   "top": {
-    "learn": "التعلّم",
-    "research": "البحث العلمي",
-    "innovate": "الابتكار",
-    "consultancy": "الاستشارات",
+    "study": "الدراسة والبحث العلمي",
+    "collaboration": "التعاون الدولي",
+    "academies": "أكاديمياتنا",
     "about": "عن الجامعة"
   },
   "items": {
@@ -12,17 +11,14 @@
     "professional_certificates": "الشهادات المهنية",
     "cross_academy_learning": "التعلّم بين الكليات",
     "lifelong_learning": "التعلّم مدى الحياة",
-
     "unesco_chair": "مختبرات البحث",
     "research_themes": "محاور البحث",
     "think_tanks": "مراكز الفكر",
     "publications": "المنشورات",
     "running_projects": "المشاريع الجارية",
-
     "ihub_innovation": "ابتكار iHub",
     "industry_partnerships": "شراكات الصناعة",
     "startups_incubation": "الشركات الناشئة والحاضنات",
-
     "vision_mission": "الرؤية والرسالة",
     "founding_story": "قصة التأسيس",
     "leadership": "القيادة",
@@ -31,6 +27,10 @@
     "contact": "اتصل بنا",
     "news_announcements": "الأخبار والإعلانات"
   },
-  "search": { "placeholder": "ابحث..." },
-  "mobile": { "menu": "القائمة" }
+  "search": {
+    "placeholder": "ابحث..."
+  },
+  "mobile": {
+    "menu": "القائمة"
+  }
 }
