@@ -105,11 +105,10 @@ export default function OurAcademies({ academies }: OurAcademiesProps) {
   return (
     <SectionShell
       id="our-academies"
-      eyebrow={t("ourAcademies.eyebrow", "Academies")}
       title={t("ourAcademies.title", "Our Academies")}
       subtitle={t(
         "ourAcademies.subtitle",
-        "Discover the academic structure and faculties across all academies."
+        "Discover the academic structure and faculties across all academies.",
       )}
       variant="light"
     >
@@ -140,7 +139,7 @@ export default function OurAcademies({ academies }: OurAcademiesProps) {
                   minWidth: 0,
                   width: { xs: "100%", md: "auto" },
 
-                  height: { xs: 160, md: 290 },
+                  height: { xs: 220, sm: 240, md: 290 },
 
                   cursor: isLive ? "pointer" : "default",
                   borderRadius: { xs: 2, md: 2 },
@@ -148,7 +147,7 @@ export default function OurAcademies({ academies }: OurAcademiesProps) {
                   position: "relative",
                   boxShadow: `0 18px 60px ${alpha(
                     theme.palette.common.black,
-                    0.18
+                    0.18,
                   )}`,
                   transition: "transform 220ms ease",
 
@@ -186,7 +185,8 @@ export default function OurAcademies({ academies }: OurAcademiesProps) {
                   sx={{
                     position: "absolute",
                     top: 14,
-                    left: 14,
+                    left: "50%",
+                    transform: "translateX(-50%)",
                     px: 2,
                     py: 0.55,
                     borderRadius: 999,
@@ -195,6 +195,7 @@ export default function OurAcademies({ academies }: OurAcademiesProps) {
                     fontSize: { xs: 14, md: 16 },
                     color: a.colors.main,
                     letterSpacing: "0.03em",
+                    zIndex: 5,
                   }}
                 >
                   {a.code}
@@ -204,36 +205,69 @@ export default function OurAcademies({ academies }: OurAcademiesProps) {
                 <Box
                   sx={{
                     position: "absolute",
-                    left: 14,
-                    right: 14,
-                    bottom: 14,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+
+                    backgroundColor: "#fff",
+                    minHeight: { xs: 105, sm: 110, md: 125 },
+                    px: { xs: 2, sm: 2.5, md: 3 },
+                    py: { xs: 1.6, sm: 1.8, md: 2 },
+                    display: "flex",
+                    flexDirection: "column",
+
+                    borderBottomLeftRadius: { xs: 16, md: 16 },
+                    borderBottomRightRadius: { xs: 16, md: 16 },
                   }}
                 >
-                  <Typography
-                    sx={{
-                      fontSize: 10,
-                      fontWeight: 700,
-                      textTransform: "uppercase",
-                      color: alpha(theme.palette.common.white, 0.7),
-                      mb: 0.6,
-                      letterSpacing: "0.08em",
-                    }}
-                  >
-                    {t("ourAcademies.internationalAcademyOf")}
-                  </Typography>
+                  {/* Top content */}
+                  <Box>
+                    <Typography
+                      sx={{
+                        fontSize: 10,
+                        fontWeight: 700,
+                        textTransform: "uppercase",
+                        color: alpha(theme.palette.common.black, 0.55),
+                        mb: 0.6,
+                        letterSpacing: "0.08em",
+                      }}
+                    >
+                      {t("ourAcademies.internationalAcademyOf")}
+                    </Typography>
 
-                  <Typography
+                    {/* Title with academy color */}
+                    <Typography
+                      sx={{
+                        fontSize: { xs: 14.5, md: 16 },
+                        fontWeight: 950,
+                        lineHeight: 1.2,
+                        color: a.colors.main,
+                        maxWidth: "92%",
+
+                        display: "-webkit-box",
+                        WebkitLineClamp: 2,
+                        WebkitBoxOrient: "vertical",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        minHeight: "2.4em",
+                      }}
+                    >
+                      {t(a.titleKey, a.titleFallback)}
+                    </Typography>
+                  </Box>
+
+                  {/* Push line to bottom */}
+                  <Box sx={{ flexGrow: 1 }} />
+
+                  {/* bottom line */}
+                  <Box
                     sx={{
-                      fontSize: { xs: 14.5, md: 16 },
-                      fontWeight: 950,
-                      pb: 1.5,
-                      lineHeight: 1.15,
-                      color: theme.palette.common.white,
-                      maxWidth: "92%",
+                      width: 90,
+                      height: 4,
+                      borderRadius: 99,
+                      backgroundColor: alpha(a.colors.main, 0.3),
                     }}
-                  >
-                    {t(a.titleKey, a.titleFallback)}
-                  </Typography>
+                  />
                 </Box>
 
                 {/* Locked overlay */}
@@ -247,7 +281,7 @@ export default function OurAcademies({ academies }: OurAcademiesProps) {
                       placeItems: "center",
                       background: `linear-gradient(180deg, ${alpha(
                         theme.palette.common.black,
-                        0.55
+                        0.55,
                       )}, ${alpha(theme.palette.common.black, 0.35)})`,
                       backdropFilter: "blur(1px) saturate(140%)",
                       WebkitBackdropFilter: "blur(1px) saturate(140%)",
@@ -272,7 +306,7 @@ export default function OurAcademies({ academies }: OurAcademiesProps) {
                           background: alpha(theme.palette.common.white, 0.12),
                           border: `1px solid ${alpha(
                             theme.palette.common.white,
-                            0.22
+                            0.22,
                           )}`,
                         }}
                       >

@@ -33,4 +33,16 @@ export const calendarEvents: CalendarDayData[] = [
     descriptionKey: "events.unescoDay",
     images: [{ src: unescoLogo, alt: "UNESCO" }],
   },
+  {
+    date: "2026-03-30",
+    category: "event",
+    descriptionKey: "events.micro",
+    images: [{ src: iusatLogo, alt: "IUSAT" }],
+  },
+  {
+    date: "2026-03-31",
+    category: "event",
+    descriptionKey: "events.micro",
+    images: [{ src: iusatLogo, alt: "IUSAT" }],
+  },
 ];

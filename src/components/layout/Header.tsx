@@ -43,34 +43,6 @@ type NavItem = {
 
 const NAV: NavItem[] = [
   {
-    key: "learn",
-    label: "Learn",
-    href: "",
-    items: [
-      {
-        id: "micro_credentials",
-        label: "Micro-credentials",
-        href: "#learn-micro",
-      },
-      { id: "short_courses", label: "Short courses", href: "#learn-short" },
-      {
-        id: "professional_certificates",
-        label: "Professional certificates",
-        href: "#learn-cert",
-      },
-      {
-        id: "cross_academy_learning",
-        label: "Cross-academy learning",
-        href: "#learn-cross",
-      },
-      {
-        id: "lifelong_learning",
-        label: "Lifelong learning",
-        href: "#learn-life",
-      },
-    ],
-  },
-  {
     key: "research",
     label: "Research",
     href: "",
@@ -90,28 +62,22 @@ const NAV: NavItem[] = [
     ],
   },
   {
-    key: "innovate",
-    label: "Innovate",
+    key: "consultancy",
+    label: "Consultancy",
     href: "",
     items: [
       {
-        id: "ihub_innovation",
-        label: "iHub Innovation",
-        href: "#innovate-ihub",
-      },
-      {
         id: "industry_partnerships",
         label: "Industry partnerships",
-        href: "#innovate-partnerships",
+        href: "#research-industrypartnerships",
       },
       {
-        id: "startups_incubation",
-        label: "Startups & incubation",
-        href: "#innovate-startups",
+        id: "running_projects",
+        label: "Running projects",
+        href: "#research-runningprojects",
       },
     ],
   },
-  { key: "consultancy", label: "Consultancy", href: "", items: [] },
   {
     key: "about",
     label: "About",
@@ -158,7 +124,7 @@ function DesktopNav({ isRTL }: { isRTL: boolean }) {
   const open = Boolean(openKey && anchorEl);
   const current = React.useMemo(
     () => NAV.find((n) => n.key === openKey) ?? null,
-    [openKey]
+    [openKey],
   );
 
   const clearCloseTimer = () => {
@@ -249,7 +215,6 @@ function DesktopNav({ isRTL }: { isRTL: boolean }) {
           <Grow {...TransitionProps} timeout={160}>
             <Box onMouseEnter={clearCloseTimer} onMouseLeave={scheduleClose}>
               <ClickAwayListener onClickAway={hardClose}>
-                {/* Arrow */}
                 <Box sx={{ position: "relative", overflow: "visible" }}>
                   <Box
                     sx={{
@@ -444,20 +409,32 @@ function MobileNavDrawer({
             elevation={0}
             sx={{
               background: "transparent",
-              "&:before": { display: "none" },
               borderRadius: 1,
               overflow: "hidden",
               mb: 1,
+              width: "100%",
               border: "1px solid rgba(0,0,0,0.06)",
             }}
           >
-            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-              <Typography sx={{ fontWeight: 800 }}>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              sx={{
+                minHeight: "unset",
+                py: 0.6,
+                px: 2,
+                "&.Mui-expanded": { minHeight: "unset" },
+                "& .MuiAccordionSummary-content": {
+                  margin: 0,
+                  "&.Mui-expanded": { margin: 0 },
+                },
+              }}
+            >
+              <Typography sx={{ fontWeight: 800, lineHeight: 1.2, m: 0, p: 0 }}>
                 {navLabel(section.key, section.label)}
               </Typography>
             </AccordionSummary>
 
-            <AccordionDetails sx={{ pt: 0 }}>
+            <AccordionDetails sx={{ pt: 0.5 }}>
               <List disablePadding>
                 {section.items.map((item, index) => (
                   <Box key={item.id}>
@@ -486,6 +463,7 @@ function MobileNavDrawer({
                           flexShrink: 0,
                         }}
                       />
+
                       <ListItemText
                         primary={
                           <Typography
@@ -557,9 +535,9 @@ export default function Header() {
   };
 
   const LANGS = [
-    { code: "ar", label: "العربية" },
-    { code: "en", label: "English" },
-    { code: "fr", label: "Français" },
+    { code: "ar", label: "AR" },
+    { code: "en", label: "EN" },
+    { code: "fr", label: "FR" },
   ] as const;
 
   const current = LANGS.find((x) => x.code === currentLang) ?? LANGS[1];
@@ -574,7 +552,6 @@ export default function Header() {
       vertical: "top" as const,
       horizontal: "center" as const,
     },
-    // styling for the menu language select
     PaperProps: {
       elevation: 0,
       sx: {
@@ -643,6 +620,33 @@ export default function Header() {
     },
   };
 
+  const langSelectSx = {
+    height: 36,
+    borderRadius: "999px",
+    bgcolor: "rgba(0,0,0,0.05)",
+    minWidth: 92,
+    px: 1.2,
+
+    "& .MuiOutlinedInput-notchedOutline": { border: "none" },
+
+    "& .MuiSelect-select": {
+      display: "flex",
+      alignItems: "center",
+      paddingTop: 0,
+      paddingBottom: 0,
+      height: 36,
+    },
+
+    "& .MuiSelect-icon": {
+      top: "calc(50% - 12px)",
+    },
+
+    "&.MuiInputBase-root": {
+      paddingTop: 0,
+      paddingBottom: 0,
+    },
+  } as const;
+
   return (
     <>
       <AppBar
@@ -679,6 +683,7 @@ export default function Header() {
               columnGap: 1,
             }}
           >
+            {/* Left */}
             <Box
               sx={{
                 display: "flex",
@@ -688,6 +693,7 @@ export default function Header() {
                 gap: 1,
               }}
             >
+              {/* Desktop Logo */}
               <Box
                 sx={{
                   display: { xs: "none", md: "flex" },
@@ -723,7 +729,7 @@ export default function Header() {
                       fontWeight: 900,
                       letterSpacing: "-0.05em",
                       color: "#000",
-                      fontSize: { md: "1.6rem" },
+                      fontSize: { md: "2rem" },
                       lineHeight: 1,
                     }}
                   >
@@ -732,6 +738,7 @@ export default function Header() {
                 </Box>
               </Box>
 
+              {/* Mobile Language Select */}
               <Box
                 sx={{
                   display: { xs: "flex", md: "none" },
@@ -743,18 +750,7 @@ export default function Header() {
                   value={currentLang}
                   onChange={(e) => changeLang(String(e.target.value))}
                   renderValue={() => <LangLabel code={current.label} />}
-                  sx={{
-                    height: 36,
-                    borderRadius: "999px",
-                    bgcolor: "rgba(0,0,0,0.05)",
-                    "& .MuiOutlinedInput-notchedOutline": { border: "none" },
-                    "& .MuiSelect-select": {
-                      display: "flex",
-                      alignItems: "center",
-                    },
-                    minWidth: 110,
-                    px: 0.5,
-                  }}
+                  sx={langSelectSx}
                   // eslint-disable-next-line @typescript-eslint/no-explicit-any
                   MenuProps={selectMenuProps as any}
                 >
@@ -767,6 +763,7 @@ export default function Header() {
               </Box>
             </Box>
 
+            {/* Center */}
             <Box
               sx={{
                 display: "flex",
@@ -774,6 +771,7 @@ export default function Header() {
                 alignItems: "center",
               }}
             >
+              {/* Mobile Logo */}
               <Box sx={{ display: { xs: "flex", md: "none" } }}>
                 <Box
                   component={Link}
@@ -813,11 +811,13 @@ export default function Header() {
                 </Box>
               </Box>
 
+              {/* Desktop Nav */}
               <Box sx={{ display: { xs: "none", md: "flex" } }}>
                 <DesktopNav isRTL={isRTL} />
               </Box>
             </Box>
 
+            {/* Right */}
             <Box
               sx={{
                 display: "flex",
@@ -827,23 +827,15 @@ export default function Header() {
                 flexDirection: isRTL ? "row-reverse" : "row",
               }}
             >
+              {/* Desktop Language Select */}
               <Select
                 size="small"
                 value={currentLang}
                 onChange={(e) => changeLang(String(e.target.value))}
                 renderValue={() => <LangLabel code={current.label} />}
                 sx={{
+                  ...langSelectSx,
                   display: { xs: "none", md: "inline-flex" },
-                  height: 36,
-                  borderRadius: "999px",
-                  bgcolor: "rgba(0,0,0,0.05)",
-                  "& .MuiOutlinedInput-notchedOutline": { border: "none" },
-                  "& .MuiSelect-select": {
-                    display: "flex",
-                    alignItems: "center",
-                  },
-                  minWidth: 110,
-                  px: 0.5,
                 }}
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 MenuProps={selectMenuProps as any}

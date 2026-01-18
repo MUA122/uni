@@ -12,7 +12,8 @@
   "events": {
     "iaauDay": "Open Day at IAAU academy - Join us for full details.",
     "iusatDay": "IUSAT special activity day.",
-    "unescoDay": "UNESCO announces a new partnership with IUSAT to promote sustainable education."
+    "unescoDay": "UNESCO announces a new partnership with IUSAT to promote sustainable education.",
+    "micro": "International Forum on Micro-Credentials"
   },
   "weekDays": {
     "sun": "SUN",

@@ -1,34 +1,48 @@
 {
   "studyResearch": {
-    "eyebrow": "Études",
-    "title": "Études et Recherche à IUSAT",
-    "subtitle": "Découvrez les domaines clés de l’apprentissage, de la recherche et de l’innovation.",
-
+    "title": "Études et recherche à l’IUSAT",
+    "subtitle": "Explorez les principaux domaines d’apprentissage, de recherche et d’innovation.",
     "cards": {
       "academics": {
-        "title": "Programmes académiques",
-        "desc": "Des programmes conçus pour l’excellence en enseignement et en recherche."
+        "title": "Macro-certifications",
+        "desc": "Programmes complets conçus pour développer des connaissances et compétences approfondies."
       },
       "micro": {
         "title": "Micro-certifications",
-        "desc": "Parcours d’apprentissage courts et ciblés alignés sur les normes internationales."
+        "desc": "Parcours d’apprentissage courts et ciblés, alignés sur les normes internationales."
       },
       "unesco": {
         "title": "Chaires UNESCO",
-        "desc": "Collaboration académique internationale soutenue par l’UNESCO."
+        "desc": "Collaboration académique mondiale dans le cadre d’initiatives soutenues par l’UNESCO."
       },
       "innovation": {
         "title": "Innovation I-Hub",
         "desc": "Un écosystème d’innovation soutenant les startups et la recherche appliquée."
       }
     },
-
-    "popup1": "Merci pour votre intérêt. Plus de détails seront disponibles prochainement.",
+    "dropdown": {
+      "academics": {
+        "bachelors": "Licences",
+        "masters": "Masters",
+        "phd": "Doctorats",
+        "online": "Diplômes en ligne"
+      },
+      "micro": {
+        "professional": "Certificats professionnels",
+        "crossAcademy": "Apprentissage inter-académies"
+      },
+      "unesco": {
+        "chair1522": "Chaire UNESCO ID : 1522EG2026\nRégénération urbaine durable : relier patrimoine, planification et innovation numérique"
+      },
+      "innovation": {
+        "startups": "Startups & incubation"
+      }
+    },
+    "popup1": "Merci pour votre intérêt. Plus de détails seront disponibles bientôt.",
     "popup2": "Cette section est actuellement en cours de développement.",
     "popup3": "Nous préparons du contenu passionnant pour cette section.",
     "popup4": "De nouvelles mises à jour seront publiées prochainement.",
     "popup5": "Veuillez revenir bientôt pour plus d’informations.",
-
     "close": "Fermer"
   }
 }

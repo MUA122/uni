@@ -107,7 +107,7 @@ function DesktopNav({ isRTL }: { isRTL: boolean }) {
   const open = Boolean(openKey && anchorEl);
   const current = React.useMemo(
     () => NAV.find((n) => n.key === openKey) ?? null,
-    [openKey]
+    [openKey],
   );
 
   const clearCloseTimer = () => {

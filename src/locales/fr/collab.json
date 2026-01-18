@@ -1,23 +1,28 @@
 {
-  "eyebrow": "Collaboration",
-  "title": "Collaboration internationale",
-  "subtitle": "Des partenariats mondiaux qui renforcent la recherche, l’éducation et l’innovation.",
+  "eyebrow": "Collaboration internationale",
+  "title": "Partenariats mondiaux",
+  "subtitle": "Nous collaborons avec des institutions internationales pour renforcer l’éducation, la recherche et l’innovation",
+
   "cards": {
     "unesco": {
-      "badge": "Collaboration UNESCO",
-      "pill": "Collaboration internationale"
+      "badge": "Collaboration",
+      "title": "Partenariat avec l’UNESCO",
+      "subtitle": "avec l’Université IUSAT",
+      "desc": "Renforcer la coopération internationale à travers les programmes de l’UNESCO dans les domaines de l’éducation, du développement durable, de la préservation culturelle, des échanges de recherche et de l’innovation, en favorisant des partenariats mondiaux pour un avenir meilleur, en accord avec la mission, les valeurs et les Objectifs de développement durable (ODD) de l’UNESCO.",
+      "cta": "En savoir plus"
     },
+
     "ensac": {
-      "name": "ENSAC",
-      "desc": "(Université Grenoble Alpes – France)"
+      "name": "Université Grenoble Alpes",
+      "desc": "Échanges académiques et collaboration en recherche conjointe."
     },
     "sapienza": {
-      "name": "SAPIENZA",
-      "desc": "(Université Sapienza de Rome – Italie)"
+      "name": "Université Sapienza de Rome",
+      "desc": "Partenariat international dans l’innovation et l’éducation."
     },
     "ihs": {
       "name": "IHS",
-      "desc": "(Université IHS – Pays-Bas)"
+      "desc": "Renforcement de la coopération à travers la formation et la recherche."
     }
   }
 }

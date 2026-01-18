@@ -6,6 +6,7 @@ import ihslogo from "/imgs/ihs.png";
 import iusatLogo from "/imgs/iusat.png";
 import unescoLogo from "/imgs/unesco.png";
 import HandshakeRoundedIcon from "@mui/icons-material/HandshakeRounded";
+import ArrowForwardRoundedIcon from "@mui/icons-material/ArrowForwardRounded";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 
@@ -19,7 +20,6 @@ export default function InternationalCollaboration() {
   return (
     <SectionShell
       id="collab"
-      eyebrow={t("eyebrow")}
       title={t("title")}
       subtitle={t("subtitle")}
       variant="light"
@@ -34,232 +34,295 @@ export default function InternationalCollaboration() {
         }}
       >
         <Box sx={{ width: "100%" }}>
-          <Box
-            onClick={() =>
-              window.open(
-                "https://www.unesco.org/",
-                "_blank",
-                "noopener,noreferrer"
-              )
-            }
-            sx={{
-              width: "100%",
-              minHeight: { xs: 260, md: 260 },
-              borderRadius: { xs: 2, md: 2 },
-              cursor: "pointer",
-              position: "relative",
-              overflow: "hidden",
-              backgroundColor: "#F5FBFA",
-              p: { xs: 2.5, md: 3 },
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-between",
-              background: "rgba(255, 255, 255, 0.72)",
-              border: "3px solid #0B6F73",
-              borderColor: "rgba(11,111,115,0.18)",
-              transform: "translateY(-2px)",
-              boxShadow: "0 12px 28px rgba(0,0,0,0.08)",
-              transition:
-                "transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease, background 220ms ease",
-              gap: { xs: 2, md: 2.5 },
-              "&:hover": {
-                background: "rgba(255, 255, 255, 0.72)",
-                border: "3px solid #0B6F73",
-              },
-            }}
-          >
+          <Box sx={{ width: "100%" }}>
             <Box
+              onClick={() =>
+                window.open(
+                  "https://www.unesco.org/",
+                  "_blank",
+                  "noopener,noreferrer",
+                )
+              }
               sx={{
-                position: "absolute",
-                inset: -2,
-                backgroundColor: "#F5FBFA",
-                filter: "blur(14px)",
-                pointerEvents: "none",
-              }}
-            />
-
-            <Stack
-              direction="row"
-              alignItems="center"
-              justifyContent="space-between"
-              sx={{
+                width: "100%",
+                minHeight: { xs: 320, md: 340 },
+                borderRadius: { xs: 2, md: 2 },
+                cursor: "pointer",
                 position: "relative",
-                zIndex: 1,
-                px: { xs: 0.5, md: 1 },
+                overflow: "hidden",
+                display: "flex",
+                alignItems: "stretch",
+
+                // Hover Style
+                transition: "transform 240ms ease, box-shadow 240ms ease",
+                boxShadow: "0 18px 50px rgba(0,0,0,0.12)",
+                "&:hover": {
+                  transform: "translateY(-6px)",
+                  boxShadow: "0 26px 70px rgba(0,0,0,0.18)",
+                },
               }}
             >
-              <Stack
-                direction="row"
-                spacing={1.25}
-                alignItems="center"
+              {/* Background Image */}
+              <Box
                 sx={{
-                  gap: { xs: 2, md: 6 },
+                  position: "absolute",
+                  inset: 0,
+                  backgroundImage:
+                    "url(https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1600&q=80)",
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  transform: "scale(1.02)",
+                }}
+              />
+
+              {/* Green Overlay */}
+              <Box
+                sx={{
+                  position: "absolute",
+                  inset: 0,
+                  background:
+                    "linear-gradient(90deg, rgba(7,116,113,0.88) 0%, rgba(7,116,113,0.72) 55%, rgba(7,116,113,0.55) 100%)",
+                }}
+              />
+
+              {/* Content */}
+              <Box
+                sx={{
+                  position: "relative",
+                  zIndex: 2,
+                  width: "100%",
+                  height: "100%",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  gap: { xs: 2, md: 3 },
+                  p: { xs: 3, md: 4 },
                   flexDirection: isRTL ? "row-reverse" : "row",
                 }}
               >
+                {/* Text Area */}
                 <Box
                   sx={{
-                    width: 40,
-                    height: 40,
-                    borderRadius: 999,
+                    flex: 1,
                     display: "flex",
-                    placeItems: "center",
-                    background: "rgba(255,255,255,0.75)",
-                    border: "1px solid rgba(11,111,115,0.18)",
-                    boxShadow: "0 10px 26px rgba(0,0,0,0.07)",
-                    backdropFilter: "blur(10px)",
+                    flexDirection: "column",
+                    justifyContent: "space-between",
+
+                    pr: isRTL ? { xs: 0, md: 26 } : 0,
+                    pl: !isRTL ? { xs: 0, md: 0 } : 0,
                   }}
                 >
-                  <Box
+                  <Box>
+                    <Typography
+                      sx={{
+                        color: "rgba(255,255,255,0.9)",
+                        fontSize: 13,
+                        fontWeight: 800,
+                        letterSpacing: "0.08em",
+                        textTransform: "uppercase",
+                        mb: 1,
+                        textAlign: isRTL ? "right" : "left",
+                      }}
+                    >
+                      {t("cards.unesco.badge")}
+                    </Typography>
+
+                    <Typography
+                      sx={{
+                        color: "#fff",
+                        fontWeight: 900,
+                        fontSize: isRTL
+                          ? { xs: 28, md: 40 }
+                          : { xs: 30, md: 44 },
+
+                        lineHeight: 1.05,
+                        mb: 2,
+                        textAlign: isRTL ? "right" : "left",
+                      }}
+                    >
+                      {t("cards.unesco.title") || "UNESCO Partnership"}
+                      <br />
+                      {t("cards.unesco.subtitle") || "with IUSAT University"}
+                    </Typography>
+
+                    <Typography
+                      sx={{
+                        color: "rgba(255,255,255,0.92)",
+                        fontSize: { xs: 14, md: 16 },
+                        lineHeight: 1.7,
+                        maxWidth: 620,
+                        textAlign: isRTL ? "right" : "left",
+                      }}
+                    >
+                      {t("cards.unesco.desc") ||
+                        "Building international cooperation through UNESCO programs in education, sustainability, research exchange, and innovation."}
+                    </Typography>
+                  </Box>
+
+                  {/* CTA */}
+                  <Stack
+                    direction="row"
+                    alignItems="center"
+                    spacing={1}
                     sx={{
-                      minWidth: 44,
-                      height: 44,
-                      borderRadius: "50%",
-                      bgcolor: "#0B6F73",
+                      mt: 3,
                       color: "#fff",
                       fontWeight: 900,
-                      fontSize: 18,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      flexShrink: 0,
-                      boxShadow: "0 8px 18px rgba(11,111,115,0.25)",
+                      fontSize: { xs: 18, md: 22 },
+                      width: "fit-content",
+                      transition: "opacity 220ms ease",
+                      "&:hover": { opacity: 0.9 },
+                      flexDirection: isRTL ? "row-reverse" : "row",
                     }}
                   >
-                    1
-                  </Box>
-                </Box>
-
-                <Box
-                  sx={{
-                    height: 30,
-                    px: 5,
-                    borderRadius: 999,
-                    display: "inline-flex",
-                    alignItems: "center",
-                    border: "1px solid rgba(11,111,115,0.14)",
-                    color: "#0B6F73",
-                    fontWeight: 900,
-                    fontSize: 12.5,
-                    textAlign: isRTL ? "right" : "left",
-                  }}
-                >
-                  {t("cards.unesco.badge")}
-                </Box>
-              </Stack>
-            </Stack>
-
-            <Box
-              sx={{
-                position: "relative",
-                zIndex: 1,
-                flex: 1,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                px: { xs: 1, md: 2 },
-              }}
-            >
-              <Stack
-                spacing={{ xs: 2, md: 2.5 }}
-                alignItems="center"
-                sx={{ width: "100%" }}
-              >
-                <Box
-                  sx={{
-                    width: "100%",
-                    borderRadius: 3,
-                    backgroundColor: "#F5FBFA",
-                    border: "1px solid rgba(11,111,115,0.16)",
-                    boxShadow: "0 18px 50px rgba(0,0,0,0.08)",
-                    p: { xs: 2.2, md: 2.5 },
-                  }}
-                >
-                  <Stack
-                    direction={{
-                      xs: "column",
-                      md: isRTL ? "row-reverse" : "row",
-                    }}
-                    alignItems="center"
-                    justifyContent="space-between"
-                    spacing={{ xs: 2, md: 3 }}
-                    sx={{ width: "100%" }}
-                  >
-                    {/* University Logo */}
-                    <Box
-                      component="img"
-                      src={iusatLogo}
-                      alt="IUSAT"
+                    <Typography
                       sx={{
-                        height: { xs: 90, md: 120 },
-                        width: "auto",
-                        filter: "drop-shadow(0 12px 18px rgba(0,0,0,0.10))",
+                        fontWeight: 900,
+                        fontSize: { xs: 18, md: 22 },
+                        color: "#fff",
                       }}
-                    />
+                    >
+                      {t("cards.unesco.cta") || "Find Out More"}
+                    </Typography>
 
-                    {/* Handshake */}
-                    <Box sx={{ display: "grid", placeItems: "center" }}>
-                      <Box
-                        sx={{
-                          width: { xs: 64, md: 76 },
-                          height: { xs: 64, md: 76 },
-                          borderRadius: "50%",
-                          display: "grid",
-                          placeItems: "center",
-                          background:
-                            "linear-gradient(180deg, rgba(11,111,115,1) 30%, rgba(44, 121, 197, 1) 100%)",
-                          boxShadow: "0 22px 46px rgba(11,111,115,0.22)",
-                        }}
-                      >
-                        <HandshakeRoundedIcon
-                          sx={{ fontSize: { xs: 30, md: 34 }, color: "#fff" }}
-                        />
-                      </Box>
-                    </Box>
-
-                    {/* UNESCO Logo */}
-                    <Box
-                      component="img"
-                      src={unescoLogo}
-                      alt="UNESCO"
-                      sx={{
-                        height: { xs: 70, md: 85 },
-                        width: "auto",
-                        filter: "drop-shadow(0 12px 18px rgba(0,0,0,0.10))",
-                      }}
+                    <ArrowForwardRoundedIcon
+                      sx={{ fontSize: 26, color: "#fff" }}
                     />
                   </Stack>
                 </Box>
 
-                {/* Pill */}
+                {/* Right Side Logos */}
                 <Box
                   sx={{
+                    position: isRTL ? "absolute" : "relative",
+                    top: isRTL ? { xs: 20, md: 22 } : "auto",
+                    right: isRTL ? { xs: 20, md: 28 } : "auto",
+
+                    width: isRTL ? { xs: 150, md: 200 } : { xs: 170, md: 240 },
+
                     display: "flex",
-                    gap: 1,
                     alignItems: "center",
                     justifyContent: "center",
-                    flexWrap: "wrap",
+                    zIndex: 4,
                   }}
                 >
-                  <Box
-                    sx={{
-                      height: 30,
-                      px: 1.2,
-                      borderRadius: 999,
-                      display: "inline-flex",
-                      alignItems: "center",
-                      background: "rgba(11,111,115,0.08)",
-                      border: "1px solid rgba(11,111,115,0.14)",
-                      color: "#0B6F73",
-                      fontWeight: 900,
-                      fontSize: 12.5,
-                      textAlign: "center",
-                    }}
+                  <Stack
+                    spacing={
+                      isRTL ? { xs: 0.9, md: 1.1 } : { xs: 1.2, md: 1.5 }
+                    }
+                    alignItems="center"
+                    justifyContent="center"
+                    sx={{ width: "100%" }}
                   >
-                    {t("cards.unesco.pill")}
-                  </Box>
+                    {/* IUSAT Pill */}
+                    <Box
+                      sx={{
+                        width: "100%",
+                        borderRadius: 8,
+                        background: "#fff",
+                        display: "grid",
+                        placeItems: "center",
+
+                        py: isRTL ? { xs: 2.0, md: 2.4 } : { xs: 2.6, md: 3.2 },
+                        px: isRTL ? { xs: 1.6, md: 2.0 } : { xs: 2.2, md: 2.8 },
+
+                        boxShadow: "0 22px 50px rgba(0,0,0,0.20)",
+                        transition: "transform 240ms ease",
+                        "&:hover": { transform: "scale(1.03)" },
+                      }}
+                    >
+                      <Box
+                        component="img"
+                        src={iusatLogo}
+                        alt="IUSAT"
+                        sx={{
+                          width: isRTL ? "48%" : "40%",
+                          maxWidth: isRTL
+                            ? { xs: 95, md: 120 }
+                            : { xs: 130, md: 170 },
+                          height: "auto",
+                          objectFit: "contain",
+                        }}
+                      />
+                      <Typography
+                        sx={{
+                          color: "#0B6F73",
+                          fontWeight: 900,
+                          fontSize: isRTL ? 15 : 18,
+                        }}
+                      >
+                        IUSAT
+                      </Typography>
+                    </Box>
+
+                    {/* Handshake */}
+                    <Box sx={{ display: "grid", placeItems: "center" }}>
+                      <HandshakeRoundedIcon
+                        sx={{
+                          fontSize: isRTL
+                            ? { xs: 22, md: 24 }
+                            : { xs: 26, md: 28 },
+                          color: "rgba(255,255,255,0.95)",
+                          filter: "drop-shadow(0 10px 22px rgba(0,0,0,0.35))",
+                        }}
+                      />
+                    </Box>
+
+                    {/* UNESCO Pill */}
+                    <Box
+                      sx={{
+                        width: "100%",
+                        borderRadius: 8,
+                        background: "#fff",
+                        display: "grid",
+                        placeItems: "center",
+
+                        py: isRTL ? { xs: 2.0, md: 2.4 } : { xs: 2.6, md: 3.2 },
+                        px: isRTL ? { xs: 1.6, md: 2.0 } : { xs: 2.2, md: 2.8 },
+
+                        boxShadow: "0 22px 50px rgba(0,0,0,0.20)",
+                        transition: "transform 240ms ease",
+                        "&:hover": { transform: "scale(1.03)" },
+                      }}
+                    >
+                      <Box
+                        component="img"
+                        src={unescoLogo}
+                        alt="UNESCO"
+                        sx={{
+                          width: isRTL ? "48%" : "40%",
+                          maxWidth: isRTL
+                            ? { xs: 95, md: 120 }
+                            : { xs: 130, md: 170 },
+                          height: "auto",
+                          objectFit: "contain",
+                        }}
+                      />
+
+                      <Typography
+                        sx={{
+                          color: "#2f62ae",
+                          fontWeight: 900,
+                          fontSize: isRTL ? 15 : 18,
+                          mt: 1,
+                        }}
+                      >
+                        UNESCO
+                      </Typography>
+                    </Box>
+                  </Stack>
                 </Box>
-              </Stack>
+              </Box>
+
+              {/* Border Glow */}
+              <Box
+                sx={{
+                  position: "absolute",
+                  inset: 0,
+                  borderRadius: { xs: 3, md: 4 },
+                  border: "1px solid rgba(255,255,255,0.16)",
+                  pointerEvents: "none",
+                }}
+              />
             </Box>
           </Box>
         </Box>
@@ -293,7 +356,7 @@ export default function InternationalCollaboration() {
               window.open(
                 "https://www.univ-grenoble-alpes.fr/",
                 "_blank",
-                "noopener,noreferrer"
+                "noopener,noreferrer",
               )
             }
           >
@@ -310,6 +373,7 @@ export default function InternationalCollaboration() {
                 direction={isRTL ? "row-reverse" : "row"}
                 alignItems="center"
                 spacing={2}
+                sx={{ gap: isRTL ? 1 : 0 }}
               >
                 <Box
                   sx={{
@@ -324,6 +388,7 @@ export default function InternationalCollaboration() {
                     alignItems: "center",
                     justifyContent: "center",
                     flexShrink: 0,
+                    mr: 5,
                     boxShadow: "0 8px 18px rgba(11,111,115,0.25)",
                   }}
                 >
@@ -398,7 +463,7 @@ export default function InternationalCollaboration() {
               window.open(
                 "https://www.uniroma1.it/",
                 "_blank",
-                "noopener,noreferrer"
+                "noopener,noreferrer",
               )
             }
           >
@@ -415,6 +480,7 @@ export default function InternationalCollaboration() {
                 direction={isRTL ? "row-reverse" : "row"}
                 alignItems="center"
                 spacing={2}
+                sx={{ gap: isRTL ? 1 : 0 }}
               >
                 <Box
                   sx={{
@@ -513,6 +579,7 @@ export default function InternationalCollaboration() {
                 direction={isRTL ? "row-reverse" : "row"}
                 alignItems="center"
                 spacing={2}
+                sx={{ gap: isRTL ? 1 : 0 }}
               >
                 <Box
                   sx={{

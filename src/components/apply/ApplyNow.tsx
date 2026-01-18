@@ -29,20 +29,15 @@ export default function ApplyNow() {
   const navigate = useNavigate();
   const theme = useTheme();
 
-  // State for the "Selection" Dialog (Step 1)
   const [open, setOpen] = useState(false);
-
-  // State for the "Program Finder" Quiz Modal (Step 2)
   const [finderOpen, setFinderOpen] = useState(false);
 
   const currentLang = location.pathname.split("/")[1] || "en";
   const isRTL = currentLang === "ar";
 
-  // Handlers
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  // Opens the Quiz Modal
   const handleLearnClick = () => {
     setOpen(false);
     setFinderOpen(true);
@@ -56,72 +51,97 @@ export default function ApplyNow() {
   return (
     <SectionShell
       id="apply-now"
-      eyebrow={t("eyebrow")}
       title={t("title")}
       subtitle={t("subtitle")}
       variant="light"
     >
+      {/* Banner Card  */}
       <Box
         sx={{
+          mt: 4,
+          borderRadius: 2,
+          overflow: "hidden",
           display: "flex",
           flexDirection: { xs: "column", md: "row" },
-          alignItems: "center",
-          justifyContent: "space-between",
-          gap: 4,
-          mt: 4,
-          p: 4,
-          borderRadius: 2,
-          bgcolor: "background.paper",
-          boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.05)",
+          minHeight: { xs: 280, md: 220 },
+          boxShadow: "0px 6px 20px rgba(0,0,0,0.08)",
           border: `1px solid ${theme.palette.divider}`,
+          bgcolor: "background.paper",
         }}
       >
         {/* Text Content */}
-        <Box sx={{ maxWidth: { md: "60%" } }}>
+        <Box
+          sx={{
+            flex: 1.1,
+            bgcolor: "#0B6A6E",
+            color: "white",
+            p: { xs: 3, md: 5 },
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+          }}
+        >
           <Typography
-            variant="h6"
-            color="primary"
-            gutterBottom
-            sx={{ fontWeight: "bold" }}
+            sx={{
+              fontWeight: 800,
+              fontSize: { xs: "2rem", md: "3rem" },
+              lineHeight: 1.05,
+            }}
           >
             {t("ctaHeader")}
           </Typography>
-          <Typography variant="body1" color="text.secondary">
+
+          <Typography
+            sx={{
+              mt: 2,
+              opacity: 0.9,
+              maxWidth: 420,
+              fontSize: { xs: "0.95rem", md: "1.05rem" },
+            }}
+          >
             {t("ctaBody")}
           </Typography>
         </Box>
 
-        {/* Main "Start" Button */}
-        <Box>
+        {/* RIGHT SIDE (Image + Apply Button on Image) */}
+        <Box
+          sx={{
+            flex: 1,
+            position: "relative",
+            minHeight: { xs: 220, md: "auto" },
+          }}
+        >
+          <Box
+            component="img"
+            alt="Apply Now"
+            src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1200&q=80"
+            sx={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              display: "block",
+            }}
+          />
+
           <Button
             variant="contained"
-            size="large"
             onClick={handleOpen}
             endIcon={isRTL ? <ArrowBackIcon /> : <ArrowForwardIcon />}
             sx={{
-              px: 5,
-              py: 1.5,
-              fontSize: "1.1rem",
-              fontFamily: isRTL ? "Cairo" : "inherit",
-              display: "flex",
-              alignItems: "center",
-              gap: 1.5,
-
-              fontWeight: "bold",
+              position: "absolute",
+              right: 20,
+              bottom: 20,
+              px: 3,
+              py: 1.1,
+              borderRadius: "999px",
               textTransform: "none",
-              borderRadius: "50px",
-              boxShadow: `0 8px 16px ${theme.palette.primary.light}`,
-              "&:hover": {
-                transform: "translateY(-2px)",
-                boxShadow: `0 12px 20px ${theme.palette.primary.light}`,
-              },
-              transition: "all 0.3s ease",
+              fontWeight: 700,
+              bgcolor: "#18B394",
+              "&:hover": { bgcolor: "#149B81" },
+              boxShadow: "0px 10px 18px rgba(0,0,0,0.15)",
             }}
           >
-            {/* Span to perfect vertical alignment for Arabic */}
-            <span style={{ position: "relative", top: isRTL ? "2px" : "0" }}>
-              {t("applyBtn")}
-            </span>
+            {t("applyBtn")}
           </Button>
         </Box>
       </Box>
@@ -178,12 +198,7 @@ export default function ApplyNow() {
                 }}
               />
               <CardActionArea onClick={handleLearnClick} sx={{ p: 3 }}>
-                <Stack
-                  direction="row"
-                  spacing={2}
-                  alignItems="center"
-                  sx={{ gap: isRTL ? 1.5 : 0 }}
-                >
+                <Stack direction="row" spacing={2} alignItems="center">
                   <Box
                     sx={{
                       p: 1.5,
@@ -209,19 +224,12 @@ export default function ApplyNow() {
                 </Stack>
               </CardActionArea>
             </Card>
-
-            {/* OPTION 2: Direct Apply (Navigates to Form) */}
             <Card
               variant="outlined"
               sx={{ borderColor: theme.palette.divider }}
             >
               <CardActionArea onClick={handleDirectClick} sx={{ p: 3 }}>
-                <Stack
-                  direction="row"
-                  spacing={2}
-                  alignItems="center"
-                  sx={{ gap: isRTL ? 1.5 : 0 }}
-                >
+                <Stack direction="row" spacing={2} alignItems="center">
                   <Box
                     sx={{
                       p: 1.5,

@@ -1,13 +1,11 @@
 {
   "studyResearch": {
-    "eyebrow": "Study",
     "title": "Study and research at IUSAT",
     "subtitle": "Explore key areas of learning, research, and innovation.",
-
     "cards": {
       "academics": {
-        "title": "Academics",
-        "desc": "Programs designed for excellence in education and academic research."
+        "title": "Macro-credentials",
+        "desc": "Comprehensive degree programs designed for in-depth knowledge and skills."
       },
       "micro": {
         "title": "Micro-credentials",
@@ -22,13 +20,29 @@
         "desc": "An innovation ecosystem supporting startups and applied research."
       }
     },
-
+    "dropdown": {
+      "academics": {
+        "bachelors": "Bachelor's Degrees",
+        "masters": "Master's Degrees",
+        "phd": "PhD Degrees",
+        "online": "Online Degrees"
+      },
+      "micro": {
+        "professional": "Professional Certificates",
+        "crossAcademy": "Cross-Academy Learning"
+      },
+      "unesco": {
+        "chair1522": "Chair UNESCO ID: 1522EG2026\nSustainable Urban Regeneration: Bridging Heritage, Planning, and Digital Innovation"
+      },
+      "innovation": {
+        "startups": "Startups & incubation"
+      }
+    },
     "popup1": "Thanks for your interest. More details will be available soon.",
     "popup2": "This section is currently under development.",
     "popup3": "We are preparing exciting content for this area.",
     "popup4": "New updates will be published shortly.",
     "popup5": "Please check back soon for more information.",
-
     "close": "Close"
   }
 }

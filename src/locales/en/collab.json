@@ -1,23 +1,28 @@
 {
-  "eyebrow": "Collaboration",
+  "eyebrow": "International Collaboration",
   "title": "International Collaboration",
-  "subtitle": "Global partnerships that enhance research, education, and innovation.",
+  "subtitle": "We collaborate with international institutions to strengthen education, research, and innovation.",
+
   "cards": {
     "unesco": {
-      "badge": "UNESCO Collaboration",
-      "pill": "International Collaboration"
+      "badge": "Collaboration",
+      "title": "UNESCO Partnership",
+      "subtitle": "with IUSAT University",
+      "desc": "Building international cooperation through UNESCO programs in education, sustainability, cultural preservation, research exchange, and innovation, fostering global partnerships for a better future, aligned with UNESCO's mission, values, and Sustainable Development Goals (SDGs).",
+      "cta": "Find Out More"
     },
+
     "ensac": {
-      "name": "ENSAC",
-      "desc": "(Grenoble Alpes University of France)"
+      "name": "Université Grenoble Alpes",
+      "desc": "Academic exchange and joint research collaboration."
     },
     "sapienza": {
-      "name": "SAPIENZA",
-      "desc": "(Sapienza University of Rome)"
+      "name": "Sapienza University of Rome",
+      "desc": "International partnership in innovation and education."
     },
     "ihs": {
       "name": "IHS",
-      "desc": "(IHS University of Netherlands)"
+      "desc": "Strengthening cooperation through training and research."
     }
   }
 }

@@ -56,7 +56,6 @@ export default function LatestNews({ items }: LatestNewsProps) {
   return (
     <SectionShell
       id="latest-news"
-      eyebrow={t("eyebrow", "Latest news")}
       title={t("title", "Latest news")}
       subtitle={t("subtitle", "")}
       variant="light"
@@ -82,7 +81,7 @@ export default function LatestNews({ items }: LatestNewsProps) {
                 background: "transparent",
                 boxShadow: `0 18px 60px ${alpha(
                   theme.palette.common.black,
-                  0.12
+                  0.12,
                 )}`,
                 transition: "transform 220ms ease",
                 "&:hover": {
