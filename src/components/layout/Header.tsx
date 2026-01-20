@@ -29,6 +29,9 @@ import SearchIcon from "@mui/icons-material/Search";
 import MenuIcon from "@mui/icons-material/Menu";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import iusatLogo from "/imgs/iusat.png";
+import arLogo from "/imgs/ar_icon.png";
+import enLogo from "/imgs/en_icon.png";
+import frLogo from "/imgs/fr_icon.png";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
@@ -83,13 +86,29 @@ const NAV: NavItem[] = [
     ],
   },
 ];
-
+const LANG_LOGOS: Record<string, string> = {
+  ar: arLogo,
+  en: enLogo,
+  fr: frLogo,
+};
 function LangLabel({ code }: { code: string }) {
   return (
     <Box sx={{ display: "inline-flex", alignItems: "center", gap: 1 }}>
-      <Box component="span" sx={{ fontWeight: 800, letterSpacing: "0.02em" }}>
-        {code}
+      <Box component="span" sx={{ fontWeight: 800 }}>
+        {code.toUpperCase()}
       </Box>
+
+      <Box
+        component="img"
+        src={LANG_LOGOS[code]}
+        alt={`${code} logo`}
+        sx={{
+          height: 20,
+          width: 22,
+          transition: "transform 0.3s ease",
+          "&:hover": { transform: "scale(1.05)" },
+        }}
+      />
     </Box>
   );
 }
@@ -556,9 +575,9 @@ export default function Header() {
   };
 
   const LANGS = [
-    { code: "ar", label: "AR" },
-    { code: "en", label: "EN" },
-    { code: "fr", label: "FR" },
+    { code: "ar", label: <LangLabel code="ar" /> },
+    { code: "en", label: <LangLabel code="en" /> },
+    { code: "fr", label: <LangLabel code="fr" /> },
   ] as const;
 
   const current = LANGS.find((x) => x.code === currentLang) ?? LANGS[1];
@@ -634,7 +653,7 @@ export default function Header() {
           },
 
           "&.Mui-selected:hover": {
-            backgroundColor: "transparent",
+            backgroundColor: "rgba(0,110,113,0.08)",
           },
         },
       },
@@ -770,14 +789,14 @@ export default function Header() {
                   size="small"
                   value={currentLang}
                   onChange={(e) => changeLang(String(e.target.value))}
-                  renderValue={() => <LangLabel code={current.label} />}
+                  renderValue={() => <LangLabel code={current.code} />}
                   sx={langSelectSx}
                   // eslint-disable-next-line @typescript-eslint/no-explicit-any
                   MenuProps={selectMenuProps as any}
                 >
                   {LANGS.map((l) => (
                     <MenuItem key={l.code} value={l.code}>
-                      <LangLabel code={l.label} />
+                      <LangLabel code={l.code} />
                     </MenuItem>
                   ))}
                 </Select>
@@ -853,7 +872,7 @@ export default function Header() {
                 size="small"
                 value={currentLang}
                 onChange={(e) => changeLang(String(e.target.value))}
-                renderValue={() => <LangLabel code={current.label} />}
+                renderValue={() => <LangLabel code={current.code} />}
                 sx={{
                   ...langSelectSx,
                   display: { xs: "none", md: "inline-flex" },
@@ -863,7 +882,7 @@ export default function Header() {
               >
                 {LANGS.map((l) => (
                   <MenuItem key={l.code} value={l.code}>
-                    <LangLabel code={l.label} />
+                    <LangLabel code={l.code} />
                   </MenuItem>
                 ))}
               </Select>
