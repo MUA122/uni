@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Box, Typography, useTheme, alpha } from "@mui/material";
+import { Box, Typography, alpha } from "@mui/material";
 
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
@@ -18,8 +18,6 @@ type PartnerCard = {
 };
 
 export default function MeetOurPartnersIaau() {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const theme = useTheme();
   const { t } = useTranslation("partners");
   const location = useLocation();
 
