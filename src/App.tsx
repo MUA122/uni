@@ -38,6 +38,9 @@ import LatestNews from "./components/latest/LatestNews";
 import MeetOurPartners from "./components/meet/MeetOurPartners";
 import ModernCalendar from "./components/calendar/ModernCalendar";
 import { calendarEvents } from "./components/calendar/calendarData";
+import StudyResearchIaau from "./components/academy/component/StudyIaau";
+import InternationalCollaborationIaau from "./components/academy/component/InternationalCollaborationIaau";
+import MeetOurPartnersIaau from "./components/academy/component/Partners";
 
 /* ===============================
    Pages
@@ -119,6 +122,33 @@ function AcademyHomePage() {
       <AcademyHeader />
       <AcademyHeroImage />
       <WhyChooseIAAU />
+      <Divider
+        sx={{
+          height: 3,
+          border: "none",
+          background:
+            "linear-gradient(90deg, transparent, rgba(0, 60, 113, 0.45), transparent)",
+        }}
+      />
+      <StudyResearchIaau />
+      <Divider
+        sx={{
+          height: 3,
+          border: "none",
+          background:
+            "linear-gradient(90deg, transparent, rgba(0, 60, 113, 0.45), transparent)",
+        }}
+      />
+      <InternationalCollaborationIaau />
+      <Divider
+        sx={{
+          height: 3,
+          border: "none",
+          background:
+            "linear-gradient(90deg, transparent, rgba(0, 60, 113, 0.45), transparent)",
+        }}
+      />
+      <MeetOurPartnersIaau />
       <AcademyFooter />
     </>
   );
@@ -173,7 +203,7 @@ function AppWithDirectionTheme() {
 
   const setFavicon = (href: string) => {
     let favicon = document.querySelector(
-      "link[rel='icon']"
+      "link[rel='icon']",
     ) as HTMLLinkElement | null;
 
     if (!favicon) {
@@ -200,7 +230,7 @@ function AppWithDirectionTheme() {
             },
           },
         },
-        { direction: dir }
+        { direction: dir },
       );
     }
 

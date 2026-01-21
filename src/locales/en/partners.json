@@ -1,0 +1,19 @@
+{
+  "title": "Meet our partners",
+  "subtitle": "Explore our international collaborations and global academic partnerships.",
+  "headline": "Meet our partners",
+  "cards": {
+    "p1": {
+      "title": "UNESCO",
+      "desc": "Partnering with UNESCO to support education, sustainability, research exchange, and innovation through international initiatives."
+    },
+    "p2": {
+      "title": "University of Grenoble Alpes",
+      "desc": "Academic cooperation in advanced studies, joint programs, and research collaboration with one of France’s leading universities."
+    },
+    "p3": {
+      "title": "Sapienza University of Rome",
+      "desc": "Strengthening global academic connections through knowledge exchange, joint research projects, and international learning opportunities."
+    }
+  }
+}

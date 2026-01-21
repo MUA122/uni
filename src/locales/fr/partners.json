@@ -1,0 +1,19 @@
+{
+  "title": "Rencontrez nos partenaires",
+  "subtitle": "Découvrez nos collaborations internationales et nos partenariats académiques à l’échelle mondiale.",
+  "headline": "Rencontrez nos partenaires",
+  "cards": {
+    "p1": {
+      "title": "UNESCO",
+      "desc": "Partenariat avec l’UNESCO pour soutenir l’éducation, la durabilité, les échanges de recherche et l’innovation à travers des initiatives internationales."
+    },
+    "p2": {
+      "title": "Université Grenoble Alpes",
+      "desc": "Coopération académique autour des programmes avancés, des cursus conjoints et de la collaboration en recherche avec l’une des universités leaders en France."
+    },
+    "p3": {
+      "title": "Université Sapienza de Rome",
+      "desc": "Renforcer les liens académiques internationaux grâce à l’échange de connaissances, aux projets de recherche communs et à des opportunités d’apprentissage globales."
+    }
+  }
+}
