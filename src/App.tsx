@@ -103,15 +103,7 @@ function HomePage() {
         }}
       />
       <MeetOurPartners />
-      <Divider
-        sx={{
-          height: 3,
-          border: "none",
-          background:
-            "linear-gradient(90deg, transparent, rgba(0,110,113,0.45), transparent)",
-        }}
-      />
-      <CampusLocation />
+
       <Divider
         sx={{
           height: 3,
@@ -121,6 +113,15 @@ function HomePage() {
         }}
       />
       <ModernCalendar data={calendarEvents} />
+      <Divider
+        sx={{
+          height: 3,
+          border: "none",
+          background:
+            "linear-gradient(90deg, transparent, rgba(0,110,113,0.45), transparent)",
+        }}
+      />
+      <CampusLocation />
       <Footer />
     </>
   );
