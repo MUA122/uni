@@ -1,6 +1,6 @@
 import { Box, Container, Typography, Button, Stack, useTheme, alpha } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { useLocation } from "react-router-dom";
+
 import SchoolRoundedIcon from "@mui/icons-material/SchoolRounded";
 import LocationOnRoundedIcon from "@mui/icons-material/LocationOnRounded";
 import PhoneRoundedIcon from "@mui/icons-material/PhoneRounded";
@@ -21,10 +21,8 @@ const MAPBOX_TOKEN = "pk.eyJ1IjoibGlvb21yIiwiYSI6ImNta3Q2ZDhjMTFnbzkzaXNhc3hvbW9
 export default function CampusLocation() {
     const theme = useTheme();
     const { t } = useTranslation("location");
-    const location = useLocation();
 
-    const currentLang = location.pathname.split("/")[1] || "en";
-    const isRTL = currentLang === "ar";
+
 
     // Handle navigation with device-specific logic
     const handleGetDirections = () => {
