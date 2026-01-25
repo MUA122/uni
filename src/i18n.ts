@@ -30,6 +30,7 @@ i18n
       "latestNews",
       "calendar",
       "meetOurPartners",
+      "location",
     ],
     defaultNS: "nav",
 

@@ -37,6 +37,7 @@ import WhyChooseIAAU from "./components/academy/component/WhyChoose";
 import LatestNews from "./components/latest/LatestNews";
 import MeetOurPartners from "./components/meet/MeetOurPartners";
 import ModernCalendar from "./components/calendar/ModernCalendar";
+import CampusLocation from "./components/location/CampusLocation";
 import { calendarEvents } from "./components/calendar/calendarData";
 import StudyResearchIaau from "./components/academy/component/StudyIaau";
 import InternationalCollaborationIaau from "./components/academy/component/InternationalCollaborationIaau";
@@ -102,6 +103,15 @@ function HomePage() {
         }}
       />
       <MeetOurPartners />
+      <Divider
+        sx={{
+          height: 3,
+          border: "none",
+          background:
+            "linear-gradient(90deg, transparent, rgba(0,110,113,0.45), transparent)",
+        }}
+      />
+      <CampusLocation />
       <Divider
         sx={{
           height: 3,
