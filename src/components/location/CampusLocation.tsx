@@ -10,6 +10,8 @@ import {
 import { useTranslation } from "react-i18next";
 import campusimg1 from "/imgs/campus1.png";
 import campusimg2 from "/imgs/campus2.png";
+import campusiusat from "/imgs/campusiusat.png";
+
 import SchoolRoundedIcon from "@mui/icons-material/SchoolRounded";
 import LocationOnRoundedIcon from "@mui/icons-material/LocationOnRounded";
 import DirectionsRoundedIcon from "@mui/icons-material/DirectionsRounded";
@@ -22,8 +24,6 @@ const GOOGLE_MAPS_LINK =
 
 // Mapbox configuration
 // TODO: Replace with your own Mapbox token in production
-const MAPBOX_TOKEN =
-  "pk.eyJ1IjoibGlvb21yIiwiYSI6ImNta3Q2ZDhjMTFnbzkzaXNhc3hvbW9jOXQifQ.wFFL85aJCBGHhynpMql8ng";
 
 export default function CampusLocation() {
   const theme = useTheme();
@@ -66,7 +66,7 @@ export default function CampusLocation() {
           >
             {t("title", "Campus Location")}
           </Typography>
-          <Typography
+          {/* <Typography
             sx={{
               color: "rgba(65, 65, 65, 0.26)",
               fontWeight: 700,
@@ -77,7 +77,7 @@ export default function CampusLocation() {
             }}
           >
             {t("eyebrow", "Find Us")}
-          </Typography>
+          </Typography> */}
         </Box>
 
         {/* Map Container */}
@@ -104,7 +104,7 @@ export default function CampusLocation() {
               sx={{
                 width: "100%",
                 height: "100%",
-                backgroundImage: `url("https://api.mapbox.com/styles/v1/mapbox/light-v11/static/${CAMPUS_LONGITUDE},${CAMPUS_LATITUDE},14,0/800x600@2x?access_token=${MAPBOX_TOKEN}")`,
+                backgroundImage: `url(${campusiusat})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 opacity: 0.7,
