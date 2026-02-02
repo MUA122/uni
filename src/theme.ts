@@ -39,7 +39,7 @@ export const COLORS = {
     lighter: lighten("#B0FDEB", 0.3),
     dark: darken("#B0FDEB", 0.2),
     darker: darken("#B0FDEB", 0.35),
-    contrastText: "#071316",
+    contrastText: "hsl(192, 52%, 6%)",
   },
 
   warning: {
