@@ -57,7 +57,7 @@ function CardShell({
         flex: "1 1 220px",
         minWidth: { xs: "100%", sm: 240, md: 0 },
         borderRadius: 2.2,
-        border: `3px solid ${expanded ? theme.palette.primary.main : " rgba(11,111,115,0.18)"}`,
+        border: `3px solid ${expanded ? theme.palette.primary.main : alpha(theme.palette.primary.main, 0.18)}`,
         background: alpha(theme.palette.background.paper, 0.92),
         boxShadow: expanded
           ? `0 18px 44px ${alpha(theme.palette.primary.main, 0.18)}`
@@ -66,8 +66,8 @@ function CardShell({
         transition:
           "transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease, background 180ms ease",
         "&:hover": {
-          borderColor: "#0B6F73",
-          background: "rgba(255,255,255,0.82)",
+          borderColor: theme.palette.primary.main,
+          background: alpha(theme.palette.background.paper, 0.98),
           transform: "translateY(-2px)",
           boxShadow: "0 18px 44px rgba(0,0,0,0.10)",
         },
@@ -211,26 +211,27 @@ function CardShell({
                       fontSize: 13.5,
                       whiteSpace: "pre-line",
                       pr: 2,
+                      color: alpha(theme.palette.text.primary, 0.9),
                     }}
                   >
                     {item.label}
                   </Typography>
                 </Box>
-                {isRTL && (
+
+                {isRTL ? (
                   <ArrowBackIcon
                     sx={{
                       fontSize: 18,
                       mt: 0.35,
-                      color: alpha(theme.palette.text.primary, 0.45),
+                      color: alpha(theme.palette.primary.main, 0.55),
                     }}
                   />
-                )}
-                {!isRTL && (
+                ) : (
                   <ArrowForwardRoundedIcon
                     sx={{
                       fontSize: 18,
                       mt: 0.35,
-                      color: alpha(theme.palette.text.primary, 0.45),
+                      color: alpha(theme.palette.primary.main, 0.55),
                     }}
                   />
                 )}
@@ -243,7 +244,7 @@ function CardShell({
   );
 }
 
-export default function StudyResearchPills() {
+export default function StudyResearch() {
   const { t } = useTranslation("study");
   const location = useLocation();
   const currentLang = location.pathname.split("/")[1] || "en";
