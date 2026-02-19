@@ -1,6 +1,6 @@
 {
   "studyResearch": {
-    "title": "Study and research at IUSAT",
+    "title": "Study and Research At IUSAT",
     "subtitle": "Explore key areas of learning, research, and innovation.",
     "cards": {
       "academics": {
@@ -43,6 +43,89 @@
     "popup3": "We are preparing exciting content for this area.",
     "popup4": "New updates will be published shortly.",
     "popup5": "Please check back soon for more information.",
-    "close": "Close"
+    "close": "Close",
+    "cta": {
+      "applicationsOpeningSoon": "Applications Opening Soon"
+    },
+    "popups": {
+      "academics": {
+        "bachelors": {
+          "title": "Bachelor’s Degrees",
+          "tagline": "Build the foundation for a global future.",
+          "body": "At IUSAT, our undergraduate programs are designed beyond traditional education.\nStudents graduate with:",
+          "bullets": [
+            "A globally competitive academic degree",
+            "Project-Based Learning (PBL) experience",
+            "Exposure to international academic partners",
+            "Industry-aligned curriculum",
+            "The opportunity to stack micro-credentials alongside their degree"
+          ],
+          "closing": "From day one, you are prepared not just to earn a degree —\nbut to lead in a changing world."
+        },
+        "masters": {
+          "title": "Master’s Degrees",
+          "tagline": "Advance your expertise. Expand your impact.",
+          "body": "Our Master’s programs are designed for ambitious graduates seeking:",
+          "bullets": [
+            "Specialized knowledge aligned with global standards",
+            "Research-driven learning environments",
+            "International collaboration opportunities",
+            "Dual-degree pathways (where applicable)",
+            "Integration with professional micro-credentials"
+          ],
+          "closing": "This is where academic depth meets real-world application."
+        },
+        "phd": {
+          "title": "PhD Degrees",
+          "tagline": "Lead research. Shape the future.",
+          "body": "Our doctoral programs aim to develop research leaders capable of:",
+          "bullets": [
+            "Contributing to global academic discourse",
+            "Supporting sustainable development goals",
+            "Engaging in cross-border research collaboration",
+            "Driving innovation in their field"
+          ],
+          "closing": "With access to international networks and research ecosystems,\nyour work extends beyond academia."
+        },
+        "online": {
+          "title": "Online Degrees",
+          "tagline": "Flexible learning. Uncompromised excellence.",
+          "body": "IUSAT’s online programs offer:",
+          "bullets": [
+            "Academic rigor equivalent to on-campus study",
+            "Digital-first interactive learning models",
+            "Access to faculty expertise and global resources",
+            "Stackable credentials for lifelong learners"
+          ],
+          "closing": "Designed for professionals and international learners seeking flexibility without sacrificing quality."
+        }
+      },
+      "micro": {
+        "professional": {
+          "title": "Professional Certificates",
+          "tagline": "Industry-recognized expertise. Globally aligned.",
+          "body": "IUSAT’s Professional Micro-credentials are designed in collaboration with international partners and industry leaders to provide focused, high-impact learning experiences.\n\nEach certificate:",
+          "bullets": [
+            "Verifies clearly defined skills and competencies",
+            "Includes formal assessment and quality assurance",
+            "Can stand alone or stack toward advanced qualifications",
+            "Aligns with global standards and evolving market needs"
+          ],
+          "closing": "Designed for students and professionals seeking to stay ahead in a rapidly changing world."
+        },
+        "crossAcademy": {
+          "title": "Cross-Academy Learning",
+          "tagline": "Break academic boundaries. Build multidimensional expertise.",
+          "body": "At IUSAT, learning extends beyond a single discipline.\n\nThrough Cross-Academy Micro-credentials, students can:",
+          "bullets": [
+            "Combine architecture with sustainability innovation",
+            "Integrate ICT with healthcare solutions",
+            "Connect design, policy, and technology",
+            "Build interdisciplinary profiles aligned with global challenges"
+          ],
+          "closing": "This model prepares graduates for complex, real-world problems that demand integrated thinking."
+        }
+      }
+    }
   }
 }

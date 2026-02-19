@@ -1,0 +1,131 @@
+{
+  "studyResearch": {
+    "title": "Étudier et faire de la recherche à l’IUSAT",
+    "subtitle": "Explorez les domaines clés de l’apprentissage, de la recherche et de l’innovation.",
+    "cards": {
+      "academics": {
+        "title": "Macro-certifications",
+        "desc": "Programmes B.Sc./ M.Sc."
+      },
+      "micro": {
+        "title": "Micro-certifications",
+        "desc": "Certificats professionnels"
+      },
+      "unesco": {
+        "title": "Chaires UNESCO",
+        "desc": "Recherche & innovation"
+      },
+      "innovation": {
+        "title": "Innovation I-Hub",
+        "desc": "Un écosystème d’innovation soutenant les startups et la recherche appliquée."
+      }
+    },
+    "dropdown": {
+      "academics": {
+        "bachelors": "Licences (Bachelor)",
+        "masters": "Masters",
+        "phd": "Doctorats (PhD)",
+        "online": "Diplômes en ligne"
+      },
+      "micro": {
+        "professional": "Certificats professionnels",
+        "crossAcademy": "Apprentissage inter-académies"
+      },
+      "unesco": {
+        "chair1522": "Chaire UNESCO ID : 1522EG2026\nRégénération urbaine durable : relier patrimoine, planification et innovation numérique"
+      },
+      "innovation": {
+        "startups": "Startups & incubation"
+      }
+    },
+    "popup1": "Merci pour votre intérêt. Plus de détails seront bientôt disponibles.",
+    "popup2": "Cette section est actuellement en cours de développement.",
+    "popup3": "Nous préparons du contenu passionnant pour cet espace.",
+    "popup4": "De nouvelles mises à jour seront publiées prochainement.",
+    "popup5": "Revenez bientôt pour plus d’informations.",
+    "close": "Fermer",
+    "cta": {
+      "applicationsOpeningSoon": "Ouverture des candidatures bientôt"
+    },
+    "popups": {
+      "academics": {
+        "bachelors": {
+          "title": "Licences (Bachelor)",
+          "tagline": "Construisez les bases d’un avenir mondial.",
+          "body": "À l’IUSAT, nos programmes de premier cycle vont au-delà de l’enseignement traditionnel.\nLes étudiants obtiennent :",
+          "bullets": [
+            "Un diplôme académique compétitif à l’échelle mondiale",
+            "Une expérience d’apprentissage par projets (PBL)",
+            "Une exposition à des partenaires académiques internationaux",
+            "Un programme aligné sur les besoins de l’industrie",
+            "La possibilité d’empiler des micro-certifications en parallèle du diplôme"
+          ],
+          "closing": "Dès le premier jour, vous êtes préparé non seulement à obtenir un diplôme —\nmais à diriger dans un monde en mutation."
+        },
+        "masters": {
+          "title": "Masters",
+          "tagline": "Approfondissez votre expertise. Amplifiez votre impact.",
+          "body": "Nos programmes de Master s’adressent aux diplômés ambitieux qui recherchent :",
+          "bullets": [
+            "Des connaissances spécialisées alignées sur les standards mondiaux",
+            "Des environnements d’apprentissage guidés par la recherche",
+            "Des opportunités de collaboration internationale",
+            "Des parcours de double diplôme (le cas échéant)",
+            "Une intégration avec des micro-certifications professionnelles"
+          ],
+          "closing": "C’est ici que la profondeur académique rencontre l’application réelle."
+        },
+        "phd": {
+          "title": "Doctorats (PhD)",
+          "tagline": "Menez la recherche. Façonnez l’avenir.",
+          "body": "Nos programmes doctoraux visent à former des leaders de la recherche capables de :",
+          "bullets": [
+            "Contribuer au débat académique mondial",
+            "Soutenir les objectifs de développement durable",
+            "S’engager dans des collaborations de recherche transfrontalières",
+            "Stimuler l’innovation dans leur domaine"
+          ],
+          "closing": "Avec l’accès à des réseaux internationaux et à des écosystèmes de recherche,\nvotre travail dépasse le cadre académique."
+        },
+        "online": {
+          "title": "Diplômes en ligne",
+          "tagline": "Apprentissage flexible. Excellence sans compromis.",
+          "body": "Les programmes en ligne de l’IUSAT offrent :",
+          "bullets": [
+            "Une rigueur académique équivalente aux études sur campus",
+            "Des modèles d’apprentissage interactifs pensés pour le numérique",
+            "L’accès à l’expertise des enseignants et à des ressources mondiales",
+            "Des certifications empilables pour l’apprentissage tout au long de la vie"
+          ],
+          "closing": "Conçu pour les professionnels et les apprenants internationaux recherchant de la flexibilité sans sacrifier la qualité."
+        }
+      },
+      "micro": {
+        "professional": {
+          "title": "Certificats professionnels",
+          "tagline": "Expertise reconnue par l’industrie. Alignée globalement.",
+          "body": "Les micro-certifications professionnelles de l’IUSAT sont conçues avec des partenaires internationaux et des acteurs de l’industrie afin d’offrir des expériences d’apprentissage ciblées et à fort impact.\n\nChaque certificat :",
+          "bullets": [
+            "Valide des compétences et des acquis clairement définis",
+            "Inclut une évaluation formelle et une assurance qualité",
+            "Peut être autonome ou s’additionner vers des qualifications avancées",
+            "S’aligne sur les standards mondiaux et l’évolution des besoins du marché"
+          ],
+          "closing": "Conçu pour les étudiants et les professionnels qui souhaitent garder une longueur d’avance dans un monde en rapide évolution."
+        },
+        "crossAcademy": {
+          "title": "Apprentissage inter-académies",
+          "tagline": "Brisez les frontières académiques. Construisez une expertise multidimensionnelle.",
+          "body": "À l’IUSAT, l’apprentissage dépasse une seule discipline.\n\nGrâce aux micro-certifications inter-académies, les étudiants peuvent :",
+          "bullets": [
+            "Associer l’architecture à l’innovation en durabilité",
+            "Intégrer les TIC aux solutions de santé",
+            "Relier design, politiques publiques et technologie",
+            "Construire des profils interdisciplinaires alignés sur les défis mondiaux"
+          ],
+          "closing": "Ce modèle prépare les diplômés à des problèmes réels complexes qui exigent une pensée intégrée."
+        }
+      }
+    }
+  }
+}
